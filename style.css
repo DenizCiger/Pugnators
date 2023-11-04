@@ -7,7 +7,8 @@
 
 body{
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/bg-menu.png");
-    background-repeat: repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
@@ -32,7 +33,7 @@ header a:hover{
 }
 
 .login_btn{
-    background-color: lime;
+    background-color: rgb(22, 252, 18);
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -40,4 +41,5 @@ header a:hover{
 
 .login_btn:hover{
     color: white;
+    background-color: rgb(11, 159, 8);
 }
