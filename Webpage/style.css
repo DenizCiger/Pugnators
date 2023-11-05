@@ -1,70 +1,50 @@
+/* Default stuff */
+
 *{
     color: #fff;
     font-family: "Dosis";
     text-decoration: none;
     scroll-behavior:smooth;
+    font-size:large;
 }
 
 body{
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
     background-repeat: no-repeat;
-    background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-size: 100vw auto ;
 }
 
 a{
-    font-size: 2rem;
+    font-size: 4rem;
+    padding: 1rem;
 }
+
+/* Header */
 
 header{
     width: 100%;
     line-height: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-main{
-    margin: 30%;
-}
-
-main form{
-    margin-left: 20%;
-}
-
-form input{
-    color: #000;
-}
-
-.play_btn{
-    display: flex;
-    margin: auto;
-    width: 100%;
-    align-items: center;
-    justify-content:center;
-}
-
-.play_btn a{
-    margin: 4%;
-    padding: 2%;
-    border-radius: 10px;
-    background-color:#404e7c;
-}
-
-.play_btn a:hover{
-    background-color:rgb(57, 107, 127);
-}
-
 header a:hover{
     cursor: pointer;
+    color: skyblue;
 }
 
-input{
-  background: transparent;
-  border: none;
+.htp{
+  background-color: #404e7c;
+  border-radius: 6px;
+  right: 10%;
+}
+
+.htp:hover{
+  background-color: #323d61;
+  color: white;
 }
 
 /* Login Button */
@@ -78,11 +58,10 @@ input{
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-  font-size: 20px;
+  /* font-size: 2rem; */
   font-weight: 600;
   line-height: 20px;
-  padding: 6px 16px;
+  padding: 2rem;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -119,14 +98,45 @@ input{
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
 
-/* How to play */
+/* Play Buttons */
 
-.htp{
-  background-color: #404e7c;
-  border-radius: 6px;
-  padding-left:  10px;
-  padding-right: 10px;
+main{
+  margin: 30%;
 }
+
+main form{
+  margin-left: 20%;
+}
+
+form input{
+  color: #000;
+}
+
+.play_btn{
+  display: flex;
+  margin: auto;
+  width: 100%;
+  align-items: center;
+  justify-content:center;
+}
+
+.play_btn a{
+  margin: 4%;
+  padding: 2%;
+  border-radius: 10px;
+  background-color:#404e7c;
+}
+
+.play_btn a:hover{
+  background-color:rgb(57, 107, 127);
+}
+
+input{
+  background: transparent;
+  border: none;
+}
+
+/* How to play */
 
 td img{
   max-width: 100px;
@@ -134,11 +144,12 @@ td img{
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
+  border: #000 solid;
+  border-radius: 6px;
 }
 
 table {
   width: 80%;
-  margin: 0 auto;
   border-collapse:collapse;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -161,4 +172,76 @@ th {
 
 td b{
   color: #000;
+}
+
+#how-to-play{
+  margin-left: 20%;
+}
+
+
+
+.form-box h1{
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-box{
+  width: 500px;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 12% auto;
+  padding: 50px 0;
+  color: #fff;
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
+}
+
+.input-box{
+  margin: 31px auto;
+  width: 80%;
+  border-bottom: 1px solid #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.input-box input{
+  width: 90%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.form-box button{
+  color: #000;
+}
+
+.login-btn{
+  margin: 40px auto 20px;
+  width: 80%;
+  display: block;
+  outline: none;
+  padding: 10px 0;
+  border: 1px solid #fff;
+  cursor: pointer;
+  /* background: rgb(88, 164, 194); */
+  background: transparent;
+  color:#fff;
+  font-size: 16px;
+}
+
+/* Custom Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #151322;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #293259;
+  border-radius: 10px;
 }

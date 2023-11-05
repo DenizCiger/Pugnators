@@ -1,0 +1,38 @@
+/* Default stuff */
+
+*{
+    color: #fff;
+    font-family: "Dosis";
+    text-decoration: none;
+    scroll-behavior:smooth;
+    font-size:large;
+}
+
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
+    background-repeat: no-repeat;
+    background-position:center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+a{
+    font-size: 4rem;
+}
+
+
+/* Header */
+
+header{
+    width: 100%;
+    line-height: 60px;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header a:hover{
+    cursor: pointer;
+    color: skyblue;
+}
