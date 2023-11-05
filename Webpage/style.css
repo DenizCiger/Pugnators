@@ -1,0 +1,164 @@
+*{
+    color: #fff;
+    font-family: "Dosis";
+    text-decoration: none;
+    scroll-behavior:smooth;
+}
+
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+a{
+    font-size: 2rem;
+}
+
+header{
+    width: 100%;
+    line-height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main{
+    margin: 30%;
+}
+
+main form{
+    margin-left: 20%;
+}
+
+form input{
+    color: #000;
+}
+
+.play_btn{
+    display: flex;
+    margin: auto;
+    width: 100%;
+    align-items: center;
+    justify-content:center;
+}
+
+.play_btn a{
+    margin: 4%;
+    padding: 2%;
+    border-radius: 10px;
+    background-color:#404e7c;
+}
+
+.play_btn a:hover{
+    background-color:rgb(57, 107, 127);
+}
+
+header a:hover{
+    cursor: pointer;
+}
+
+input{
+  background: transparent;
+  border: none;
+}
+
+/* Login Button */
+.login_btn {
+  appearance: none;
+  background-color: #29be53;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.login_btn:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.login_btn:hover {
+  background-color: #2c974b;
+}
+
+.login_btn:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.login_btn:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.login_btn:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+/* How to play */
+
+.htp{
+  background-color: #404e7c;
+  border-radius: 6px;
+  padding-left:  10px;
+  padding-right: 10px;
+}
+
+td img{
+  max-width: 100px;
+  width: 3rem;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse:collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td, td img{
+  padding: 10px;
+  text-align: left;
+  color: #000;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  background-color: #333;
+  color: white;
+}
+
+td b{
+  color: #000;
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTL-Party | Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio autoplay loop src="sounds/jazz_loop.mp3"></audio>
+    
+    <header>
+        <a href="#">HTL Party</a>
+        <a href="#how-to-play" class="htp">How to play?</a>
+        <a href="login.html" class="login_btn">Login</a>
+    </header>
+
+    <main>
+        <form action="/action_page.php">
+            <label for="username">Username:</label>
+            <input type="text" placeholder="SuperEpicPlayer">
+        </form>
+        <div class="play_btn">
+            <a href="play.html">Join Game</a>
+            <a href="host.html">Host Game</a>
+        </div>
+    </main>
+
+    <br><br><br><br><br><br><br><br><br>
+    
+    <section id="how-to-play">
+        <h1>How to play:</h1>
+        <p>The concept is simple:</p>
+        <ol>
+            <li>Roll the dice</li>
+            <li>Your character moves as many fields as you rolled</li>
+            <li>After everyone did their turn, a random Minigame starts</li>
+            <li>If you perform better in the Minigame, your ability will be charged more</li>
+            <li>Use these Items to either slow down your oppenents, or to protect yourself from them</li>
+            <li>First person that gets to the finish line, wins!</li>
+        </ol>
+
+        <p>Currently these Items are available:</p>
+        
+        <table>
+            <tr>
+                <th>Texture</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td><img src="images/Game Textures/Items/Shield.png" class="item-showcase-texture" alt="Shield Texture"></td>
+                <td>Energy Shield</td>
+                <td>Protects the user from getting hit for 1 round</td>
+            </tr>
+            <tr>
+                <td><img src="images/Game Textures/Items/Rocket.png" class="item-showcase-texture" alt="Rocket Texture"></td>
+                <td>Rocket</td>
+                <td>Shoots at a field, causing all players that stand on it to take damage</td>
+            </tr>
+        </table>
+
+        <p>Currently available characters:</p>
+
+        <table>
+            <tr>
+                <th>Texture</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Ability</th>
+            </tr>
+            <tr>
+                <td><img src="images/Game Textures/Characters/Troller/Troller Icon.png" alt="Troller Texture"></td>
+                <td>Troller</td>
+                <td>
+                    <b>Troller</b> is the ultimate trickster, always ready to bring laughter and chaos to the party!<br>
+                    With a cheeky grin and a bag of hilarious surprises, Troller's special ability is guaranteed to keep players of all ages entertained.
+                </td>
+                <td>
+                    <b>Troll Trick</b>: Swaps places with the person that is directly in front of him. <br>
+                    (Does't work if the person being swapped with is within 10 fields of the finish line)
+                </td>
+            </tr>
+        </table>
+    </section>
+</body>
+</html>
