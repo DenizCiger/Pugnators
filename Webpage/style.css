@@ -50,7 +50,7 @@ header a:hover{
 }
 
 /* Login Button */
-.login_btn {
+.login-btn {
   appearance: none;
   background-color: #6985e3;
   box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
@@ -60,42 +60,31 @@ header a:hover{
   font-weight: 600;
   width: fit-content;
   padding: 2rem;
-  /* border: 1px solid rgba(27, 31, 35, .15); */
-  /* font-size: 2rem;
-  line-height: 20px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap; */
 }
 
-.login_btn:focus:not(:focus-visible):not(.focus-visible) {
+.login-btn:focus:not(:focus-visible):not(.focus-visible) {
   box-shadow: none;
   outline: none;
 }
 
-.login_btn:hover {
+.login-btn:hover {
   background-color: #4c62aa;
   color: #fff;
 }
 
-.login_btn:focus {
+.login-btn:focus {
   box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
   outline: none;
 }
 
-.login_btn:disabled {
+.login-btn:disabled {
   background-color: #94d3a2;
   border-color: rgba(27, 31, 35, .1);
   color: rgba(255, 255, 255, .8);
   cursor: default;
 }
 
-.login_btn:active {
+.login-btn:active {
   background-color: #2f3d6c;
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
@@ -114,7 +103,7 @@ form input{
   color: #000;
 }
 
-.play_btn{
+.play-btn{
   display: grid;
   margin: auto;
   width: 100%;
@@ -123,13 +112,13 @@ form input{
   grid-gap: 5rem;
 }
 
-.play_btn a{
+.play-btn a{
   width: fit-content;
   padding: 2rem;
   background-color:#404e7c;
 }
 
-.play_btn a:hover{
+.play-btn a:hover{
   background-color:rgb(57, 107, 127);
 }
 
@@ -226,7 +215,7 @@ td b{
   color: #fff;
 }
 
-.login-btn{
+.login-confirm-btn{
   margin: 40px auto 20px;
   width: 80%;
   display: block;
