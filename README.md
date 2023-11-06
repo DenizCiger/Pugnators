@@ -38,12 +38,6 @@ In the dynamic part of the project, we will focus on the web application develop
 
     - **Educational Resources** In addition to gaming, the website will provide links to educational resources and information related to HTL fields.
 
-## Tasks
-
-- [X] Create Menu Interface - 04.11.23
-- [X] Create Login Interface - 04.11.23
-- [ ] Add functioning Login System using an API for School Servers
-
 ## Team Members
 Person | Profession
 |-------------------------|-----------------|
