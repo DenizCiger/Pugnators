@@ -9,16 +9,19 @@
 }
 
 body{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: 100vw auto ;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow: scroll;
 }
 
 a{
+    border-radius: 6px;
     font-size: 4rem;
     padding: 1rem;
+    text-shadow: #000 3px 3px;
 }
 
 /* Header */
@@ -26,9 +29,10 @@ a{
 header{
     width: 100%;
     line-height: 60px;
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 17rem;
 }
 
 header a:hover{
@@ -38,8 +42,6 @@ header a:hover{
 
 .htp{
   background-color: #404e7c;
-  border-radius: 6px;
-  right: 10%;
 }
 
 .htp:hover{
@@ -51,17 +53,16 @@ header a:hover{
 .login_btn {
   appearance: none;
   background-color: #6985e3;
-  border: 1px solid rgba(27, 31, 35, .15);
-  border-radius: 6px;
   box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
   box-sizing: border-box;
   color: #fff;
-  cursor: pointer;
   display: inline-block;
-  /* font-size: 2rem; */
   font-weight: 600;
-  line-height: 20px;
+  width: fit-content;
   padding: 2rem;
+  /* border: 1px solid rgba(27, 31, 35, .15); */
+  /* font-size: 2rem;
+  line-height: 20px;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -69,7 +70,7 @@ header a:hover{
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
-  white-space: nowrap;
+  white-space: nowrap; */
 }
 
 .login_btn:focus:not(:focus-visible):not(.focus-visible) {
@@ -102,11 +103,11 @@ header a:hover{
 /* Play Buttons */
 
 main{
-  margin: 30%;
+  margin: 20%;
 }
 
 main form{
-  margin-left: 20%;
+  margin-left: auto;
 }
 
 form input{
@@ -114,17 +115,17 @@ form input{
 }
 
 .play_btn{
-  display: flex;
+  display: grid;
   margin: auto;
   width: 100%;
-  align-items: center;
-  justify-content:center;
+  align-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5rem;
 }
 
 .play_btn a{
-  margin: 4%;
-  padding: 2%;
-  border-radius: 10px;
+  width: fit-content;
+  padding: 2rem;
   background-color:#404e7c;
 }
 
@@ -237,19 +238,4 @@ td b{
   background: transparent;
   color:#fff;
   font-size: 16px;
-}
-
-/* Custom Scrollbar */
-
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-::-webkit-scrollbar-track {
-  background: #151322;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #293259;
-  border-radius: 10px;
 }
