@@ -132,9 +132,18 @@ form input{
   background-color:rgb(57, 107, 127);
 }
 
-input{
-  background: transparent;
+form input{
+  width: 90%;
   border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+
+  margin: 31px auto;
+  width: 80%;
+  border-bottom: 1px solid #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 /* How to play */
