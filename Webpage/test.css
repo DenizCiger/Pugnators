@@ -2,27 +2,10 @@ body {
     margin: 0;
     padding: 0;
     background-color: #121212;
-    font-family: Arial, sans-serif;
+    font-family: Senior;
     position: relative;
 }
 
-.login-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-    background-color: #255f28;
-}
 
 a{
     font-family: PressStart;
@@ -107,59 +90,79 @@ h1 {
     bottom: 4px;
     left: -6px;
     right: -6px;
-    /* background: black; */
     z-index: -1;
 }
 
 .button{
     padding: 10px 10px;
     position: relative;
-    /* background: black; */
     width: auto;
     z-index: 2;
 }
 
 /* Host Button */
-#host-btn {
+
+#host-btn::before, #host-btn, #host-btn::after {
     background-color: #0A529A;
-    color: #fff;
 }
 
-#host-btn:after {
-    background-color: #0A529A;
-    color: #fff;
-}
-
-#host-btn:hover {
+#host-btn:hover::before, #host-btn:hover, #host-btn:hover::after {
     background-color: #073666;
 }
 
-#join-btn:after {
+/* Join Button */
+
+#join-btn::before, #join-btn, #join-btn:after {
     background-color: #86B5D7;
-    color: #fff;
 }
 
-#join-btn:hover {
+#join-btn:hover::before, #join-btn:hover, #join-btn:hover::after {
     background-color: #668AA3;
 }
 
-#instructions-btn:after {
+/* Instructions Button */
+
+#instructions-btn::before, #instructions-btn, #instructions-btn::after {
     background-color: #DC931A;
     color: #fff;
 }
 
-#instructions-btn:hover {
+#instructions-btn:hover::before, #instructions-btn:hover, #instructions-btn:hover::after {
     background-color: #A86F14;
 }
 
-#options-btn:after {
+/* Options Button */
+
+#options-btn::before, #options-btn, #options-btn::after {
     background-color: #A2122A;
     color: #fff;
 }
 
-#options-btn:hover {
+#options-btn:hover::before, #options-btn:hover, #options-btn:hover::after {
     background-color: #6D0D1D;
 }
+
+/* Login Button */
+
+#login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: PressStart;
+}
+
+#login-button::before, #login-button, #login-button::after{
+    background-color: #4CAF50;
+}
+
+#login-button:hover::before, #login-button:hover, #login-button:hover::after {
+    background-color: #255f28;
+}
+
+
 
 @media (max-width: 600px) {
     h1 {
@@ -168,7 +171,15 @@ h1 {
 
     .button {
         font-size: 1rem;
+    }
+
+    .button:not(#login-button){
         width: 200px;
+        left: calc(25%-200px);
+    }
+
+    #login-button{
+        width: 100px;;
     }
 }
 
@@ -180,4 +191,9 @@ h1 {
 @font-face {
     font-family: PressStart;
     src: url("Fonts/PressStart2P.ttf");
+}
+
+@font-face {
+    font-family: Senior;
+    src: url("Fonts/pcsenior.ttf");
 }
