@@ -1,125 +1,85 @@
+/*Colors:
+ * #0A529A 
+ * #86B5D7
+ * #DC931A
+ * #A2122A
+ */
+
 /* Default stuff */
 
 *{
-    color: #fff;
-    font-family: "Dosis";
-    text-decoration: none;
-    scroll-behavior:smooth;
-    font-size:large;
+  color: #fff;
+  text-decoration: none;
+  scroll-behavior:smooth;
+  font-size:large;
 }
-
+  
 body{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: 100% 100%;
   overflow-y: scroll;
+  font-family: "Dosis";
+  margin: 0;
+  padding: 0;
 }
 
 a{
-    border-radius: 6px;
-    font-size: 4rem;
-    padding: 1rem;
-    text-shadow: #000 3px 3px;
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Header */
 
 header{
-    width: 100%;
-    line-height: 60px;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 17rem;
+  text-align: center;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+header a{
+  background-color: #6985e3;
 }
 
 header a:hover{
-    cursor: pointer;
-    color: skyblue;
-}
-
-.htp{
-  background-color: #404e7c;
-}
-
-.htp:hover{
-  background-color: #323d61;
-  color: #fff;
-}
-
-/* Login Button */
-.login-btn {
-  appearance: none;
-  background-color: #6985e3;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  display: inline-block;
-  font-weight: 600;
-  width: fit-content;
-  padding: 2rem;
-}
-
-.login-btn:focus:not(:focus-visible):not(.focus-visible) {
-  box-shadow: none;
-  outline: none;
-}
-
-.login-btn:hover {
   background-color: #4c62aa;
-  color: #fff;
+  cursor: pointer;
 }
 
-.login-btn:focus {
-  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
-  outline: none;
-}
-
-.login-btn:disabled {
-  background-color: #94d3a2;
-  border-color: rgba(27, 31, 35, .1);
-  color: rgba(255, 255, 255, .8);
-  cursor: default;
-}
-
-.login-btn:active {
-  background-color: #2f3d6c;
-  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+header a:active{
+  background-color: #323d61;
 }
 
 /* Play Buttons */
 
 main{
-  margin: 20%;
-}
-
-main form{
-  margin-left: auto;
-}
-
-form input{
-  color: #000;
+  margin: 25%;
 }
 
 .play-btn{
+  text-align: center;
+  padding: 20px;
   display: grid;
-  margin: auto;
-  width: 100%;
-  align-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5rem;
+  gap: 20px;
 }
 
 .play-btn a{
-  width: fit-content;
-  padding: 2rem;
   background-color:#404e7c;
 }
 
 .play-btn a:hover{
-  background-color:rgb(57, 107, 127);
+
 }
 
 form input{

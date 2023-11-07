@@ -1,0 +1,183 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+.login-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #255f28;
+}
+
+a{
+    font-family: PressStart;
+}
+
+.main-menu {
+    text-align: center;
+    color: #fff;
+    padding: 40px;
+}
+
+h1 {
+    font-size: 48px;
+    margin: 4rem 0 20px; /* Set the top margin to 2.5rem */
+    font-family: Origami;
+}
+
+.button-container {
+    margin: 50px;
+    display: block;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.button {
+    font-size: 1.2rem;
+    display: block;
+    padding: 30px;
+    margin: 20px;
+    text-decoration: none;
+    
+    height: auto;
+    position: relative;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* width: 250px;
+    border-radius: 20px;
+    box-sizing: content-box;
+    text-align: center;
+    transition: background-color 0.3s ease; */
+}
+
+.button{
+    position: relative;
+    display: block;
+    margin: 10px;
+    font-family: PressStart;
+    text-transform: uppercase;
+    
+    font-size: 25px;
+    color: white;
+}
+
+.button:active{
+    top: 2px;
+}
+
+.button::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: -10px;
+    right: -10px;
+    background: black;
+    z-index: -1;
+}
+
+.button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: -6px;
+    right: -6px;
+    /* background: black; */
+    z-index: -1;
+}
+
+.button{
+    padding: 10px 10px;
+    position: relative;
+    /* background: black; */
+    width: auto;
+    z-index: 2;
+}
+
+/* Host Button */
+#host-btn {
+    background-color: #0A529A;
+    color: #fff;
+}
+
+#host-btn:after {
+    background-color: #0A529A;
+    color: #fff;
+}
+
+#host-btn:hover {
+    background-color: #073666;
+}
+
+#join-btn:after {
+    background-color: #86B5D7;
+    color: #fff;
+}
+
+#join-btn:hover {
+    background-color: #668AA3;
+}
+
+#instructions-btn:after {
+    background-color: #DC931A;
+    color: #fff;
+}
+
+#instructions-btn:hover {
+    background-color: #A86F14;
+}
+
+#options-btn:after {
+    background-color: #A2122A;
+    color: #fff;
+}
+
+#options-btn:hover {
+    background-color: #6D0D1D;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .button {
+        font-size: 1rem;
+        width: 200px;
+    }
+}
+
+@font-face {
+    font-family: Origami;
+    src: url("Fonts/origami.ttf");
+}
+
+@font-face {
+    font-family: PressStart;
+    src: url("Fonts/PressStart2P.ttf");
+}
