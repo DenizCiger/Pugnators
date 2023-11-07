@@ -1,0 +1,186 @@
+/*Colors:
+ * #0A529A 
+ * #86B5D7
+ * #DC931A
+ * #A2122A
+ */
+
+/* Default stuff */
+
+*{
+  color: #fff;
+  text-decoration: none;
+  scroll-behavior:smooth;
+  font-size:large;
+}
+  
+body{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("images/UI/bg-menu.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  overflow-y: scroll;
+  font-family: "Dosis";
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Header */
+
+header{
+  text-align: center;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+header a{
+  background-color: #6985e3;
+}
+
+header a:hover{
+  background-color: #4c62aa;
+  cursor: pointer;
+}
+
+header a:active{
+  background-color: #323d61;
+}
+
+/* Play Buttons */
+
+main{
+  margin: 25%;
+}
+
+.play-btn{
+  text-align: center;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.play-btn a{
+  background-color:#404e7c;
+}
+
+form input{
+  width: 90%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+
+  margin: 31px auto;
+  width: 80%;
+  border-bottom: 1px solid #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+/* How to play */
+
+td img{
+  max-width: 100px;
+  width: 3rem;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  background-color: rgba(80, 195, 226, 0.439);
+  border: #000 solid;
+  border-radius: 6px;
+}
+
+table {
+  width: 80%;
+  border-collapse:collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td, td img{
+  padding: 10px;
+  text-align: left;
+  color: #000;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  background-color: #333;
+  color: white;
+}
+
+td b{
+  color: #000;
+}
+
+#how-to-play{
+  margin-left: 20%;
+}
+
+/* Login Form */
+
+.form-box h1{
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-box{
+  width: 500px;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 12% auto;
+  padding: 50px 0;
+  color: #fff;
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.5);
+}
+
+.input-box{
+  margin: 31px auto;
+  width: 80%;
+  border-bottom: 1px solid #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.input-box input{
+  width: 90%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+}
+
+.form-box button{
+  color: #fff;
+}
+
+.login-confirm-btn{
+  margin: 40px auto 20px;
+  width: 80%;
+  display: block;
+  outline: none;
+  padding: 10px 0;
+  border: 1px solid #fff;
+  cursor: pointer;
+  /* background: rgb(88, 164, 194); */
+  background: transparent;
+  color:#fff;
+  font-size: 16px;
+}

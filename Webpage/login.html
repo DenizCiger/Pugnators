@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>HTL-Party | Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
-    <header>
-        <a href="home.html" id="home-btn">HTL Party</a>
-    </header>
-    <div class="form-box">
-        <h1>Login</h1>
-        <div class="input-box">
-            <input type="email" placeholder="Email Adress">
+    <body>
+        <a href="test.html" class="button" id="login-button">Back</a>
+        <div class="login-container">
+            <form class="login-form">
+                <h1>Login</h1>
+                <div class="input-container">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Your username" required>
+                </div>
+                <div class="input-container">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Your password" required>
+                </div>
+                <button class="button" type="submit" id="submit-button">Log In</button>
+            </form>
         </div>
-        
-        <div class="input-box">
-            <input type="password" placeholder="Password">
-        </div>
-        <button type="button" class="login-confirm-btn">Login</button>
-    </div>
-</body>
+    </body>
 </html>
