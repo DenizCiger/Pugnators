@@ -1,3 +1,5 @@
+/* Default Stuff */
+
 :root{
     --placeHolderColor: #6e6e6e;
     --backgroundColor: #121212;
@@ -42,6 +44,8 @@ h1 {
     text-transform:uppercase;
 }
 
+/* Buttons */
+
 .button-container {
     margin: 50px;
     display: block;
@@ -82,6 +86,13 @@ h1 {
     z-index: -1;
 }
 
+.button{
+    padding: 10px 10px;
+    position: relative;
+    width: auto;
+    z-index: 2;
+}
+
 .button::after {
     content: "";
     display: block;
@@ -91,13 +102,6 @@ h1 {
     left: -6px;
     right: -6px;
     z-index: -1;
-}
-
-.button{
-    padding: 10px 10px;
-    position: relative;
-    width: auto;
-    z-index: 2;
 }
 
 .button:not(#login-button){
