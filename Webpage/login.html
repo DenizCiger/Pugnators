@@ -3,21 +3,46 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-    <body>
-        <a href="test.html" class="button" id="login-button">Back</a>
-        <div class="login-container">
-            <form class="login-form">
-                <h1>Login</h1>
-                <div class="input-container">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Your username" required>
-                </div>
-                <div class="input-container">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Your password" required>
-                </div>
+<body>
+    <a href="test.html" class="button" id="login-button">Back</a>
+    <div class="login-container">
+        <form class="login-form" id="login-form">
+            <h1>Login</h1>
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Your username" required>
+            </div>
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Your password" required>
+            </div>
+            <ul>
                 <button class="button" type="submit" id="submit-button">Log In</button>
-            </form>
-        </div>
-    </body>
+                <!-- <button class="button" type="submit">Register</button> -->
+            </ul>
+
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting by default
+
+            // Get the email input value
+            const emailInput = document.getElementById("email");
+            const email = emailInput.value.trim();
+
+            // Regular expression to validate email format
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@students\.htl-leonding\.ac\.at$/;
+
+            if (!emailPattern.test(email)) {
+                alert("Invalid email address. The email should be in the format user@students.htl-leonding.ac.at");
+                return;
+            }
+
+            // If the email is valid, you can proceed with form submission.
+            // You can remove the 'return;' statement and let the form submit normally.
+        });
+    </script>
+</body>
 </html>

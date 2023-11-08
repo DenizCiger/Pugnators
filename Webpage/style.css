@@ -206,6 +206,10 @@ input {
     font-family: var(--normalTextFont);
 }
 
+form ul{
+    display: inline;
+}
+
 ::placeholder{
     color: var(--placeHolderColor);
 }
