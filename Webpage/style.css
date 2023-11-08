@@ -18,18 +18,20 @@
     --normalTextFont: Senior;
 }
 
+*{
+    font-family: var(--normalTextFont);
+    color: #fff;
+    background-color: var(--backgroundColor);
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--backgroundColor);
-    font-family: var(--normalTextFont);
     position: relative;
-    color: #fff;
 }
 
-.main-menu {
+.main-menu, .host-menu, .instruction-menu{
     text-align: center;
-    color: #fff;
     padding: 40px;
 }
 
@@ -40,7 +42,6 @@ h1, h2, h3 {
 h1 {
     font-size: 48px;
     margin: 4rem 0 20px;
-    color: #fff;
     text-transform:uppercase;
 }
 
@@ -53,6 +54,10 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+.button, .button::before, .button::after{
+    transition: background-color .2s;
 }
 
 .button {
@@ -82,7 +87,6 @@ h1 {
     bottom: 10px;
     left: -10px;
     right: -10px;
-    background: black;
     z-index: -1;
 }
 
@@ -109,7 +113,7 @@ h1 {
     margin-right: auto;
 }
 
-/* Host Button */
+/* Main Host Button */
 
 #host-btn::before, #host-btn, #host-btn::after {
     background-color: var(--colorPalette1);
@@ -119,7 +123,7 @@ h1 {
     background-color: var(--darkerColorPalette1);
 }
 
-/* Join Button */
+/* Main Join Button */
 
 #join-btn::before, #join-btn, #join-btn:after {
     background-color: var(--colorPalette2);
@@ -129,7 +133,7 @@ h1 {
     background-color: var(--darkerColorPalette2);
 }
 
-/* Instructions Button */
+/* Main Instructions Button */
 
 #instructions-btn::before, #instructions-btn, #instructions-btn::after {
     background-color: var(--colorPalette3);
@@ -139,7 +143,7 @@ h1 {
     background-color: var(--darkerColorPalette3);
 }
 
-/* Options Button */
+/* Main Options Button */
 
 #options-btn::before, #options-btn, #options-btn::after {
     background-color: var(--colorPalette4);
@@ -149,7 +153,11 @@ h1 {
     background-color: var(--darkerColorPalette4);
 }
 
-/* Login Button */
+
+
+
+
+/* Login/Back Button */
 
 #login-button {
     position: absolute;
@@ -169,7 +177,11 @@ h1 {
     background-color: var(--darkerLoginButtonColor);
 }
 
-/* Form */
+
+
+
+
+/* Login Form */
 
 .login-container {
     top: 5rem;
@@ -182,11 +194,13 @@ h1 {
     margin: auto;
 }
 
-.login-form{
+.login-container *{
     background-color: var(--colorPalette1);
+}
+
+.login-form{
     padding: 20px;
     border: solid #fff;
-    /* border-radius: 4px; */
 }
 
 .login-container h1{
@@ -195,27 +209,23 @@ h1 {
 
 label {
     display: block;
-    color: #fff;
 }
 
-input {
+.login-container input {
     width: fit-content;
     padding: 10px 0 10px 10px;
     border: solid;
     margin: 10px auto;
     background-color: transparent;
-    color: #fff;
-    background-color: var(--backgroundColor);
-    /* border-radius: 4px; */
     outline: none;
-    font-family: var(--normalTextFont);
+    background-color: var(--backgroundColor);
 }
 
 form ul{
     display: inline;
 }
 
-::placeholder{
+.login-container input::placeholder{
     color: var(--placeHolderColor);
 }
 
@@ -228,55 +238,82 @@ form ul{
     background-color: #A86F14;
 }
 
+
+
+
+
+/* Host Public Lobby Button */
+
+#host-public-btn::before, #host-public-btn, #host-public-btn::after {
+    background-color: var(--colorPalette1);
+}
+
+#host-public-btn:hover::before, #host-public-btn:hover, #host-public-btn:hover::after {
+    background-color: var(--darkerColorPalette1);
+}
+
+/* Host Public Lobby Button */
+
+#host-private-btn::before, #host-private-btn, #host-private-btn::after {
+    background-color: var(--colorPalette4);
+}
+
+#host-private-btn:hover::before, #host-private-btn:hover, #host-private-btn:hover::after {
+    background-color: var(--darkerColorPalette4);
+}
+
+
+
+
+
 /* Instructions */
 
 #how-to-play {
     width: 80%;
+    text-align: left;
     margin: 1rem 10%;
 }
 
-#how-to-play li{
+#how-to-play table li{
     line-height: 1.3rem;
 }
 
-#how-to-play b{
+#how-to-play table b{
     color: var(--colorPalette3);
 }
 
-table{
+#how-to-play table{
     min-width: 80%;
     border-collapse: collapse;
-    font-family: var(--normalTextFont);
     font-size: smaller;
     text-align: left;
 }
 
-td:nth-child(){
+#how-to-play table td:nth-child(){
     margin: 10rem;
 }
 
-th, td{
+#how-to-play table th, #how-to-play table td{
   padding: 1rem;
   line-height: 1.3rem;
   text-shadow: #000 1px 1px;
 }
 
-th{
+#how-to-play table th{
     color: var(--colorPalette3);
     text-transform: uppercase;
 }
 
-td img{
+#how-to-play table td img{
     image-rendering: pixelated;
     width: 5rem;
 }
-  
 
-tr:nth-child(even){
+#how-to-play table tr:nth-child(even) *{
     background-color: #444;
 }
 
-tr:nth-child(odd){
+#how-to-play table tr:nth-child(odd) *{
     background-color: #666;
 }
 
