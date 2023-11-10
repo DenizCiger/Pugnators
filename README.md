@@ -24,6 +24,8 @@ This includes the following stuff:
 - User Experience (UX) Design: Understand the principles of designing an **engaging** and **intuitive user interface**. A **smooth user experience** is crucial for player retention.
 
 - Monetization Strategies: If we plan to monetize our game, researching different models like **in-app purchases**, **ads**, or **subscriptions** is a must-have. Find out what works best for our target audience.
+
+![](htlparty.svg)
  
 ## Dynamic Part
 
