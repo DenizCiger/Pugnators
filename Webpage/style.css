@@ -274,7 +274,7 @@ form ul{
     margin: 1rem 10%;
 }
 
-#how-to-play table li{
+#how-to-play table ol, li{
     line-height: 1.3rem;
 }
 
