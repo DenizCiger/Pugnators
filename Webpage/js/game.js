@@ -1,10 +1,23 @@
 window.onload = function() {
-    var config = {
-        width: 800,
-        height: 600,
-        backgroundColor: 0x000000,
-        scene: [Scene1, Scene2]
+    const config = {
+        type: Phaser.AUTO,
+        mode: Phaser.Scale.Fit,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        scene: {
+            preload: preload,
+            create: create
+        }
+    };
+    
+    const game = new Phaser.Game(config);
+
+    function preload() {
+        this.load.image('background', '/images/Game_Textures/Map/bg.png');
     }
 
-    var game = new Phaser.Game(config);
+    function create() {
+        this.add.image('background').setOrigin(0).setDisplaySize(window.innerWidth, window.innerHeight);
+    }
 }
