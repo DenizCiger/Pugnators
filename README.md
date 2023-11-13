@@ -4,26 +4,8 @@ The fun party game for HTL students!
 
 ## Static Part
 
-For the static part, we are researching how to create an online multiplayer browser game.
-This includes the following stuff:
-- Networking: Learn about different networking architectures for games. Understand concepts like **client-server models**, **peer-to-peer connections**, and **latency reduction**.
-- WebSockets: Explore how to  implement **real-time communication** between clients and servers. WebSockets are often used to create **responsive** and **interactive multiplayer experiences**.
-
-- Frameworks: Consider, if we should use frameworks like **[Phaser.js](https://phaser.io/)** for our project. Frameworks like it can provide **tools** to streamline the **development process**.
-
-- Security: Ensure the security of our game by learning about **authentication**, **authorization**, and **data encryption**. We don't want any unwanted guests crashing our virtual party!
-
-- Database Integration: Research databases that can handle **real-time updates** and **store player data**. This is **crucial** for **maintaining player progress** and **managing in-game assets**.
-
-- Scalability: Explore **strategies to scale our game** as the number of players increases. This includes **load balancing**, **server clusters**, and **other techniques** to **maintain performance**.
-
-- Frontend and Backend Development: Brush up on our frontend skills (**HTML, CSS, JavaScript**) for the **user interface**, and delve into backend technologies (**Node.js, Django, Flask**) for **handling game logic** and **data storage**.
-
-- Testing and Debugging: Learn about **testing methodologies** for multiplayer games. Debugging in **real-time environments** can be a challenge, so it's **good to be prepared**.
-
-- User Experience (UX) Design: Understand the principles of designing an **engaging** and **intuitive user interface**. A **smooth user experience** is crucial for player retention.
-
-- Monetization Strategies: If we plan to monetize our game, researching different models like **in-app purchases**, **ads**, or **subscriptions** is a must-have. Find out what works best for our target audience.
+For the static part, we are researching how to create an online multiplayer browser game. This can be a complex topic and we will most likely use all subtopics of it in our Dynamic Part (the web app).
+##### Here is a wireframe diagram, showcasing a sketch for some sites in the project.
 
 ![](htlparty.svg)
  
