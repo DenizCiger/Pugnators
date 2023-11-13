@@ -1,0 +1,1 @@
+This is the only map for rn, but more will be added when we leave the alpha of the project
