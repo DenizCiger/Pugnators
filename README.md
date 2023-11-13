@@ -89,3 +89,4 @@ For the Dynamic Part, our Plan is to create "HTL-Party", which is an exciting we
 |Adrian Pichler           | Project Member  |
 |Marcel Gasteiner         | Project Member  |
 |Professor David Klewein  | Project Client  |
+|Professor Robert Reder   | Project Client  |
