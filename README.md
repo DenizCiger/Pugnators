@@ -2,7 +2,28 @@
 
 ## Static Part
 
-For the static part, we are researching, what makes a good fighting game. This can be a complex topic and we will use many subtopics of it in our Dynamic Part (the web app).
+For the static part, we are researching, what makes a good fighting game. Some, but not all of them will be
+
+1. **Gameplay Mechanics:**
+
+2. **Character Design:**
+
+3. **Graphics and Animation:**
+
+4. **Storytelling and Narrative:*+
+
+5. **Multiplayer and Online Features:**
+
+6. **Sound and Music:**
+
+7. **Community and Social Aspect:**
+
+8. **Game Balance and Updates:**
+
+9. **Accessibility and Learning Curve:**
+
+By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good fighting game and the various elements that contribute to its success.
+
 ##### Here is a wireframe diagram, showcasing a sketch for some sites in the project.
 
 ![](pugnators.svg)
