@@ -5,12 +5,12 @@
 - [ ] Create Host Interface
 - [ ] Create Settings Interface
 - [ ] Add functioning Login System
-- [ ] Add Character selection
+- [ ] Add Moving System
 - [ ] Add Maps
-- [ ] Add moving system
-- [ ] Add knockback-system
-- [ ] Add winning & -conditions
-- [ ] Add Abilities
-- [ ] Add characters
-- [ ] Add Finishers/Victory-poses
+- [ ] Add Characters
+- [ ] Add Knockback System
+- [ ] Add Character selection
+- [ ] Add Winning & -conditions
+- [ ] Add Items
+- [ ] Add Super Attack/Victory-poses
 - [ ] Publish Alpha
