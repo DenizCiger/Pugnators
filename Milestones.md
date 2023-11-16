@@ -6,11 +6,11 @@
 - [ ] Create Settings Interface
 - [ ] Add functioning Login System
 - [ ] Add Character selection
-- [ ] Add dice roll
-- [ ] Add moving, based on dice roll
-- [ ] Add first Minigames
+- [ ] Add Maps
+- [ ] Add moving system
+- [ ] Add knockback-system
 - [ ] Add winning & -conditions
 - [ ] Add Abilities
-- [ ] Add Shop
-- [ ] Add other Action Fields
+- [ ] Add characters
+- [ ] Add Finishers/Victory-poses
 - [ ] Publish Alpha
