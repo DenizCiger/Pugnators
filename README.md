@@ -2,7 +2,7 @@
 
 ## Static Part
 
-For the static part, we are researching, what makes a good fighting game. Some, but not all of them will be
+For the static part, we are researching, what makes a good fighting game. Some, but not all of them will be:
 
 1. **Gameplay Mechanics:**
 
@@ -10,17 +10,13 @@ For the static part, we are researching, what makes a good fighting game. Some, 
 
 3. **Graphics and Animation:**
 
-4. **Storytelling and Narrative:*+
+4. **Multiplayer and Online Features:**
 
-5. **Multiplayer and Online Features:**
+5. **Sound and Music:**
 
-6. **Sound and Music:**
+7. **Game Balance and Updates:**
 
-7. **Community and Social Aspect:**
-
-8. **Game Balance and Updates:**
-
-9. **Accessibility and Learning Curve:**
+8. **Accessibility and Learning Curve:**
 
 By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good fighting game and the various elements that contribute to its success.
 
