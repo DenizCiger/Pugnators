@@ -12,5 +12,5 @@
 - [ ] Add Character selection
 - [ ] Add Winning & -conditions
 - [ ] Add Items
-- [ ] Add Super Attack/Victory-poses
+- [ ] Add Super Attack/Victory-poses/finishers
 - [ ] Publish Alpha
