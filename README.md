@@ -45,7 +45,9 @@ For the Dynamic Part, our Plan is to create "Pugnators", which is an exciting we
 - Toggle on/off the Super Meter
 
 ### Game Menu
-- Players choose their Character (and optionally also the skin)
+- Players choose their Character
+- Players will choose a skin for their chararacter
+- Players will choose in what Team they are (if it's a tean match)
 
 ### Objective
 The primary objective of **Pugnators** is to knock opponents off the stage. Each player starts with an empty knockback meter that increases as they take damage. The more filled the bar, the farther they will be knocked back by attacks.
