@@ -64,7 +64,7 @@ Throughout the match, items such as weapons, power-ups, and healing items may ap
 
 The game supports multiplayer modes, allowing friends or players online to join the fun. Matches can be played in free-for-all or team formats, adding a social and competitive element to the gameplay.
 
-## Final Smash
+## Super Attack
 
 As players deal and receive damage, a **Super Attack** meter fills up. When activated, the **Super Attack** allows a character to unleash a powerful, unique attack that can turn the tide of the battle.
 
