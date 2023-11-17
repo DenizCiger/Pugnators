@@ -2,7 +2,24 @@
 
 ## Static Part
 
-For the static part, we are researching, what makes a good fighting game. This can be a complex topic and we will use many subtopics of it in our Dynamic Part (the web app).
+For the static part, we are researching, what makes a good fighting game. Some, but not all of the points we will research will be:
+
+ 1. Gameplay Mechanics
+
+ 2. Character Design
+
+ 3. Graphics and Animation
+
+ 4. Multiplayer and Online Features
+
+ 5. Sound and Music
+
+ 7. Game Balance and Updates
+
+ 8. Accessibility and Learning Curve
+
+By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good fighting game and the various elements that contribute to its success.
+
 ##### Here is a wireframe diagram, showcasing a sketch for some sites in the project.
 
 ![](pugnators.svg)
@@ -28,7 +45,9 @@ For the Dynamic Part, our Plan is to create "Pugnators", which is an exciting we
 - Toggle on/off the Super Meter
 
 ### Game Menu
-- Players choose their Character (and optionally also the skin)
+- Players choose their Character
+- Players will choose a skin for their chararacter
+- Players will choose in what Team they are (if it's a tean match)
 
 ### Objective
 The primary objective of **Pugnators** is to knock opponents off the stage. Each player starts with an empty knockback meter that increases as they take damage. The more filled the bar, the farther they will be knocked back by attacks.
@@ -45,7 +64,7 @@ Throughout the match, items such as weapons, power-ups, and healing items may ap
 
 The game supports multiplayer modes, allowing friends or players online to join the fun. Matches can be played in free-for-all or team formats, adding a social and competitive element to the gameplay.
 
-## Final Smash
+## Super Attack
 
 As players deal and receive damage, a **Super Attack** meter fills up. When activated, the **Super Attack** allows a character to unleash a powerful, unique attack that can turn the tide of the battle.
 
