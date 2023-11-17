@@ -4,19 +4,19 @@
 
 For the static part, we are researching, what makes a good fighting game. Some, but not all of the points we will research will be:
 
-## 1. Gameplay Mechanics
+# 1. Gameplay Mechanics
 
-## 2. Character Design
+# 2. Character Design
 
-## 3. Graphics and Animation
+# 3. Graphics and Animation
 
-## 4. Multiplayer and Online Features
+# 4. Multiplayer and Online Features
 
-## 5. Sound and Music
+# 5. Sound and Music
 
-## 7. Game Balance and Updates
+# 7. Game Balance and Updates
 
-## 8. Accessibility and Learning Curve
+# 8. Accessibility and Learning Curve
 
 By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good fighting game and the various elements that contribute to its success.
 
