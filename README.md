@@ -2,7 +2,7 @@
 
 ## Static Part
 
-For the static part, we are researching, what makes a good fighting game. Some, but not all of them will be:
+For the static part, we are researching, what makes a good fighting game. Some, but not all of the points we will research will be:
 
 ## 1. Gameplay Mechanics
 
