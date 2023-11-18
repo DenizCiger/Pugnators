@@ -2,7 +2,7 @@
 
 ## Static Part
 
-For the static part, we are researching, what makes a good fighting game. Some, but not all of the points we will research will be:
+For the static part, we are researching, what makes a good Platform-Fighting-Game. Some, but not all of the points we will research will be:
 
  1. Gameplay Mechanics
 
@@ -18,7 +18,7 @@ For the static part, we are researching, what makes a good fighting game. Some, 
 
  8. Accessibility and Learning Curve
 
-By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good fighting game and the various elements that contribute to its success.
+By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good platform-fighter and the various elements that contribute to its success.
 
 ##### Here is a wireframe diagram, showcasing a sketch for some sites in the project.
 
