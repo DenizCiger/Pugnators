@@ -20,9 +20,9 @@ For the static part, we are researching, what makes a good Platform-Fighting-Gam
 
 By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good platform-fighter and the various elements that contribute to its success.
 
-##### Here is a wireframe diagram, showcasing a sketch for some sites in the project.
+##### Here is a wireframe diagram, showcasing a sketch for the static part in the project:
 
-![](pugnators.svg)
+![](static.svg)
  
 ## Dynamic Part
 
@@ -68,6 +68,9 @@ The game supports multiplayer modes, allowing friends or players online to join 
 
 As players deal and receive damage, a **Super Attack** meter fills up. When activated, the **Super Attack** allows a character to unleash a powerful, unique attack that can turn the tide of the battle.
 
+##### Here is a wireframe diagram, showcasing a sketch for the dynamic site:
+
+![](dynamic.svg)
 
 ## Team Members
 |Person                   | Profession      |
