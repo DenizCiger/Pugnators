@@ -20,7 +20,11 @@ For the static part, we are researching, what makes a good Platform-Fighting-Gam
 
 By delving into these subtopics, we'll gain a comprehensive understanding of what makes a good platform-fighter and the various elements that contribute to its success.
 
+<<<<<<< HEAD
 ##### Here is a wireframe diagram, showcasing a sketch for the static site
+=======
+##### Here is a wireframe diagram, showcasing a sketch for the static part in the project.
+>>>>>>> dc9a48e02998dfa8af48667e1022fdf2ddb8e097
 
 ![](static.svg)
  
@@ -68,10 +72,16 @@ The game supports multiplayer modes, allowing friends or players online to join 
 
 As players deal and receive damage, a **Super Attack** meter fills up. When activated, the **Super Attack** allows a character to unleash a powerful, unique attack that can turn the tide of the battle.
 
+<<<<<<< HEAD
 ##### Here is a wireframe diagram, showcasing a sketch for the dynamic site
 
 ![](dynamic.svg)
 
+=======
+##### Here is a wireframe diagram, showcasing a sketch for the dynamic part in the project.
+
+![](dynamic.svg)
+>>>>>>> dc9a48e02998dfa8af48667e1022fdf2ddb8e097
 
 ## Team Members
 |Person                   | Profession      |
