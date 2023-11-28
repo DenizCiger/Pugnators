@@ -1,0 +1,40 @@
+.setting-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.option-title {
+    margin-right: 10px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}
+
+label {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #D46A6A;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label:hover {
+    background-color: #B44A4A;
+}
+
+input[type="radio"]:checked + label{
+    background-color: #6ABF91;
+}
+
+input[type="radio"]:checked:hover + label{
+    background-color: #4A9F71;
+}
