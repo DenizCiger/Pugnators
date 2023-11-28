@@ -17,7 +17,7 @@
 label {
     display: inline-block;
     padding: 8px 12px;
-    background-color: #D46A6A;
+    background-color: #C45A5A;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -32,7 +32,7 @@ label:hover {
 }
 
 input[type="radio"]:checked + label{
-    background-color: #6ABF91;
+    background-color: #5AAF81;
 }
 
 input[type="radio"]:checked:hover + label{
