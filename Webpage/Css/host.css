@@ -1,8 +1,21 @@
+
 .setting-option {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+}
+
+.setting-option span, .buttons > *{
+    padding: 8px 12px;
+    margin: 0;
+}
+
+.setting-option span{
+    background-color: #999;;
+}
+
+.setting-option *{
+    margin: 0;
 }
 
 .option-title {
@@ -16,7 +29,6 @@
 
 label {
     display: inline-block;
-    padding: 8px 12px;
     background-color: #C45A5A;
     color: #fff;
     cursor: pointer;
