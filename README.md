@@ -22,7 +22,7 @@ By delving into these subtopics, we'll gain a comprehensive understanding of wha
 
 ##### Here is a wireframe diagram, showcasing a sketch for the static part in the project:
 
-![](static.svg)
+![](Drawio/static.svg)
  
 ## Dynamic Part
 
@@ -70,7 +70,7 @@ As players deal and receive damage, a **Super Attack** meter fills up. When acti
 
 ##### Here is a wireframe diagram, showcasing a sketch for the dynamic site:
 
-![](dynamic.svg)
+![](Drawio/dynamic.svg)
 
 ## Team Members
 |Person                   | Profession      |

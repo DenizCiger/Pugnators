@@ -341,15 +341,15 @@ form ul{
 
 @font-face {
     font-family: Origami;
-    src: url("Fonts/origami.ttf");
+    src: url("../Fonts/origami.ttf");
 }
 
 @font-face {
     font-family: PressStart;
-    src: url("Fonts/PressStart2P.ttf");
+    src: url("../Fonts/PressStart2P.ttf");
 }
 
 @font-face {
     font-family: Senior;
-    src: url("Fonts/pcsenior.ttf");
+    src: url("../Fonts/pcsenior.ttf");
 }

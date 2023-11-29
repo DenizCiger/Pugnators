@@ -1,0 +1,65 @@
+
+.setting-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.setting-option span, .buttons > *{
+    padding: 8px 12px;
+    margin: 0;
+}
+
+.setting-option .op{
+    background-color: #999;
+}
+
+.setting-option *{
+    margin: 0;
+}
+
+.option-title {
+    margin-right: 10px;
+}
+
+
+.checkbox {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    height: 1em;
+    width: 3em;
+    background-color: #f46b64; /* Background color of the slider */
+    cursor: pointer;
+    border: solid #fff 2px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 2em;
+    width: 2em;
+    left: 0em;
+    bottom: 0em;
+    background-color: #fff; /* Color of the slider handle */
+    transition: 0.1s;
+}
+
+input:checked + .slider:before {
+    transform: translateX(2.5em); /* Move the handle to the checked position */
+}
+
+input:checked + .slider {
+    background-color: #64f46b;
+}
