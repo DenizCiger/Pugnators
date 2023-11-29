@@ -10,7 +10,7 @@
     margin: 0;
 }
 
-.setting-option span{
+.setting-option .op{
     background-color: #999;
 }
 
@@ -22,31 +22,42 @@
     margin-right: 10px;
 }
 
-.buttons {
-    display: flex;
-    align-items: center;
-}
 
-label {
+
+.checkbox {
+    position: relative;
     display: inline-block;
-    background-color: #C45A5A;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 60px;
+    height: 34px;
 }
 
-input[type="radio"] {
+input {
     display: none;
 }
 
-label:hover {
-    background-color: #B44A4A;
+.slider {
+    position: absolute;
+    top: 0;
+    height: 1em;
+    width: 50px;
+    background-color: #ddd; /* Background color of the slider */
+    cursor: pointer;
 }
 
-input[type="radio"]:checked + label{
-    background-color: #5AAF81;
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 25px;
+    width: 25px;
+    size-adjust: auto;
+    left: 3px;
+    bottom: 3px;
+    background-color: #f00; /* Color of the slider handle */
+    border: solid 1px #aaa;
+    transition: 0.4s; /* Smooth transition on change */
 }
 
-input[type="radio"]:checked:hover + label{
-    background-color: #4A9F71;
+input:checked + .slider:before {
+    transform: translateX(41px); /* Move the handle to the checked position */
+    background-color: #0f0;
 }
