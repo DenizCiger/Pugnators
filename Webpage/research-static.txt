@@ -12,6 +12,8 @@
     		* Air attacks: are not in every game but usually are normal/heavy/sometimes special attacks triggered while in the air | They normally work a bit differently than their counterparts on the ground.
     		* Items: are not in every game but normally change the functionality to your character's moveset when collected.
 
+	(als überleitung könnte noch erwähnt werden, dass es halt characters und maps gibt, die ihre speziellen Eigenschaften haben)
+
 2. Character Design
 	content is still missing
 3. Graphics and Animation
