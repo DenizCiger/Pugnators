@@ -5,12 +5,12 @@
 	Objective: Knock other players off the stage.
 		This helps you do that: (When writing the final text, you MUST consider that this has to describe multiple games and not OUR game)
 
-	  	* Knockback, which is dealt to characters if they are attacked. Knockback varies from attack to attack and changes dependent on the game.
-    		* Attacks, dependent on the game, can be combined with a direction to trigger a specific attack (for example, a dash or uppercut).
-    		* Charge attacks, normally need to be charged before using. Dependent on the game, they can be combined with a direction and normally deal more knockback than normal attacks.
-    		* Special attacks, dependent on the game, can be combined with a direction to trigger a specific attack. Special + up normally is some sort of way to gain height.
-    		* Air attacks are not in every game but usually are normal/heavy/sometimes special attacks triggered while in the air. They normally work a bit differently than their counterparts on the ground.
-    		* Items are not in every game but normally change the functionality to your character's moveset when collected.
+	  	* Knockback: which is dealt to characters if they are attacked | Knockback varies from attack to attack and changes dependent on the game.
+    		* Attacks: dependent on the game, they can be combined with a direction to trigger a specific attack (for example, a dash or uppercut).
+    		* Charge attacks: normally need to be charged before using | Dependent on the game, they can be combined with a direction and normally deal more knockback than normal attacks.
+    		* Special attacks: dependent on the game, they can be combined with a direction to trigger a specific attack | Special + up normally is some sort of way to gain height.
+    		* Air attacks: are not in every game but usually are normal/heavy/sometimes special attacks triggered while in the air | They normally work a bit differently than their counterparts on the ground.
+    		* Items: are not in every game but normally change the functionality to your character's moveset when collected.
 
 2. Character Design
 	content is still missing
