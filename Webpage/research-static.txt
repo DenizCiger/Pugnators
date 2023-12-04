@@ -13,8 +13,9 @@
     		* Air attacks: are not in every game but usually are normal/heavy/sometimes special attacks triggered while in the air | They normally work a bit differently than their counterparts on the ground.
     		* Items: are not in every game but normally change the functionality to your character's moveset when collected.
 
-	Boundarys: When is someone eliminated/losing a life
-		the player is eliminated/losing a live (dependent on the game) as soon as he leaves the map in any way. Leaving the map means that the player isn´t visible on the camera anymore or leaves a small area 		surounding the camera. This is normaly paired with a effect that shows all players that the "Opfer" was eliminated.
+	Boundarys: When do you loose?
+		the player is eliminated/losing a live (dependent on the game) as soon as he leaves the map in any way. Leaving the map means that the player isn´t visible on the camera anymore or leaves a small area surounding the camera.
+		This is normaly paired with a effect that shows all players that the player was eliminated.
 
 	(als überleitung könnte noch erwähnt werden, dass es halt characters und maps gibt, die ihre speziellen Eigenschaften haben)
 
@@ -30,7 +31,7 @@
 		Examples for Soundeffects:
 			* Character Movements
 			* Attacks
-			* Hits and Damages
+			* Hits and Damage
 			* Projectiles and Weapons
 	* Music
 		Music in a Platform-Fighting-Game also plays a vital role in setting the tone, enhancing the gaming experience, and complementing the fast-paced action of the gameplay.
