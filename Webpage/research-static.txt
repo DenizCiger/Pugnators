@@ -30,7 +30,7 @@
 		Examples for Soundeffects:
 			* Character Movements
 			* Attacks
-			* Hits and Damages
+			* Hits and Damage
 			* Projectiles and Weapons
 	* Music
 		Music in a Platform-Fighting-Game also plays a vital role in setting the tone, enhancing the gaming experience, and complementing the fast-paced action of the gameplay.
