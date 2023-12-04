@@ -20,7 +20,12 @@
 	(als überleitung könnte noch erwähnt werden, dass es halt characters und maps gibt, die ihre speziellen Eigenschaften haben)
 
 2. Character Design
-	content is being added soon
+	* Character Silhouette
+		The silhouette of the character is their shape and outline. It can help to convey their personality, abilities, and role in the game. A good character silhouette should be distinctive, recognizable, and expressive.
+	* Character Moveset
+		This is the set of attacks and abilities that a character can use in combat. A good character moveset should be balanced, diverse, and fun to use.
+	* Character Customization
+		This is the feature that allows players to change the appearance and/or abilities of a character. A good character customization should be flexible, creative, and rewarding. For example, some games have characters with different skins, colors, and weapons that players can unlock and choose.
 3. Graphics and Animation
 	* Animations
 		Animations are important for a good fighting game.
