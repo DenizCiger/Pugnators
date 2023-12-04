@@ -22,7 +22,15 @@
 2. Character Design
 	content is being added soon
 3. Graphics and Animation
-	content is being added soon
+	* Animations
+		Animations are important for a good fighting game.
+            So every character should have an idle, jump and animations for every attack.
+            The animation is the foundation to your fighting game and the visual effects, sound effects, hitpause, camera effects, and other game feel additions are the dressing.
+	* Graphics
+		In the last years the graphics of platform fighting games became better and more graphically impressive.
+            It is important that the characters are easily recognizable.
+            So characters should be different from the background.
+
 4. Multiplayer and Online Features
 	content is being added soon
 5. Sound and Music
