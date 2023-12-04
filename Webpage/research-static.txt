@@ -56,6 +56,10 @@
 		So every stage can have custom background tracks appropriate to their theme.
 		Every character may have their own victory music, which plays when they win a game.
 6. Game Balance and Updates
-	content is being added soon
+	1. So Überschrift(lul)
+
+	Balancing characters is tough because developers want to keep the character feeling the same even after changes. Characters usually get either a nerf (making them weaker) or a buff (making them better). 		Completely redoing a character is rare 		because it means starting from scratch, not just tweaking things like damage.
+
+	
 7. Accessibility and Learning Curve
 	content is being added soon
