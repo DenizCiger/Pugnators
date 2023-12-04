@@ -41,7 +41,7 @@
         When music adopt to the on-screen action, then it is called a dynamic music system. The music can variate based on factors like time left, players alive or the intensity of the combat.
         The backgroundmusic can also be based on the stage.
         So every stage can have custom background tracks appropriate to their theme.
-        Every character may have their own victory music, wich play when they win a game.
+        Every character may have their own victory music, which plays when they win a game.
 6. Game Balance and Updates
 	content is being added soon
 7. Accessibility and Learning Curve
