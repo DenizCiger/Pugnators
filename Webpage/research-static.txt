@@ -1,3 +1,4 @@
+
 1. Gameplay Mechanics
 
 	Specific "gametype": Platform fighter
