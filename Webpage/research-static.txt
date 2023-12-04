@@ -19,11 +19,11 @@
 	(als überleitung könnte noch erwähnt werden, dass es halt characters und maps gibt, die ihre speziellen Eigenschaften haben)
 
 2. Character Design
-	content is still missing
+	content is being added soon
 3. Graphics and Animation
-	content is still missing
+	content is being added soon
 4. Multiplayer and Online Features
-	content is still missing
+	content is being added soon
 5. Sound and Music
 	* Soundeffects:
 		In a Platform-Fighting-Game, sound effects play a crucial role in enhancing the overall gaming experience and providing feedback to players.
@@ -42,6 +42,6 @@
         So every stage can have custom background tracks appropriate to their theme.
         Every character may have their own victory music, wich play when they win a game.
 6. Game Balance and Updates
-	content is still missing
+	content is being added soon
 7. Accessibility and Learning Curve
-	content is still missing
+	content is being added soon
