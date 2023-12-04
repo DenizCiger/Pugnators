@@ -25,7 +25,22 @@
 4. Multiplayer and Online Features
 	content is still missing
 5. Sound and Music
-	content is still missing
+	* Soundeffects:
+		In a Platform-Fighting-Game, sound effects play a crucial role in enhancing the overall gaming experience and providing feedback to players.
+		Examples for Soundeffects:
+			* Character Movements
+			* Attacks
+			* Hits and Damages
+			* Projectiles and Weapons
+	* Music
+		Music in a Platform-Fighting-Game also plays a vital role in setting the tone, enhancing the gaming experience, and complementing the fast-paced action of the gameplay.
+        The music is generally energetic and upbeat, matching the fast and dynamic nature of the gameplay.
+        It helps maintain a high level of excitement throughout matches.
+        The genre often leans towards electronic, rock, or a fusion of different styles that amplify the intensity of the battles.
+        When music adopt to the on-screen action, then it is called a dynamic music system. The music can variate based on factors like time left, players alive or the intensity of the combat.
+        The backgroundmusic can also be based on the stage.
+        So every stage can have custom background tracks appropriate to their theme.
+        Every character may have their own victory music, wich play when they win a game.
 6. Game Balance and Updates
 	content is still missing
 7. Accessibility and Learning Curve
