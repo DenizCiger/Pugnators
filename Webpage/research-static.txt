@@ -60,6 +60,12 @@
 
 	Balancing characters is tough because developers want to keep the character feeling the same even after changes. Characters usually get either a nerf (making them weaker) or a buff (making them better). 		Completely redoing a character is rare 		because it means starting from scratch, not just tweaking things like damage.
 
+	2. Fine-Tuning Strengths:
+	
+	Developers work on adjusting the strengths of characters to create a varied group.
+	This includes characters who are quick and nimble and others who are strong and hit hard.
+	Challenges of Changing Abilities:
+
 	
 7. Accessibility and Learning Curve
 	content is being added soon
