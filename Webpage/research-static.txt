@@ -66,6 +66,13 @@
 	This includes characters who are quick and nimble and others who are strong and hit hard.
 	Challenges of Changing Abilities:
 
+	3. Challanges
+
+	It's tricky to make adjustments to a character's abilities without losing what makes them unique.
+	Developers face difficulties in finding the right balance to keep each character interesting and fair.
+	Ensuring a Fun Experience:
+
+
 	
 7. Accessibility and Learning Curve
 	content is being added soon
