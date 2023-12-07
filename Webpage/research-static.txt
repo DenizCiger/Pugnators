@@ -78,4 +78,23 @@
 	Finding the right balance prevents certain characters from being too strong and makes the game more fun for all players.	
 	
 7. Accessibility and Learning Curve
-	content is being added soon
+	* Accessibility
+		Accessibility in platform-fighting games refers to the design and implementation of features that make the game more inclusive and playable for a wider range of players, including those with various disabilities or limitations. 
+		* Customizable Controls:
+			Allow players to customize controls to suit their preferences and needs.
+			This includes remapping buttons and adjusting sensitivity to accommodate different input devices.
+		* Input Options:
+			Support various input devices such as controllers, keyboards, and adaptive controllers.
+			This ensures that players can choose the input method that works best for them.
+		* Colorblind Modes:
+			Implement colorblind-friendly options to make the game's visuals more accessible for players with color vision deficiencies.
+			This may involve using distinct symbols or patterns in addition to colors.
+		* Difficulty Settings:
+			Implement adjustable difficulty settings to cater to players with varying skill levels.
+			This can include reducing the speed of the game, adjusting AI behavior, or providing invincibility options.
+		* Tutorial and Training Modes:
+			Create comprehensive tutorial and training modes with step-by-step instructions.
+			This assists players, including those with cognitive disabilities, in learning the game mechanics.
+		* Accessible Menus:
+			Design menus with clear navigation, and ensure they are accessible with screen readers.
+			Use high contrast, large fonts, and simple layouts to improve overall readability.
