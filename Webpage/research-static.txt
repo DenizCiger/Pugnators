@@ -26,6 +26,7 @@
 		This is the set of attacks and abilities that a character can use in combat. A good character moveset should be balanced, diverse, and fun to use.
 	* Character Customization
 		This is the feature that allows players to change the appearance and/or abilities of a character. A good character customization should be flexible, creative, and rewarding. For example, some games have characters with different skins, colors, and weapons that players can unlock and choose.
+
 3. Graphics and Animation
 	* Animations
 		Animations are important for a good fighting game.
@@ -38,6 +39,7 @@
 
 4. Multiplayer and Online Features
 	content is being added soon
+
 5. Sound and Music
 	* Soundeffects:
 		In a Platform-Fighting-Game, sound effects play a crucial role in enhancing the overall gaming experience and providing feedback to players.
@@ -55,6 +57,7 @@
 		The backgroundmusic can also be based on the stage.
 		So every stage can have custom background tracks appropriate to their theme.
 		Every character may have their own victory music, which plays when they win a game.
+
 6. Game Balance and Updates
 	1. Why Balance Games?
 
@@ -73,7 +76,13 @@
 	Developers face difficulties in finding the right balance to keep each character interesting and fair.
 	Ensuring a Fun Experience:
 
-	4. Goal
+	4. Metas
+
+	Metas are strategys that usually form when games have continuous updates with buffs and nerfs, normally the strongest combination of a character and game-specific items.
+	Players who abuse a meta are often seen as annoying, since metas often make them very hard to play against, leading to frustration in the player. However, metas should only last for a short time, 
+	since developers should try to patch too overpowered combos very quickly. Dependent on the Game-publisher, patches are made very rare or frequently.
+
+	5. Goal
 
 	The goal is to balance things so that the game stays enjoyable for everyone.
 	Finding the right balance prevents certain characters from being too strong and makes the game more fun for all players.	
