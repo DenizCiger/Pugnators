@@ -1,4 +1,3 @@
-
 1. Gameplay Mechanics
 
 	Specific "gametype": Platform fighter
@@ -64,26 +63,13 @@
 	Balancing characters is tough because developers want to keep the character feeling the same even after changes. Characters usually get either a nerf (making them weaker) or a buff (making them better). 
 	Completely redoing a character is rare because it means starting from scratch, not just tweaking values like damage.
 
-	2. Fine-Tuning Strengths:
-	
-	Developers work on adjusting the strengths of characters to create a varied group.
-	This includes characters who are quick and nimble and others who are strong and hit hard, this way different kinds of players can find a character they enjoy playing.
+	2. The pros and cons of characters
 
-	3. Challanges
+	Characters in a fighting game normaly have strenghts and weaknesses, making them better/worse than others. In a balanced game each characters loses as many matchups as he loses, meoning that his stats are 	overall better than the character he faces in the matchup. Matchups can help Developers balance characters, since they can easely see if a characters wins or loses most of his matchups. (hier könnte als 	Beispiel die Matchupliste aus irgendeinem Smash-Game einfügen) A character that was very overpowered in Super Smash Bros Brawl was Meta-Knight, who literely wasn´t underpowered in any matchups.
 
-	It's tricky to make adjustments to a character's abilities without losing what makes them unique.
-	Developers often face difficulties in finding the right balance to keep each character interesting and fair.
+	3. Metas
 
-	4. Metas
-
-	Metas are strategys that usually form when games have continuous updates with buffs and nerfs, normally the strongest combination of a character and game-specific items.
-	Players who abuse a meta are often seen as annoying, since metas often make them very hard to play against, leading to frustration in the player. However, metas should only last for a short time, 
-	since developers should try to patch too overpowered combos very quickly. Dependent on the Game-publisher, patches are made very rare or frequently.
-
-	5. Goal
-
-	The goal is to balance things so that the game stays enjoyable for everyone.
-	Finding the right balance prevents certain characters from being too strong or weak and makes the game more fun for all players.	
+	There are Metas in nearly any fighting game, Metas being the strogest strategy that you can execute in the game. Today, Metas change very quickly, since developers try to balance their games constantly. In 	older games which werent able to be updated if there was a balancing issue, players using Metas are often seen as very annoying, since they simply have a higher chance at winning than you, what leads to 	frustration. There are also annoyoing Metas in current games, an example of this would be "spam" characters in Brawlhally, "spam" meaning that you can repeat one attack in very quick succession and either 	stunning or pushing back the enemy, who cant really do anything against it. (Hier könnte noch erwähnt werden, ob mitlerweile ein Patch für spam-charaktere eingeführt wurde, weis i hoid aktuell ned)
 	
 7. Accessibility and Learning Curve
 	* Accessibility
