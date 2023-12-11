@@ -70,6 +70,12 @@
 	3. Metas
 
 	There are Metas in nearly any fighting game, Metas being the strogest strategy that you can execute in the game. Today, Metas change very quickly, since developers try to balance their games constantly. In 	older games which werent able to be updated if there was a balancing issue, players using Metas are often seen as very annoying, since they simply have a higher chance at winning than you, what leads to 	frustration. There are also annoyoing Metas in current games, an example of this would be "spam" characters in Brawlhally, "spam" meaning that you can repeat one attack in very quick succession and either 	stunning or pushing back the enemy, who cant really do anything against it. (Hier könnte noch erwähnt werden, ob mitlerweile ein Patch für spam-charaktere eingeführt wurde, weis i hoid aktuell ned)
+
+	4. Challanges of balancing characters
+
+	It's tricky to make adjustments to a character's abilities without losing what makes them unique.
+	Some characters are supposed to feal very slow but heavy hitting, but completely changing that would require a rework of the character what 1) would be a lot of work 2) would make fans of the characters mad
+	Developers often face difficulties in finding the right balance to keep each character interesting and fair.
 	
 7. Accessibility and Learning Curve
 	* Accessibility
