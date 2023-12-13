@@ -37,7 +37,9 @@
 		So characters should be different from the background.
 
 4. Multiplayer and Online Features
-	content is being added soon
+	* Lobbies and Rooms:
+		Customizable Rooms: Players can create or join customizable rooms where they can set specific rules, such as match type, stage selection, and other gameplay modifiers.
+		Private Lobbies: Friends or specific players can be invited to join private lobbies, allowing for a more personalized and controlled multiplayer experience.
 
 5. Sound and Music
 	* Soundeffects:
