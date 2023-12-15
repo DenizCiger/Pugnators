@@ -125,3 +125,4 @@
 		* Continuous Improvement:
 			The learning curve in platform fighting games is ongoing.
 			Even top players continue to refine their skills, adapt to changes in the meta, and discover new strategies.
+(we should try to include pictures, videos and gifs)
