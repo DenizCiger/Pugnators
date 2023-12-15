@@ -1,15 +1,18 @@
 html {
     scroll-behavior: smooth;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#content, #table-of-contents {
-    width: 60%;
-    justify-self: center;
+#content {
+    width: 80%;
     text-align: justify;
+    grid-column: 2;
 }
 
 #table-of-contents {
     width: max-content;
+    position: fixed;
+    grid-column: 1;
 }
 
 #table-of-contents h1 {
@@ -18,4 +21,5 @@ html {
 
 body {
     display: grid;
+    grid-template-columns: 30% auto;
 }
