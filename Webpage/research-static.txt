@@ -115,7 +115,7 @@
 			Mastering these techniques can give players a significant advantage and enhance their overall gameplay.
 		* Matchup Knowledge:
 			Understanding the matchups against different characters is crucial. This involves knowing the strengths and weaknesses of your character against others.
-			Players learn specific strategies and approaches for dealing with different opponents.
+			Players learn specific strategies and approaches for dealing with different opponents. (vielleicth hier nen Verweis auf die Matchuppliste von vorher machen)
 		* Mind Games and Adaptation:
 			As players reach higher skill levels, the game becomes more about mind games, predictions, and adaptability.
 			Reading opponents, understanding their habits, and adapting strategies during a match become key components of success.
