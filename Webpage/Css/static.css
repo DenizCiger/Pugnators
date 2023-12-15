@@ -2,10 +2,18 @@ html {
     scroll-behavior: smooth;
 }
 
-#content {
+#content, #table-of-contents {
     width: 60%;
     justify-self: center;
     text-align: justify;
+}
+
+#table-of-contents {
+    width: max-content;
+}
+
+#table-of-contents h1 {
+    text-align: center;
 }
 
 body {
