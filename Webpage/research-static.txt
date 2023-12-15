@@ -67,7 +67,7 @@
 
 	2. The pros and cons of characters
 
-	Characters in a fighting game normaly have strenghts and weaknesses, making them better/worse than others. In a balanced game each characters loses as many matchups as he loses, meoning that his stats are 	overall better than the character he faces in the matchup. Matchups can help Developers balance characters, since they can easely see if a characters wins or loses most of his matchups. (hier könnte als 	Beispiel die Matchupliste aus irgendeinem Smash-Game einfügen) A character that was very overpowered in Super Smash Bros Brawl was Meta-Knight, who literely wasn´t underpowered in any matchups.
+	Characters in a fighting game normaly have strenghts and weaknesses, making them better/worse than others. In a balanced game each characters loses as many matchups as he loses, meaning that his stats are 	overall better than the character he faces in the matchup. Matchups can help Developers balance characters, since they can easely see if a characters wins or loses most of his matchups. (hier könnte als 	Beispiel die Matchupliste aus irgendeinem Smash-Game einfügen) A character that was very overpowered in Super Smash Bros Brawl was Meta-Knight, who literely wasn´t underpowered in any matchups.
 
 	3. Metas
 
