@@ -8,7 +8,7 @@
     
 </head>
 <body>
-    <button type="button" class="collapse"></button>
+    <button type="button" class="collapse" onclick="toggleTableOfContents()"></button>
     <aside id="table-of-contents">
         <h1>Table of contents</h1>
         <ul>
@@ -270,23 +270,18 @@
         </section>
     </section>
     <script>
-        var coll = document.getElementsByClassName("collapse");
+        
+        let isCollapsed = true;
 
-        var i;
+        function toggleTableOfContents() {
+            const toc = document.getElementById('table-of-contents');
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-
-                if (content.style.maxWidth) {
-                    content.style.maxWidth = null;
-                }
-                else
-                {
-                    content.style.maxWidth = content.scrollWidth*1.5 + "px";
-                }
-            });
+            if (isCollapsed) {
+                toc.style.transform = 'translateX(0%)';
+            } else {
+                toc.style.transform = 'translateX(-100%)';
+            }
+            isCollapsed = !isCollapsed; // Toggle collapsed state variable
         }
     </script>
 </body>

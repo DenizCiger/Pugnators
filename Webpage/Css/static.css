@@ -30,7 +30,7 @@ body {
     display: none;
 }
 
-li {
+#table-of-contents li {
     list-style: none;
 }
 
@@ -68,18 +68,16 @@ li a:active{
         font-size: 15px;
         height: 2rem;
         position: fixed;
-      }
+    }
     
-      .active, .collapse:hover {
+    .active, .collapse:hover {
         background-color: #ccc;
-      }
+    }
     
-      #table-of-contents {
-        max-width: 0px;
-        /* transform: translateX(-100%); */
+    #table-of-contents {
+        transform: translateX(-100%);
         overflow: hidden;
         top: 2rem;
-        position: fixed;
-        transition: max-width 0.2s ease-out;
-      }
+        transition: 0.4s ease-out;
+    }
 }
