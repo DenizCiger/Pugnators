@@ -17,7 +17,7 @@ html {
 }
 
 #table-of-contents h1 {
-    text-align: center;
+    margin: 10%;
 }
 
 body {
@@ -28,6 +28,27 @@ body {
 
 .collapse {
     display: none;
+}
+
+li {
+    list-style: none;
+}
+
+li a {
+    font-size: 80%;
+    text-decoration: none;
+    color: black;
+    transition: 0.1s linear;
+}
+
+li a:hover{
+    color: turquoise;
+    font-size: 85%;
+}
+
+li a:active{
+    color: aquamarine;
+    font-size: 90%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -55,6 +76,7 @@ body {
     
       #table-of-contents {
         max-width: 0px;
+        /* transform: translateX(-100%); */
         overflow: hidden;
         top: 2rem;
         position: fixed;
