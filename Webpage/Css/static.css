@@ -14,7 +14,7 @@ html {
     width: max-content;
     position: fixed;
     grid-column: 1;
-    /* transform: translateX(-100%); */
+    transform: translateX(-100%);
     overflow: auto;
     top: 2rem;
     transition: transform 0.4s ease-out;
@@ -80,15 +80,32 @@ body {
 
 @media (max-width: 750px) {
     #content {
-        font-size: 2.1vw; /* Adjust according to your design */
+        font-size: 3vw;
+        margin: auto;
     }
-
+    
     body {
         background-color: #1e1f26;
         color: white;
+        display: flex;
+    }
+    
+    #table-of-contents {
+        position: absolute;
+        display: flex;
+        justify-self: center;
+    }
+
+    #table-of-contents h1{
+        font-size: 5vw;
     }
 
     #table-of-contents li a {
         color:white;
+        font-size: 3vw;
+    }
+
+    #table-of-contents li a:hover {
+        font-size: 2.5vw;
     }
 }

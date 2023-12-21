@@ -270,19 +270,34 @@
         </section>
     </section>
     <script>
-        
         let isCollapsed = true;
-
+    
         function toggleTableOfContents() {
             const toc = document.getElementById('table-of-contents');
-
-            if (isCollapsed) {
-                toc.style.transform = 'translateX(0%)';
+            const content = document.getElementById('content');
+    
+            if (window.innerWidth <= 750) {
+                if (isCollapsed) {
+                    toc.style.transform = 'translateX(0%)';
+                    content.style.display = 'none';
+                    toc.style.display = 'flex';
+                } else {
+                    toc.style.transform = 'translateX(-100%)';
+                    content.style.display = 'block';
+                    toc.style.display = 'none';
+                }
             } else {
-                toc.style.transform = 'translateX(-100%)';
+                content.style.display = 'block';
+                // For screens wider than 750px, use the original behavior
+                if (isCollapsed) {
+                    toc.style.transform = 'translateX(0%)';
+                } else {
+                    toc.style.transform = 'translateX(-100%)';
+                }
             }
+    
             isCollapsed = !isCollapsed; // Toggle collapsed state variable
         }
-    </script>
+    </script>    
 </body>
 </html>
