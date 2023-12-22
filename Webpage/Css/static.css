@@ -14,7 +14,7 @@ html {
     width: max-content;
     position: fixed;
     grid-column: 1;
-    transform: translateX(-100%);
+    transform: translateX(0%);
     overflow: auto;
     top: 2rem;
     transition: transform 0.4s ease-out;
@@ -38,7 +38,7 @@ html {
 #table-of-contents li a {
     font-size: min(1.3vw, 1.5rem);
     text-decoration: none;
-    color: black;
+    color: white;
     transition: color 0.1s linear;
 }
 
@@ -57,6 +57,8 @@ body {
     grid-template-columns: 30% auto;
     margin: 0px;
     transition: background-color 0.5s;
+    color:white;
+    background-color: #1e1f26;
 }
 
 .collapse {
@@ -72,6 +74,8 @@ body {
     font-size: 15px;
     height: 2rem;
     position: fixed;
+    transform: translateY(-100%);
+    transition: 0.2s ease-in;
 }
 
 .collapse:hover {
@@ -85,8 +89,6 @@ body {
     }
     
     body {
-        background-color: #1e1f26;
-        color: white;
         display: flex;
     }
     
@@ -101,11 +103,14 @@ body {
     }
 
     #table-of-contents li a {
-        color:white;
         font-size: 3vw;
     }
 
     #table-of-contents li a:hover {
         font-size: 2.5vw;
+    }
+
+    .collapse{
+        transform: translateY(0);
     }
 }

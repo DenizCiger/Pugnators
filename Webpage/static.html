@@ -275,6 +275,7 @@
         function toggleTableOfContents() {
             const toc = document.getElementById('table-of-contents');
             const content = document.getElementById('content');
+            // const collapseButton = document.getElementById('collapse');
     
             if (window.innerWidth <= 750) {
                 if (isCollapsed) {
@@ -285,14 +286,6 @@
                     toc.style.transform = 'translateX(-100%)';
                     content.style.display = 'block';
                     toc.style.display = 'none';
-                }
-            } else {
-                content.style.display = 'block';
-                // For screens wider than 750px, use the original behavior
-                if (isCollapsed) {
-                    toc.style.transform = 'translateX(0%)';
-                } else {
-                    toc.style.transform = 'translateX(-100%)';
                 }
             }
     
