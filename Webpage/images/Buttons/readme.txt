@@ -1,0 +1,1 @@
+these can be used to make it more simple to explain how to trigger an attack. However, certain textures need to get some fixes
