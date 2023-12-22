@@ -22,7 +22,7 @@ html {
     transition: transform 0.4s ease-out;
 }
 
-#table-of-contents ul{
+#table-of-contents-list{
     padding-left: 2vw;
 }
 
@@ -95,15 +95,16 @@ body {
     
     body {
         display: flex;
+        justify-content: center;
     }
     
     #table-of-contents {
         position: absolute;
-        left: 30%;
         display: none;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        width: max-content;
     }
 
     #table-of-contents h1{
@@ -116,6 +117,18 @@ body {
 
     #table-of-contents li a:hover {
         font-size: 2.5vw;
+    }
+
+    #table-of-contents ul {
+        width: 70%;
+    }
+
+    #table-of-contents-list {
+        padding-left: 0px;
+    }
+
+    #table-of-contents h1 {
+        margin: 0px;
     }
 
     .collapse{
