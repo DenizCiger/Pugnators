@@ -1,31 +1,138 @@
-window.onload = function() {
-    const config = {
-        type: Phaser.AUTO,
-        mode: Phaser.Scale.Fit,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 192,
-        height: 108,
-        scene: {
-            preload: preload,
-            create: create
-        }
-    };
-    
-    const game = new Phaser.Game(config);
+const canvas = document.querySelector('canvas');
+const c = canvas.getContext('2d');
 
-    function preload() {
-        this.load.image('background', '/images/Game_Textures/Map/bg.png');
+canvas.width = 1920;
+canvas.height = 1080;
+
+c.fillRect(0, 0, canvas.width, canvas.height);
+
+const gravity = 0.2;
+
+class Sprite {
+    constructor({ position, movementVelocity, color = 'red' }) {
+        this.position = position;
+        this.movementVelocity = movementVelocity;
+        this.height = 150;
+        this.width = 50;
+        this.direction = 0;
+        this.availableJumps = 2;
+        this.color = color;
+        this.lastKey;
+        this.attackBox = {
+            position: this.position,
+            width: 100,
+            height: 50
+        };
     }
 
-    function create() {
-        this.add.image('background').setOrigin(0).setDisplaySize(window.innerWidth, window.innerHeight);
-        // Calculate the position for the centered rectangle
-        const rectWidth = config.width / 2;
-        const rectHeight = config.height / 2;
-        const rectX = config.width / 2;
-        const rectY = config.height - (rectHeight/2) - 100;
+    draw() {
+        c.fillStyle = this.color;
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
-        // Create a rectangle and add it to the scene
-        const rectangle = this.add.rectangle(rectX, rectY, rectWidth, rectHeight, 0x00ff00);
+        // attack box
+        c.fillStyle = 'red'
+        c.globalAlpha = 0.5
+
+        if (this.direction == 0)
+        {
+            c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        }
+        else {
+            c.fillRect(this.attackBox.position.x - (this.attackBox.width/2), this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        }
+        c.globalAlpha = 1
+    }
+
+    update() {
+        this.draw();
+        this.position.y += this.movementVelocity.y;
+        
+        if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
+        }
+        else{
+            this.position.x += this.movementVelocity.x;
+        }
+
+        if (this.position.y + this.height + this.movementVelocity.y >= canvas.height) {
+            this.movementVelocity.y = 0;
+            this.availableJumps = 2;
+        } else {
+            this.movementVelocity.y += gravity;
+        }
     }
 }
+
+const player = new Sprite({
+    position: {
+        x: 0,
+        y: 100
+    },
+    movementVelocity: {
+        x: 0,
+        y: 0
+    },
+    color: 'blue'
+});
+
+const enemy = new Sprite({
+    position: {
+        x: 400,
+        y: 100
+    },
+    movementVelocity: {
+        x: 0,
+        y: 0
+    },
+    color: 'green'
+});
+
+const keys = {
+    left: 'a',
+    right: 'd',
+    jump: ' '
+};
+
+const keyPressed = {};
+
+let lastMoveKeyPressed;
+
+function animate() {
+    window.requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    player.update();
+    enemy.update();
+
+    player.movementVelocity.x = 0;
+
+    if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
+        player.movementVelocity.x = -2;
+        player.direction = 180
+    } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
+        player.movementVelocity.x = 2;
+        player.direction = 0
+    }
+
+    if (keyPressed[keys.jump] && player.availableJumps > 0) {
+        player.movementVelocity.y = -10;
+        keyPressed[keys.jump] = false
+        player.availableJumps--;
+    }
+}
+
+animate();
+
+window.addEventListener('keydown', (event) => {
+    if (Object.values(keys).includes(event.key)) {
+        keyPressed[event.key] = true;
+
+        if (event.key === keys.left || event.key === keys.right) {
+            lastMoveKeyPressed = event.key;
+        }
+    }
+});
+
+window.addEventListener('keyup', (event) => {
+    if (Object.values(keys).includes(event.key)) {
+        keyPressed[event.key] = false;
+    }
+});
