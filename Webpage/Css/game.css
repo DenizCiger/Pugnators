@@ -35,40 +35,45 @@ p {
     padding: 2vh 0 2vh 2vw;
     border-radius: 0;
     max-width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .player-stats {
+    background-size: 20vw;
+    padding: 2vh 2vw;
+    border-radius: 0;
     display: flex;
     align-items: center;
-    justify-content:flex-start;
-    /* background-image: url('../images/Game_Textures/UI/Info-Background.png');
-    background-size:contain; */
+    background-image: url('../images/Game_Textures/UI/Info-Background-v1.png');
+    background-repeat: no-repeat;
+    background-position: 1.5vw 0.5vw;
 }
-  
+
 .player-image-container {
     margin: 0 1vw 0 0;
 }
   
 .player-image {
-    width:  5vw;
-    height: 5vw;
+    width:  6.5vw;
+    height: 6.5vw;
     image-rendering: pixelated;
 }
   
 .player-info {
     text-align: left;
-    margin: 0 2vw 0 0;
+    margin: 3.5vw 2vw 0 0;
 }
   
 .player-name {
-    font-size: 1.7vw;
+    font-size: 1vw;
+    margin-bottom: .4vw;
     font-family: Senior, sans-serif;
 }
   
 .player-percentage {
     font-family: PressStart, sans-serif;
-    font-size: 2.5vw;
-    margin-top: 1vh;
+    font-size: 1.5vw;
     color: white;
     text-align: right;
     cursor: pointer;
