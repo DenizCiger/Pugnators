@@ -23,6 +23,7 @@ class Sprite {
             width: 100,
             height: 50
         };
+        this.isAttacking = false;
     }
 
     draw() {
@@ -30,17 +31,29 @@ class Sprite {
         c.fillRect(this.position.x, this.position.y, this.width, this.height);
 
         // attack box
-        c.fillStyle = 'red'
-        c.globalAlpha = 0.5
 
-        if (this.direction == 0)
-        {
-            c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }
-        else {
-            c.fillRect(this.attackBox.position.x - (this.attackBox.width/2), this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }
-        c.globalAlpha = 1
+        if (this.isAttacking) {
+
+            c.fillStyle = 'red'
+            c.globalAlpha = 0.5
+            
+            if (this.direction == 0)
+            {
+                c.fillRect (
+                    this.attackBox.position.x, this.attackBox.position.y,
+                    this.attackBox.width,
+                    this.attackBox.height
+                )
+            }
+            else {
+                c.fillRect (
+                    this.attackBox.position.x - (this.attackBox.width/2),
+                    this.attackBox.position.y, this.attackBox.width,
+                    this.attackBox.height
+                )
+            }
+            c.globalAlpha = 1;
+        } 
     }
 
     update() {
@@ -59,6 +72,13 @@ class Sprite {
         } else {
             this.movementVelocity.y += gravity;
         }
+    }
+
+    attack() {
+        this.isAttacking = true;
+        setTimeout(() => {
+            this.isAttacking = false
+        }, 100);
     }
 }
 
@@ -89,7 +109,8 @@ const enemy = new Sprite({
 const keys = {
     left: 'a',
     right: 'd',
-    jump: ' '
+    jump: ' ',
+    attackNormal: 'j'
 };
 
 const keyPressed = {};
@@ -113,7 +134,7 @@ function animate() {
     }
 
     if (keyPressed[keys.jump] && player.availableJumps > 0) {
-        player.movementVelocity.y = -10;
+        player.movementVelocity.y = -9;
         keyPressed[keys.jump] = false
         player.availableJumps--;
     }
@@ -127,6 +148,9 @@ window.addEventListener('keydown', (event) => {
 
         if (event.key === keys.left || event.key === keys.right) {
             lastMoveKeyPressed = event.key;
+        }
+        if (event.key === keys.attackNormal) {
+            player.attack();
         }
     }
 });
