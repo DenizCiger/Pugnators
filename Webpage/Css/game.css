@@ -1,0 +1,92 @@
+body {
+    font-family: PressStart, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+}
+
+canvas {
+    max-width: 100%;
+    display: block;
+    background-color: black;
+}
+
+p {
+    margin: 0px;
+    height: 15px;
+    font-size: 15px;
+}
+
+@media screen and (min-width: 1920px) {
+    canvas {
+        width: 1920px;
+    }
+}
+
+/* Player Info Display */
+  
+.player-overlay {
+    background-color: #333;
+    color: white;
+    padding: 2vh 0 2vh 2vw;
+    border-radius: 0;
+    max-width: 100%;
+}
+
+.player-stats {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    /* background-image: url('../images/Game_Textures/UI/Info-Background.png');
+    background-size:contain; */
+}
+  
+.player-image-container {
+    margin: 0 1vw 0 0;
+}
+  
+.player-image {
+    width:  5vw;
+    height: 5vw;
+    image-rendering: pixelated;
+}
+  
+.player-info {
+    text-align: left;
+    margin: 0 2vw 0 0;
+}
+  
+.player-name {
+    font-size: 1.7vw;
+    font-family: Senior, sans-serif;
+}
+  
+.player-percentage {
+    font-family: PressStart, sans-serif;
+    font-size: 2.5vw;
+    margin-top: 1vh;
+    color: white;
+    text-align: right;
+    cursor: pointer;
+}
+  
+/* Imported Fonts */
+
+@font-face {
+    font-family: Origami;
+    src: url("../Fonts/origami.ttf");
+}
+  
+  @font-face {
+    font-family: PressStart;
+    src: url("../Fonts/PressStart2P.ttf");
+  }
+  
+  @font-face {
+    font-family: Senior;
+    src: url("../Fonts/pcsenior.ttf");
+  }
