@@ -1,0 +1,66 @@
+/* Imported Fonts */
+
+@font-face {
+  font-family: Origami;
+  src: url("../Webpage/Fonts/origami.ttf");
+}
+
+@font-face {
+  font-family: PressStart;
+  src: url("../Webpage/Fonts/PressStart2P.ttf");
+}
+
+@font-face {
+  font-family: Senior;
+  src: url("../Webpage/Fonts/pcsenior.ttf");
+}
+
+body {
+  font-family: PressStart, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.player-overlay {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.player-image-container {
+  margin-right: 20px;
+}
+
+.player-image {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+}
+
+.player-info {
+  text-align: left;
+  margin-top: 40px; /* Adjust this value for vertical spacing */
+}
+
+.player-name {
+  margin-top: 0;
+  font-family: Senior, sans-serif;
+}
+
+.player-percentage {
+  font-family: PressStart, sans-serif;
+  font-size: 24px;
+  margin-top: 10px;
+  color: red;
+  text-align: right;
+  cursor: pointer;
+}
