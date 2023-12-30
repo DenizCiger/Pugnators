@@ -41,12 +41,14 @@ p {
 
 .player-stats {
     background-size: 20vw;
-    padding: 2vh 2.1vw;
+    padding: 2vh 2vw;
     display: flex;
     align-items: center;
-    background-image: url('../images/Game_Textures/UI/Info-Background-v1.png');
+    background-image: url('../images/Game_Textures/UI/Info-Background-v2.png');
+    image-rendering: pixelated;
     background-repeat: no-repeat;
-    background-position: 100%;
+    background-size: 20vw;
+    background-position: 1.5vw;
 }
 
 .player-image-container {
@@ -54,19 +56,19 @@ p {
 }
   
 .player-image {
-    width:  6.6vw;
-    height: 6.6vw;
+    width:  7.2vw;
+    height: 7.2vw;
     image-rendering: pixelated;
 }
   
 .player-info {
     text-align: left;
-    margin: 3.5vw 2vw 0 0;
+    margin: 4.5vw 2vw 0 0;
 }
   
 .player-name {
     font-size: 1vw;
-    margin-bottom: .4vw;
+    margin-left: 0.1vw;
     font-family: Senior, sans-serif;
 }
   
@@ -76,6 +78,7 @@ p {
     color: white;
     text-align: right;
     cursor: pointer;
+    margin-top: 0.9vw;
 }
   
 /* Imported Fonts */
