@@ -78,6 +78,5 @@ As players deal and receive damage, a **Super Attack** meter fills up. When acti
 |Deniz Ciger              | Project Manager |
 |Sebastian Schneiderbauer | Project Member  |
 |Adrian Pichler           | Project Member  |
-|Marcel Gasteiner         | Project Member  |
 |Professor David Klewein  | Project Client  |
 |Professor Robert Reder   | Project Client  |
