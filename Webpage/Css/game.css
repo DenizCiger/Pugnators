@@ -44,7 +44,7 @@ p {
     padding: 2vh 2vw;
     display: flex;
     align-items: center;
-    background-image: url('../images/Game_Textures/UI/Info-Background-v2.png');
+    background-image: url('../images/Game_Textures/UI/Info-Background-v1.png');
     image-rendering: pixelated;
     background-repeat: no-repeat;
     background-size: 20vw;
@@ -63,7 +63,7 @@ p {
   
 .player-info {
     text-align: left;
-    margin: 4.5vw 2vw 0 0;
+    margin: 4vw 2vw 0 0;
 }
   
 .player-name {
@@ -78,7 +78,7 @@ p {
     color: white;
     text-align: right;
     cursor: pointer;
-    margin-top: 0.9vw;
+    margin-top: 1vw;
 }
   
 /* Imported Fonts */
@@ -88,12 +88,12 @@ p {
     src: url("../Fonts/origami.ttf");
 }
   
-  @font-face {
+@font-face {
     font-family: PressStart;
     src: url("../Fonts/PressStart2P.ttf");
-  }
+}
   
-  @font-face {
+@font-face {
     font-family: Senior;
     src: url("../Fonts/pcsenior.ttf");
-  }
+}
