@@ -41,7 +41,7 @@ p {
 
 .player-stats {
     background-size: 20vw;
-    padding: 2vh 2vw;
+    padding: 2vh 2.1vw;
     display: flex;
     align-items: center;
     background-image: url('../images/Game_Textures/UI/Info-Background-v1.png');
