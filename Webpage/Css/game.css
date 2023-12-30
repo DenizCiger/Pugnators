@@ -10,6 +10,7 @@ body {
 }
 
 canvas {
+    width: 100%;
     max-width: 100%;
     display: block;
     background-color: black;
@@ -21,11 +22,11 @@ p {
     font-size: 15px;
 }
 
-@media screen and (min-width: 1920px) {
+/* @media screen and (min-width: 1920px) {
     canvas {
         width: 1920px;
     }
-}
+} */
 
 /* Player Info Display */
   
