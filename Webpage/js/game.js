@@ -5,81 +5,20 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.2;
 
-class Sprite {
-    constructor({ position, movementVelocity, color = 'red' }) {
-        this.position = position;
-        this.movementVelocity = movementVelocity;
-        this.height = 150;
-        this.width = 50;
-        this.direction = 0;
-        this.availableJumps = 2;
-        this.color = color;
-        this.lastKey;
-        this.attackBox = {
-            position: this.position,
-            width: 100,
-            height: 50
-        };
-        this.isAttacking = false;
-    }
+var p1percentageDisplay = document.getElementById('percentage1')
+var p2percentageDisplay = document.getElementById('percentage2')
+var p3percentageDisplay = document.getElementById('percentage3')
+var p4percentageDisplay = document.getElementById('percentage4')
 
-    draw() {
-        c.fillStyle = this.color;
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+const background = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png'
+});
 
-        // attack box
-
-        if (this.isAttacking) {
-
-            c.fillStyle = 'red'
-            c.globalAlpha = 0.5
-            
-            if (this.direction == 0)
-            {
-                c.fillRect (
-                    this.attackBox.position.x, this.attackBox.position.y,
-                    this.attackBox.width,
-                    this.attackBox.height
-                )
-            }
-            else {
-                c.fillRect (
-                    this.attackBox.position.x - (this.attackBox.width/2),
-                    this.attackBox.position.y, this.attackBox.width,
-                    this.attackBox.height
-                )
-            }
-            c.globalAlpha = 1;
-        } 
-    }
-
-    update() {
-        this.draw();
-        this.position.y += this.movementVelocity.y;
-        
-        if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
-        }
-        else{
-            this.position.x += this.movementVelocity.x;
-        }
-
-        if (this.position.y + this.height + this.movementVelocity.y >= canvas.height) {
-            this.movementVelocity.y = 0;
-            this.availableJumps = 2;
-        } else {
-            this.movementVelocity.y += gravity;
-        }
-    }
-
-    attack() {
-        this.isAttacking = true;
-        setTimeout(() => {
-            this.isAttacking = false
-        }, 100);
-    }
-}
-
-const player = new Sprite({
+const player1 = new Fighter({
     position: {
         x: 0,
         y: 100
@@ -91,7 +30,7 @@ const player = new Sprite({
     color: 'blue'
 });
 
-const enemy = new Sprite({
+const player2 = new Fighter({
     position: {
         x: 400,
         y: 100
@@ -117,24 +56,28 @@ let lastMoveKeyPressed;
 function animate() {
     window.requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
-    player.update();
-    enemy.update();
+    background.update();
+    player1.update();
+    player2.update();
 
-    player.movementVelocity.x = 0;
+    player1.movementVelocity.x = 0;
 
     if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
-        player.movementVelocity.x = -2;
-        player.direction = 180
+        player1.movementVelocity.x = -2;
+        player1.direction = 180
     } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
-        player.movementVelocity.x = 2;
-        player.direction = 0
+        player1.movementVelocity.x = 2;
+        player1.direction = 0
     }
 
-    if (keyPressed[keys.jump] && player.availableJumps > 0) {
-        player.movementVelocity.y = -9;
+    if (keyPressed[keys.jump] && player1.availableJumps > 0) {
+        player1.movementVelocity.y = -9;
         keyPressed[keys.jump] = false
-        player.availableJumps--;
+        player1.availableJumps--;
     }
+
+    p1percentageDisplay.textContent = player1.percentage + "%"
+    p2percentageDisplay.textContent = player2.percentage + "%"
 }
 
 animate();
@@ -147,7 +90,7 @@ window.addEventListener('keydown', (event) => {
             lastMoveKeyPressed = event.key;
         }
         if (event.key === keys.attackNormal) {
-            player.attack();
+            player1.attack();
         }
     }
 });
