@@ -15,7 +15,8 @@ const background = new Sprite({
         x: 0,
         y: 0
     },
-    imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png'
+    imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
+    scale: 5
 });
 
 const player1 = new Fighter({
