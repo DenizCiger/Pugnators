@@ -1,25 +1,43 @@
 class Sprite {
-    constructor({ position, imageSrc, scale = 1}) {
+    constructor({ position, imageSrc, scale = 1, numberOfFrames = 1, framesHold = 5}) {
         this.position = position;
         this.height = 900;
         this.width = 1920;
         this.image = new Image();
         this.image.src = imageSrc;
-        this.scale = scale
+        this.scale = scale;
+
+        this.numberOfFrames = numberOfFrames;
+        this.currentFrame = 0;
+        this.framesElapsed = 0;
+        this.framesHold = framesHold;
     }
 
     draw() {
         c.drawImage(
             this.image,
+            this.currentFrame * this.image.width / this.numberOfFrames,
+            0,
+            this.image.width / this.numberOfFrames,
+            this.image.height,
             this.position.x,
             this.position.y,
-            this.image.width * this.scale,
+            this.image.width * this.scale / this.numberOfFrames,
             this.image.height * this.scale
         );
     } 
 
     update() {
         this.draw();
+        this.framesElapsed++;
+
+        if (this.framesElapsed % this.framesHold === 0) {         
+            if (this.currentFrame < this.numberOfFrames - 1) {
+                this.currentFrame++;
+            } else {
+                this.currentFrame = 0;
+            }
+        }
     }
 }
 
@@ -62,8 +80,7 @@ class Fighter {
                     this.attackBox.width,
                     this.attackBox.height
                 )
-            }
-            else {
+            } else {
                 c.fillRect (
                     this.attackBox.position.x - (this.attackBox.width/2),
                     this.attackBox.position.y, this.attackBox.width,
@@ -79,8 +96,7 @@ class Fighter {
         this.position.y += this.movementVelocity.y;
         
         if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
-        }
-        else{
+        } else {
             this.position.x += this.movementVelocity.x;
         }
 
