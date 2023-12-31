@@ -14,6 +14,7 @@ canvas {
     max-width: 100%;
     display: block;
     background-color: black;
+    image-rendering: pixelated;
 }
 
 p {
@@ -21,12 +22,6 @@ p {
     height: 15px;
     font-size: 15px;
 }
-
-/* @media screen and (min-width: 1920px) {
-    canvas {
-        width: 1920px;
-    }
-} */
 
 /* Player Info Display */
   
@@ -45,7 +40,7 @@ p {
     padding: 1vh 2vw;
     display: flex;
     align-items: center;
-    background-image: url('../images/Game_Textures/UI/Info-Background-v1.png');
+    background-image: url('../images/Game-Textures/UI/Info-Background-v1.png');
     image-rendering: pixelated;
     background-repeat: no-repeat;
     background-size: 20vw;
