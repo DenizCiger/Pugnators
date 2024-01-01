@@ -25,11 +25,8 @@ const percentageDisplays = [
 // Background
 const background = new Sprite({
     position: { x: 0, y: 0 },
-    animationData: {
-        imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
-        scale: 1.25,
-        offset: { x: 0, y: 0 }
-    }
+    animationData: { imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png' },
+    scale: 1.25
 });
 
 // Players

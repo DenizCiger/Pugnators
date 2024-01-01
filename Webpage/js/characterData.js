@@ -25,12 +25,13 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/LeondingChan/LeondingChan_Front.png',
+            numberOfFrames: 1,
             offset: { x: 10, y: 0 }
             // Other ability details
         },
         // Define more abilities for LeondingChan
     ],
-    Nerd: [
+    'Nerd': [
         {
             actionName: 'info',
             logoSrc: './images/Game-Textures/Characters/Nerd/Nerd_Icon.png',
@@ -40,6 +41,7 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/Nerd.png',
+            numberOfFrames: 1,
             offset: { x: 10, y: 0 }
             // Other ability details
         },
