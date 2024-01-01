@@ -43,7 +43,7 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/walk.png',
-            numberOfFrames: 10,
+            numberOfFrames: 11,
             offset: { x: 10, y: 0 },
             framesHold: 5
             // Other ability details
