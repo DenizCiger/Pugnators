@@ -32,8 +32,8 @@ const background = new Sprite({
 // Players
 let p1Character = 'Troller';
 let p2Character = 'Nerd';
-let p3Character = 'Nerd';
-let p4Character = 'Troller';
+let p3Character = 'LeondingChan';
+let p4Character = 'Snowy';
 
 const player1 = new Fighter({
     characterType: p1Character,
@@ -46,12 +46,12 @@ const player2 = new Fighter({
     color: 'blue'
 })
 const player3 = new Fighter({
-    characterType: p2Character,
+    characterType: p3Character,
     position: { x: 200 + 2 * (canvas.width - 2 * 200) / 3, y: 100 },
     color: 'green'
 })
 const player4 = new Fighter({
-    characterType: p2Character,
+    characterType: p4Character,
     position: { x: (canvas.width-200), y: 100 },
     color: 'yellow'
 })
