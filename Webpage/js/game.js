@@ -45,6 +45,15 @@ const background = new Sprite({
     scale: 1.25
 });
 
+// Obstacles
+const map = [
+    new Obstacle({
+        position: { x: 600, y: 600 },
+        height: 30,
+        width: 200
+    })
+]
+
 // Players
 let p1Character = 'Troller';
 let p2Character = 'Snowy';
@@ -133,6 +142,11 @@ function updateAnimations() {
     for (let i = 0; i < players.length; i++) {
         players[i].update();
     }
+
+    for (let i = 0; i < map.length; i++) {
+        map[i].update();
+    }
+
 }
 
 function updatePercentageDisplays() {

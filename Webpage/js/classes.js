@@ -151,3 +151,37 @@ class Fighter extends Sprite {
         }, 100);
     }
 }
+
+class Obstacle extends Sprite {
+    constructor({
+        position = {x: 0, y: 0},
+        pixelMultiplier = 4,
+        color = 'purple',
+        dropThrough = false,
+        height = 10,
+        width = 40,
+    }) {
+        
+        super({
+            position,
+            pixelMultiplier
+        });
+        
+        this.color = color;
+        this.dropThrough = dropThrough;
+        this.height = height * this.pixelMultiplier;
+        this.width =  width * this.pixelMultiplier;
+    }
+
+    update() {
+        this.draw();
+        this.drawHitbox();
+    }
+
+    drawHitbox() {
+        c.fillStyle = this.color;
+        c.globalAlpha = 0.5
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+        c.globalAlpha = 1
+    }
+}
