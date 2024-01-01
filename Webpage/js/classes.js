@@ -1,16 +1,18 @@
 class Sprite {
-    constructor({ position, imageSrc, scale = 1, numberOfFrames = 1, framesHold = 5}) {
+    constructor({ position = {x: 0, y:0}, imageSrc, scale = 1, numberOfFrames = 1, framesHold = 5, offset = {x: 0, y: 0}}, pixelMultiplier = 4) {
         this.position = position;
-        this.height = 900;
-        this.width = 1920;
         this.image = new Image();
         this.image.src = imageSrc;
         this.scale = scale;
-
+        
         this.numberOfFrames = numberOfFrames;
         this.currentFrame = 0;
         this.framesElapsed = 0;
         this.framesHold = framesHold;
+        this.offset = offset;
+        this.pixelMultiplier = pixelMultiplier
+        this.offset.x = this.offset.x * this.pixelMultiplier;
+        this.offset.y = this.offset.y * this.pixelMultiplier;
     }
 
     draw() {
@@ -20,8 +22,8 @@ class Sprite {
             0,
             this.image.width / this.numberOfFrames,
             this.image.height,
-            this.position.x,
-            this.position.y,
+            this.position.x - this.offset.x,
+            this.position.y - this.offset.y,
             this.image.width * this.scale / this.numberOfFrames,
             this.image.height * this.scale
         );
@@ -43,59 +45,53 @@ class Sprite {
 
 
 
-class Fighter {
-    constructor({ position, movementVelocity, color = 'red' }) {
-        this.position = position;
+class Fighter extends Sprite {
+    constructor({
+        position = {x: 0, y: 0},
+        movementVelocity,
+        color = 'red',
+        imageSrc,
+        scale = 1,
+        numberOfFrames = 1,
+        framesHold = 5,
+        offset = {x: 0, y: 0},
+        pixelMultiplier = 4
+    }) {
+        super({
+            position,
+            imageSrc,
+            scale,
+            numberOfFrames,
+            framesHold,
+            offset,
+            pixelMultiplier
+        });
+
+        console.log(this);
+        console.log(this.image.src);
+
         this.movementVelocity = movementVelocity;
-        this.height = 150;
-        this.width = 50;
+        this.height = 32 * this.pixelMultiplier;
+        this.width =  12 * this.pixelMultiplier;
         this.direction = 0;
         this.availableJumps = 2;
         this.color = color;
-        this.lastKey;
         this.attackBox = {
             position: this.position,
             width: 100,
             height: 50
         };
         this.isAttacking = false;
-        this.percentage = Math.floor(Math.random() * 1000);;
-    }
-
-    draw() {
-        c.fillStyle = this.color;
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        // attack box
-
-        if (this.isAttacking) {
-
-            c.fillStyle = 'red'
-            c.globalAlpha = 0.5
-            
-            if (this.direction == 0)
-            {
-                c.fillRect (
-                    this.attackBox.position.x, this.attackBox.position.y,
-                    this.attackBox.width,
-                    this.attackBox.height
-                )
-            } else {
-                c.fillRect (
-                    this.attackBox.position.x - (this.attackBox.width/2),
-                    this.attackBox.position.y, this.attackBox.width,
-                    this.attackBox.height
-                )
-            }
-            c.globalAlpha = 1;
-        } 
+        this.percentage = Math.floor(Math.random() * 1000);
     }
 
     update() {
         this.draw();
+        this.drawHitbox();
         this.position.y += this.movementVelocity.y;
         
         if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
+            this.movementVelocity.x = 0;
         } else {
             this.position.x += this.movementVelocity.x;
         }
@@ -106,6 +102,13 @@ class Fighter {
         } else {
             this.movementVelocity.y += gravity;
         }
+    }
+
+    drawHitbox() {
+        c.fillStyle = this.color;
+        c.globalAlpha = 0.5
+        c.fillRect(this.position.x, this.position.y, this.width, this.height);
+        c.globalAlpha = 1
     }
 
     attack() {
