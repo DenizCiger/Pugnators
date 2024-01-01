@@ -14,6 +14,22 @@ const keys = {
 const keyPressed = {};
 let lastMoveKeyPressed;
 
+// Player-Info Displays
+const playerInfoDisplays = [
+    document.getElementById('playerInfo1'),
+    document.getElementById('playerInfo2'),
+    document.getElementById('playerInfo3'),
+    document.getElementById('playerInfo4')
+]
+
+// Player-Icon Displays
+const playerIconDisplays = [
+    document.getElementById('icon1'),
+    document.getElementById('icon2'),
+    document.getElementById('icon3'),
+    document.getElementById('icon4')
+]
+
 // Percentage Displays
 const percentageDisplays = [
     document.getElementById('percentage1'),
@@ -31,9 +47,9 @@ const background = new Sprite({
 
 // Players
 let p1Character = 'Troller';
-let p2Character = 'Nerd';
+let p2Character = 'Snowy';
 let p3Character = 'LeondingChan';
-let p4Character = 'Snowy';
+let p4Character = 'Nerd';
 
 const player1 = new Fighter({
     characterType: p1Character,
@@ -56,6 +72,7 @@ const player4 = new Fighter({
     color: 'yellow'
 })
 
+const playerCharacters = [p1Character, p2Character, p3Character, p4Character];
 const players = [player1, player2, player3, player4];
 
 // Animation function
@@ -83,6 +100,8 @@ function animate() {
     updatePercentageDisplays();
 }
 
+hideNonExistentPlayers();
+setupUserIcons();
 animate();
 
 // Event listeners
@@ -106,7 +125,6 @@ window.addEventListener('keyup', (event) => {
 });
 
 // Util
-
 function updateAnimations() {
     window.requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,4 +157,18 @@ function getColorForPercentage(percentage) {
         default:
           return '#FFFFFF'; // White for percentages <= 35
       }
-  }
+}
+
+function hideNonExistentPlayers() {
+    for (let i = 0; i < playerInfoDisplays.length; i++) {
+        if (i >= players.length) {
+            playerInfoDisplays[i].style.display = 'none';
+        }
+    }
+}
+
+function setupUserIcons() {
+    for (let i = 0; i < players.length; i++) {
+        playerIconDisplays[i].src = characterData[playerCharacters[i]].find(a => a.actionName === 'info').logoSrc;
+    }
+}

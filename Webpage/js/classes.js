@@ -100,7 +100,7 @@ class Fighter extends Sprite {
             height: 50
         };
         this.isAttacking = false;
-        this.percentage = Math.floor(Math.random() * 1000);
+        this.percentage = Math.floor(Math.random() * 400);
         
         this.setState('idle');
     }
