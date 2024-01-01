@@ -10,7 +10,8 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Troller/Troller.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 }
+            offset: { x: 10, y: 0 },
+            framesHold: 10
             // Other ability details
         },
         // Define more abilities for Troller
@@ -26,7 +27,8 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/LeondingChan/LeondingChan_Front.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 }
+            offset: { x: 10, y: 0 },
+            framesHold: 10
             // Other ability details
         },
         // Define more abilities for LeondingChan
@@ -40,9 +42,10 @@ const characterData = {
         {
             actionName: 'idle',
             isAttack: false,
-            animationSrc: './images/Game-Textures/Characters/Nerd/Nerd.png',
-            numberOfFrames: 1,
-            offset: { x: 10, y: 0 }
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/walk.png',
+            numberOfFrames: 12,
+            offset: { x: 10, y: 0 },
+            framesHold: 5
             // Other ability details
         },
         // Define more abilities for Nerd
@@ -58,7 +61,8 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Snowy/Snowy.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 }
+            offset: { x: 10, y: 0 },
+            framesHold: 10
             // Other ability details
         },
         // Define more abilities for Frosty

@@ -84,7 +84,7 @@ function setupObstacles() {
 }
 
 function setupPlayers() {
-  playerCharacters = ['Troller', 'Snowy', 'LeondingChan', 'Nerd'];
+  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Snowy'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({

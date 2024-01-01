@@ -23,17 +23,31 @@ class Sprite {
     setAnimationData({
         imageSrc,
         offset = { x: 0, y: 0 },
-        numberOfFrames = 1
+        numberOfFrames = 1,
+        framesHold = 5
     }) {
         this.animationData.imageSrc = imageSrc;
         this.animationData.offset = offset;
         this.animationData.numberOfFrames = numberOfFrames;
+        this.animationData.framesHold = framesHold;
 
         this.image.onload = () => {
             console.log(this.image.width); // Displays the correct width after image loads
         };
 
         this.image.src = imageSrc;
+    }
+    
+    animateFrames() {
+        this.framesElapsed++;
+
+        if (this.framesElapsed % this.animationData.framesHold === 0) {
+            if (this.currentFrame < this.animationData.numberOfFrames - 1) {
+                this.currentFrame++;
+            } else {
+                this.currentFrame = 0;
+            }
+        }
     }
 
     draw() {
@@ -54,15 +68,7 @@ class Sprite {
 
     update() {
         this.draw();
-        this.framesElapsed++;
-
-        if (this.framesElapsed % this.animationData.framesHold === 0) {
-            if (this.currentFrame < this.animationData.numberOfFrames - 1) {
-                this.currentFrame++;
-            } else {
-                this.currentFrame = 0;
-            }
-        }
+        this.animateFrames();
     }
 }
 
@@ -86,8 +92,8 @@ class Fighter extends Sprite {
 
         this.scale = this.action.scale * pixelMultiplier;
         this.movementVelocity = movementVelocity;
-        this.height = 32 * this.pixelMultiplier;
-        this.width = 12 * this.pixelMultiplier;
+        this.height = 48 * this.pixelMultiplier;
+        this.width = 16 * this.pixelMultiplier;
         this.direction = 0;
         this.availableJumps = 2;
         this.color = color;
@@ -109,7 +115,8 @@ class Fighter extends Sprite {
             this.setAnimationData({
                 imageSrc: this.action.animationSrc,
                 offset: this.action.offset,
-                numberOfFrames: this.action.numberOfFrames
+                numberOfFrames: this.action.numberOfFrames,
+                framesHold: this.action.framesHold
             });
         }
     }
@@ -117,6 +124,8 @@ class Fighter extends Sprite {
     update() {
         this.draw();
         this.drawHitbox();
+        this.animateFrames();
+
         this.position.y += this.movementVelocity.y;
 
         if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
