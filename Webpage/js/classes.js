@@ -1,39 +1,52 @@
 class Sprite {
-    constructor({ position = {x: 0, y:0}, imageSrc, scale = 1, numberOfFrames = 1, framesHold = 5, offset = {x: 0, y: 0}}, pixelMultiplier = 4) {
+    constructor({
+        position = { x: 0, y:0 },
+        scale = 1,
+        pixelMultiplier = 4,
+        animationData = { imageSrc: null, offset : { x: 0, y: 0} }
+    }) {
         this.position = position;
-        this.image = new Image();
-        this.image.src = imageSrc;
-        this.scale = scale;
-        
-        this.numberOfFrames = numberOfFrames;
+        this.scale = scale * pixelMultiplier;
+        this.pixelMultiplier = pixelMultiplier;
+        this.animationData = animationData;
+
         this.currentFrame = 0;
         this.framesElapsed = 0;
-        this.framesHold = framesHold;
-        this.offset = offset;
-        this.pixelMultiplier = pixelMultiplier
-        this.offset.x = this.offset.x * this.pixelMultiplier;
-        this.offset.y = this.offset.y * this.pixelMultiplier;
+
+        this.image = new Image();
     }
 
+    setAnimationData({
+        imageSrc,
+        offset = { x: 0, y: 0 }
+    }) {
+        this.animationData.imageSrc = imageSrc;
+        this.animationData.offset = offset;
+
+        // Additional logic to initialize or reset animation properties
+      }
+
     draw() {
-        c.drawImage(
-            this.image,
-            this.currentFrame * this.image.width / this.numberOfFrames,
-            0,
-            this.image.width / this.numberOfFrames,
-            this.image.height,
-            this.position.x - this.offset.x,
-            this.position.y - this.offset.y,
-            this.image.width * this.scale / this.numberOfFrames,
-            this.image.height * this.scale
-        );
+        if (this.animationData.imageSrc) {
+            c.drawImage(
+                this.image,
+                this.currentFrame * this.image.width / this.animationData.numberOfFrames,
+                0,
+                this.image.width / this.animationData.numberOfFrames,
+                this.image.height,
+                this.position.x - this.animationData.offset.x,
+                this.position.y - this.animationData.offset.y,
+                this.image.width * this.scale / this.animationData.numberOfFrames,
+                this.image.height * this.scale
+            );
+        }
     } 
 
     update() {
         this.draw();
         this.framesElapsed++;
 
-        if (this.framesElapsed % this.framesHold === 0) {         
+        if (this.framesElapsed % this.animationData.framesHold === 0) {         
             if (this.currentFrame < this.numberOfFrames - 1) {
                 this.currentFrame++;
             } else {
@@ -43,33 +56,25 @@ class Sprite {
     }
 }
 
-
-
 class Fighter extends Sprite {
     constructor({
+        characterType,
         position = {x: 0, y: 0},
-        movementVelocity,
-        color = 'red',
-        imageSrc,
-        scale = 1,
-        numberOfFrames = 1,
-        framesHold = 5,
-        offset = {x: 0, y: 0},
+        movementVelocity = {x: 0, y: 0},
+        color,
         pixelMultiplier = 4
     }) {
+        
         super({
             position,
-            imageSrc,
-            scale,
-            numberOfFrames,
-            framesHold,
-            offset,
             pixelMultiplier
         });
+        
+        this.state = 'info';
+        this.characterType = characterType;
+        this.action = characterData[this.characterType].find(a => a.actionName === this.state);
 
-        console.log(this);
-        console.log(this.image.src);
-
+        this.scale = this.action.scale;
         this.movementVelocity = movementVelocity;
         this.height = 32 * this.pixelMultiplier;
         this.width =  12 * this.pixelMultiplier;
@@ -83,6 +88,20 @@ class Fighter extends Sprite {
         };
         this.isAttacking = false;
         this.percentage = Math.floor(Math.random() * 1000);
+        
+        this.setState('idle');
+    }
+
+    setState(newState) {
+        this.state = newState;
+        // Logic to update animation data based on the new state
+        this.action = characterData[this.characterType].find(a => a.actionName === this.state);
+        if (this.action) {
+          this.setAnimationData({
+            imageSrc: this.action.animationSrc,
+            offset:   this.action.offset
+          });
+        }
     }
 
     update() {

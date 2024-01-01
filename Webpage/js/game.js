@@ -25,34 +25,47 @@ const percentageDisplays = [
 // Background
 const background = new Sprite({
     position: { x: 0, y: 0 },
-    imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
-    scale: 5
+    animationData: {
+        imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
+        scale: 1.25,
+        offset: { x: 0, y: 0 }
+    }
 });
 
 // Players
+let p1Character = 'Troller';
+let p2Character = 'Nerd';
+let p3Character = 'Nerd';
+let p4Character = 'Troller';
+
 const player1 = new Fighter({
-    position: { x: 0, y: 100 },
-    movementVelocity: { x: 0, y: 0 },
-    imageSrc: './images/Game-Textures/Characters/Troller/Troller.png',
-    scale: 4,
-    offset: { x: 9, y: 0 }
-});
+    characterType: p1Character,
+    position: { x: (200), y: 100 },
+    color: 'red'
+})
 const player2 = new Fighter({
-    position: { x: 400, y: 100 },
-    movementVelocity: { x: 0, y: 0 },
-    imageSrc: './images/Game-Textures/Characters/Nerd/Nerd.png',
-    color: 'blue',
-    scale: 4,
-    offset: { x: 10, y: 0 }
-});
+    characterType: p2Character,
+    position: { x: 200 +     (canvas.width - 2 * 200) / 3, y: 100 },
+    color: 'blue'
+})
+const player3 = new Fighter({
+    characterType: p2Character,
+    position: { x: 200 + 2 * (canvas.width - 2 * 200) / 3, y: 100 },
+    color: 'green'
+})
+const player4 = new Fighter({
+    characterType: p2Character,
+    position: { x: (canvas.width-200), y: 100 },
+    color: 'yellow'
+})
+
+const players = [player1, player2, player3, player4];
 
 // Animation function
 function animate() {
-    window.requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    background.update();
-    player1.update();
-    player2.update();
+    updateAnimations();
+
+    
 
     player1.movementVelocity.x = 0;
 
@@ -70,8 +83,7 @@ function animate() {
         player1.availableJumps--;
     }
 
-    percentageDisplays[0].textContent = player1.percentage + "%";
-    percentageDisplays[1].textContent = player2.percentage + "%";
+    updatePercentageDisplays();
 }
 
 animate();
@@ -95,3 +107,39 @@ window.addEventListener('keyup', (event) => {
         keyPressed[event.key] = false;
     }
 });
+
+// Util
+
+function updateAnimations() {
+    window.requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    background.update();
+
+    for (let i = 0; i < players.length; i++) {
+        players[i].update();
+    }
+}
+
+function updatePercentageDisplays() {
+    for (let i = 0; i < players.length; i++) {
+        // Update the text content of each percentage display element
+        percentageDisplays[i].textContent = players[i].percentage + "%";
+        percentageDisplays[i].style.color = getColorForPercentage(players[i].percentage);
+
+    }
+}
+
+function getColorForPercentage(percentage) {
+    switch (true) {
+        case percentage >= 200:
+          return '#5A0000'; // Dark red for percentages >= 200
+        case percentage > 100:
+          return '#CA0000'; // Red for percentages > 100
+        case percentage > 70:
+          return '#FFA500'; // Orange for percentages > 70
+        case percentage > 35:
+          return '#FFFF00'; // Yellow for percentages > 35
+        default:
+          return '#FFFFFF'; // White for percentages <= 35
+      }
+  }
