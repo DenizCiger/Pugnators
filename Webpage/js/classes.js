@@ -12,6 +12,7 @@ class Sprite {
 
         this.currentFrame = 0;
         this.framesElapsed = 0;
+        this.flipHorizontally = false;
 
         this.image = new Image();
 
@@ -52,6 +53,18 @@ class Sprite {
 
     draw() {
         if (this.animationData.imageSrc) {
+            ctx.save(); // Save the current canvas state
+    
+            if (this.flipHorizontally) {
+                // Flip the image horizontally
+                ctx.translate(this.position.x + (this.image.width * this.scale / this.animationData.numberOfFrames), this.position.y);
+                ctx.scale(-1, 1);
+                // Adjust the translation to account for offset.x and pixelMultiplier
+                // I DONT KNOW WHY I HAVE TO MULTIPLY BY 1.5 BUT IT WORKS I GUESS
+                const adjustedOffsetX = this.animationData.offset.x * this.pixelMultiplier*1.5 - (this.image.width * this.scale / this.animationData.numberOfFrames);
+                ctx.translate(-(this.position.x + adjustedOffsetX), -this.position.y);
+            }
+    
             ctx.drawImage(
                 this.image,
                 this.currentFrame * this.image.width / this.animationData.numberOfFrames,
@@ -63,13 +76,16 @@ class Sprite {
                 this.image.width * this.scale / this.animationData.numberOfFrames,
                 this.image.height * this.scale
             );
+    
+            ctx.restore(); // Restore the saved canvas state
         }
-    }
+    } 
 
     update() {
         this.draw();
         this.animateFrames();
     }
+
 }
 
 class Fighter extends Sprite {
@@ -122,6 +138,12 @@ class Fighter extends Sprite {
     }
 
     update() {
+        if (this.direction == 180) {
+            this.flipHorizontally = true;
+        } else {
+            this.flipHorizontally = false
+        } 
+
         this.draw();
         this.drawHitbox();
         this.animateFrames();
