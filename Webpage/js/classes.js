@@ -1,9 +1,9 @@
 class Sprite {
     constructor({
-        position = { x: 0, y:0 },
+        position = { x: 0, y: 0 },
         scale = 1,
         pixelMultiplier = 4,
-        animationData = { imageSrc: null, offset : { x: 0, y: 0}, numberOfFrames: 1 }
+        animationData = { imageSrc: null, offset: { x: 0, y: 0 }, numberOfFrames: 1 }
     }) {
         this.position = position;
         this.pixelMultiplier = pixelMultiplier;
@@ -14,7 +14,6 @@ class Sprite {
         this.framesElapsed = 0;
 
         this.image = new Image();
-        this.animationData = animationData;
 
         if (this.animationData.imageSrc) {
             this.setAnimationData({ imageSrc: this.animationData.imageSrc, offset: this.animationData.offset, numberOfFrames: this.animationData.numberOfFrames });
@@ -28,20 +27,18 @@ class Sprite {
     }) {
         this.animationData.imageSrc = imageSrc;
         this.animationData.offset = offset;
-        this.animationData.numberOfFrames = numberOfFrames
+        this.animationData.numberOfFrames = numberOfFrames;
 
         this.image.onload = () => {
-            // Now that the image has loaded, you can access its width and height
-            console.log(this.image.width); // This should display the correct width
+            console.log(this.image.width); // Displays the correct width after image loads
         };
-    
+
         this.image.src = imageSrc;
     }
-    
+
     draw() {
         if (this.animationData.imageSrc) {
-
-            c.drawImage(
+            ctx.drawImage(
                 this.image,
                 this.currentFrame * this.image.width / this.animationData.numberOfFrames,
                 0,
@@ -53,14 +50,14 @@ class Sprite {
                 this.image.height * this.scale
             );
         }
-    } 
+    }
 
     update() {
         this.draw();
         this.framesElapsed++;
 
-        if (this.framesElapsed % this.animationData.framesHold === 0) {         
-            if (this.currentFrame < this.numberOfFrames - 1) {
+        if (this.framesElapsed % this.animationData.framesHold === 0) {
+            if (this.currentFrame < this.animationData.numberOfFrames - 1) {
                 this.currentFrame++;
             } else {
                 this.currentFrame = 0;
@@ -72,17 +69,17 @@ class Sprite {
 class Fighter extends Sprite {
     constructor({
         characterType,
-        position = {x: 0, y: 0},
-        movementVelocity = {x: 0, y: 0},
+        position = { x: 0, y: 0 },
+        movementVelocity = { x: 0, y: 0 },
         color,
         pixelMultiplier = 4
     }) {
-        
+
         super({
             position,
             pixelMultiplier
         });
-        
+
         this.state = 'info';
         this.characterType = characterType;
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
@@ -90,7 +87,7 @@ class Fighter extends Sprite {
         this.scale = this.action.scale * pixelMultiplier;
         this.movementVelocity = movementVelocity;
         this.height = 32 * this.pixelMultiplier;
-        this.width =  12 * this.pixelMultiplier;
+        this.width = 12 * this.pixelMultiplier;
         this.direction = 0;
         this.availableJumps = 2;
         this.color = color;
@@ -101,20 +98,19 @@ class Fighter extends Sprite {
         };
         this.isAttacking = false;
         this.percentage = Math.floor(Math.random() * 400);
-        
+
         this.setState('idle');
     }
 
     setState(newState) {
         this.state = newState;
-        // Logic to update animation data based on the new state
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
         if (this.action) {
-          this.setAnimationData({
-            imageSrc: this.action.animationSrc,
-            offset:   this.action.offset,
-            numberOfFrames: this.action.numberOfFrames
-          });
+            this.setAnimationData({
+                imageSrc: this.action.animationSrc,
+                offset: this.action.offset,
+                numberOfFrames: this.action.numberOfFrames
+            });
         }
     }
 
@@ -122,7 +118,7 @@ class Fighter extends Sprite {
         this.draw();
         this.drawHitbox();
         this.position.y += this.movementVelocity.y;
-        
+
         if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
             this.movementVelocity.x = 0;
         } else {
@@ -138,10 +134,10 @@ class Fighter extends Sprite {
     }
 
     drawHitbox() {
-        c.fillStyle = this.color;
-        c.globalAlpha = 0.5
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-        c.globalAlpha = 1
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = 0.5
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.globalAlpha = 1
     }
 
     attack() {
@@ -154,23 +150,23 @@ class Fighter extends Sprite {
 
 class Obstacle extends Sprite {
     constructor({
-        position = {x: 0, y: 0},
+        position = { x: 0, y: 0 },
         pixelMultiplier = 4,
         color = 'purple',
         dropThrough = false,
         height = 10,
         width = 40,
     }) {
-        
+
         super({
             position,
             pixelMultiplier
         });
-        
+
         this.color = color;
         this.dropThrough = dropThrough;
         this.height = height * this.pixelMultiplier;
-        this.width =  width * this.pixelMultiplier;
+        this.width = width * this.pixelMultiplier;
     }
 
     update() {
@@ -179,9 +175,9 @@ class Obstacle extends Sprite {
     }
 
     drawHitbox() {
-        c.fillStyle = this.color;
-        c.globalAlpha = 0.5
-        c.fillRect(this.position.x, this.position.y, this.width, this.height);
-        c.globalAlpha = 1
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = 0.5
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.globalAlpha = 1
     }
 }
