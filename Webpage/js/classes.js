@@ -27,13 +27,19 @@ class Sprite {
         numberOfFrames = 1,
         framesHold = 5
     }) {
+        this.isLoadingImage = true; // Set loading flag before starting image load
+        this.currentFrame = 0;
+
         this.animationData.imageSrc = imageSrc;
         this.animationData.offset = offset;
         this.animationData.numberOfFrames = numberOfFrames;
         this.animationData.framesHold = framesHold;
 
         this.image.onload = () => {
-            console.log(this.image.width); // Displays the correct width after image loads
+            this.isLoadingImage = false; // Reset loading flag when image is loaded
+            if (this.state !== 'running' && this.state !== 'idle') {
+                this.setState(this.state); // Trigger state change only if not in 'running' or 'idle'
+            }
         };
 
         this.image.src = imageSrc;
@@ -142,11 +148,19 @@ class Fighter extends Sprite {
             this.flipHorizontally = true;
         } else {
             this.flipHorizontally = false
-        } 
+        }
 
         this.draw();
-        this.drawHitbox();
+        // this.drawHitbox();
         this.animateFrames();
+
+        if (!this.isLoadingImage) {
+            if (this.movementVelocity.x !== 0 && this.state !== 'running') {
+                this.setState('running');
+            } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
+                this.setState('idle');
+            }
+        }
 
         this.position.y += this.movementVelocity.y;
 

@@ -13,6 +13,7 @@ const keys = {
 };
 const keyPressed = {};
 let lastMoveKeyPressed;
+const horizontalSpeed = 4
 
 // Static variables
 let playerInfoDisplays;
@@ -29,10 +30,10 @@ function animate() {
   players[0].movementVelocity.x = 0;
 
   if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
-    players[0].movementVelocity.x = -2;
+    players[0].movementVelocity.x = -horizontalSpeed;
     players[0].direction = 180;
   } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
-    players[0].movementVelocity.x = 2;
+    players[0].movementVelocity.x = horizontalSpeed;
     players[0].direction = 0;
   }
 

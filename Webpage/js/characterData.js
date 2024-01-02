@@ -42,11 +42,18 @@ const characterData = {
         {
             actionName: 'idle',
             isAttack: false,
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/idle.png',
+            numberOfFrames: 4,
+            offset: { x: 8, y: 0 },
+            framesHold: 15
+        },
+        {
+            actionName: 'running',
+            isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/walk.png',
             numberOfFrames: 11,
             offset: { x: 10, y: 0 },
             framesHold: 5
-            // Other ability details
         },
         // Define more abilities for Nerd
     ],
