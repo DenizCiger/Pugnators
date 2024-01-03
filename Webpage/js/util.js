@@ -13,7 +13,7 @@ function getPlayerColor(index) {
     window.requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background.update();
-    players[0].logCoords()
+    // players[0].logCoords()
   
     for (let i = 0; i < players.length; i++) {
       players[i].update();
@@ -50,3 +50,16 @@ function getPlayerColor(index) {
     return Array.from({ length: count }, (_, i) => document.getElementById(`${elementName}${i + 1}`));
   }
   
+  function checkRectangleCollision(rect1X, rect1Y, rect1Width, rect1Height, rect2X, rect2Y, rect2Width, rect2Height) {
+    if (
+        rect1X < rect2X + rect2Width &&
+        rect1X + rect1Width > rect2X &&
+        rect1Y < rect2Y + rect2Height &&
+        rect1Y + rect1Height > rect2Y
+      ) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }

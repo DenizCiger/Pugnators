@@ -74,7 +74,7 @@ function setupBackground() {
 function setupObstacles() {
   map = [
     new Obstacle({
-      position: { x: 600, y: 600 },
+      position: { x: 600, y: 550 },
       height: 30,
       width: 200
     })
@@ -82,7 +82,8 @@ function setupObstacles() {
 }
 
 function setupPlayers() {
-  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  // playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  playerCharacters = ['Nerd'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({

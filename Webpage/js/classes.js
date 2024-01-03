@@ -192,21 +192,41 @@ class Fighter extends Sprite {
                 this.setState(this.currentAttack);
             }
         }
+        
+        this.updateVelocities()
+    }
+
+    updateVelocities() {
+        var previousPosition = {x: this.position.x, y: this.position.y};
+
+        this.position.x += this.movementVelocity.x;
+        
+
+        if (this.position.x + this.width >= canvas.width ||
+            this.position.x <= 0 ||
+            checkRectangleCollision(
+                this.position.x, this.position.y, this.width, this.height,
+                map[0].position.x, map[0].position.y, map[0].width, map[0].height
+            )
+        ) {
+            this.position.x = previousPosition.x
+            this.movementVelocity.x = 0;
+        }
 
         this.position.y += this.movementVelocity.y;
 
-        if (this.position.x + this.width + this.movementVelocity.x >= canvas.width || this.position.x + this.movementVelocity.x <= 0) {
-            this.movementVelocity.x = 0;
-        } else {
-            this.position.x += this.movementVelocity.x;
-        }
-
-        if (this.position.y + this.height + this.movementVelocity.y >= canvas.height) {
+        if (this.position.y + this.height >= canvas.height ||
+            checkRectangleCollision(
+                this.position.x, this.position.y, this.width, this.height,
+                map[0].position.x, map[0].position.y, map[0].width, map[0].height
+            )
+        ) {
+            this.position.y = previousPosition.y
             this.movementVelocity.y = 0;
             this.availableJumps = 2;
         } else {
             this.movementVelocity.y += gravity;
-        }
+        }     
     }
 
     drawHitbox() {
@@ -228,6 +248,14 @@ class Fighter extends Sprite {
         console.log("X: {0} Y:{1}", this.position.x, this.position.y)
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
+    }
+
+    isOnGround(ground) {
+        let bottomSide = this.position.y+this.height
+
+        return bottomSide >= ground.position.y && 
+        player.bottomSide <= ground.position.y
+        // && player.ySpeed <= 0
     }
 }
 
