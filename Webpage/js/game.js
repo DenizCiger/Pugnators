@@ -107,8 +107,8 @@ window.addEventListener('keydown', (event) => {
     if (event.key === keys.left || event.key === keys.right) {
       lastMoveKeyPressed = event.key;
     }
-    if (event.key === keys.attackNormal) {
-      players[0].attack();
+    if (event.key === keys.attackNormal && !players[0].isAttacking) {
+      players[0].attack('nlight');
     }
   }
 });

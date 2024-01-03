@@ -145,6 +145,7 @@ class Fighter extends Sprite {
             height: 50
         };
         this.isAttacking = false;
+        this.currentAttack = '';
         this.percentage = Math.floor(Math.random() * 400);
 
         this.setState('idle');
@@ -172,13 +173,23 @@ class Fighter extends Sprite {
 
         this.draw();
         this.drawHitbox();
+
+        if (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) {
+                this.isAttacking = false;
+        }
+
         this.animateFrames();
 
         if (!this.isLoadingImage) {
-            if (this.movementVelocity.x !== 0 && this.state !== 'running') {
-                this.setState('running');
-            } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
-                this.setState('idle');
+            if (!this.isAttacking) {
+
+                if (this.movementVelocity.x !== 0 && this.state !== 'running') {
+                    this.setState('running');
+                } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
+                    this.setState('idle');
+                }
+            } else {
+                this.setState(this.currentAttack);
             }
         }
 
@@ -205,10 +216,11 @@ class Fighter extends Sprite {
         ctx.globalAlpha = 1
     }
 
-    attack() {
+    attack(attackType) {
         this.isAttacking = true;
+        this.currentAttack = attackType
         setTimeout(() => {
-            this.isAttacking = false
+            this.currentAttack = '';
         }, 100);
     }
 

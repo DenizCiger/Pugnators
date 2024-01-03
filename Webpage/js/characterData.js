@@ -55,6 +55,14 @@ const characterData = {
             offset: { x: 10, y: 0 },
             framesHold: 5
         },
+        {
+            actionName: 'nlight',
+            isAttack: true,
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/default-combo.png',
+            numberOfFrames: 12,
+            offset: { x: 10, y: 0 },
+            framesHold: 5
+        },
         // Define more abilities for Nerd
     ],
     'Snowy': [
