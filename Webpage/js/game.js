@@ -85,7 +85,7 @@ function setupObstacles() {
 }
 
 function setupPlayers() {
-  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Snowy'];
+  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({
@@ -117,6 +117,7 @@ function updateAnimations() {
   window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.update();
+  players[0].logCoords()
 
   for (let i = 0; i < players.length; i++) {
     players[i].update();

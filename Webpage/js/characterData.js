@@ -10,7 +10,7 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Troller/Troller.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 },
+            offset: { x: 6, y: 0 },
             framesHold: 10
             // Other ability details
         },
@@ -27,7 +27,7 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/LeondingChan/LeondingChan_Front.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 },
+            offset: { x: 7, y: 0 },
             framesHold: 10
             // Other ability details
         },
@@ -44,7 +44,7 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/idle.png',
             numberOfFrames: 4,
-            offset: { x: 8, y: 0 },
+            offset: { x: 6, y: 0 },
             framesHold: 15
         },
         {
@@ -68,7 +68,7 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Snowy/Snowy.png',
             numberOfFrames: 1,
-            offset: { x: 10, y: 0 },
+            offset: { x: 8, y: 0 },
             framesHold: 10
             // Other ability details
         },

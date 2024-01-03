@@ -3,7 +3,9 @@ class Sprite {
         position = { x: 0, y: 0 },
         scale = 1,
         pixelMultiplier = 4,
-        animationData = { imageSrc: null, offset: { x: 0, y: 0 }, numberOfFrames: 1 }
+        animationData = { imageSrc: null, offset: { x: 0, y: 0 }, numberOfFrames: 1 },
+        height,
+        width
     }) {
         this.position = position;
         this.pixelMultiplier = pixelMultiplier;
@@ -15,6 +17,9 @@ class Sprite {
         this.flipHorizontally = false;
 
         this.image = new Image();
+
+        this.height = height;
+        this.width = width;
 
         if (this.animationData.imageSrc) {
             this.setAnimationData({ imageSrc: this.animationData.imageSrc, offset: this.animationData.offset, numberOfFrames: this.animationData.numberOfFrames });
@@ -37,9 +42,6 @@ class Sprite {
 
         this.image.onload = () => {
             this.isLoadingImage = false; // Reset loading flag when image is loaded
-            if (this.state !== 'running' && this.state !== 'idle') {
-                this.setState(this.state); // Trigger state change only if not in 'running' or 'idle'
-            }
         };
 
         this.image.src = imageSrc;
@@ -63,25 +65,41 @@ class Sprite {
     
             if (this.flipHorizontally) {
                 // Flip the image horizontally
-                ctx.translate(this.position.x + (this.image.width * this.scale / this.animationData.numberOfFrames), this.position.y);
+                ctx.translate(
+                    this.position.x+this.width + this.animationData.offset.x*this.pixelMultiplier,
+                    this.position.y
+                );
                 ctx.scale(-1, 1);
-                // Adjust the translation to account for offset.x and pixelMultiplier
-                // I DONT KNOW WHY I HAVE TO MULTIPLY BY 1.5 BUT IT WORKS I GUESS
-                const adjustedOffsetX = this.animationData.offset.x * this.pixelMultiplier*1.5 - (this.image.width * this.scale / this.animationData.numberOfFrames);
-                ctx.translate(-(this.position.x + adjustedOffsetX), -this.position.y);
+
+                let width = this.image.width / this.animationData.numberOfFrames;
+                let height = this.image.height;
+
+                ctx.drawImage(
+                    this.image,
+                    this.currentFrame * width,
+                    0,
+                    width,
+                    height,
+                    0,
+                    0,
+                    width * this.scale,
+                    height * this.scale
+                );
             }
-    
-            ctx.drawImage(
-                this.image,
-                this.currentFrame * this.image.width / this.animationData.numberOfFrames,
-                0,
-                this.image.width / this.animationData.numberOfFrames,
-                this.image.height,
-                this.position.x - this.animationData.offset.x * this.pixelMultiplier,
-                this.position.y - this.animationData.offset.y * this.pixelMultiplier,
-                this.image.width * this.scale / this.animationData.numberOfFrames,
-                this.image.height * this.scale
-            );
+            else {
+
+                ctx.drawImage(
+                    this.image,
+                    this.currentFrame * this.image.width / this.animationData.numberOfFrames,
+                    0,
+                    this.image.width / this.animationData.numberOfFrames,
+                    this.image.height,
+                    this.position.x - this.animationData.offset.x * this.pixelMultiplier,
+                    this.position.y - this.animationData.offset.y * this.pixelMultiplier,
+                    this.image.width * this.scale / this.animationData.numberOfFrames,
+                    this.image.height * this.scale
+                );
+            }
     
             ctx.restore(); // Restore the saved canvas state
         }
@@ -100,12 +118,16 @@ class Fighter extends Sprite {
         position = { x: 0, y: 0 },
         movementVelocity = { x: 0, y: 0 },
         color,
-        pixelMultiplier = 4
+        pixelMultiplier = 4,
+        height = 48,
+        width = 18
     }) {
 
         super({
-            position,
-            pixelMultiplier
+            position: position,
+            pixelMultiplier: pixelMultiplier,
+            height: height * pixelMultiplier,
+            width: width * pixelMultiplier
         });
 
         this.state = 'info';
@@ -114,8 +136,6 @@ class Fighter extends Sprite {
 
         this.scale = this.action.scale * pixelMultiplier;
         this.movementVelocity = movementVelocity;
-        this.height = 48 * this.pixelMultiplier;
-        this.width = 16 * this.pixelMultiplier;
         this.direction = 0;
         this.availableJumps = 2;
         this.color = color;
@@ -151,7 +171,7 @@ class Fighter extends Sprite {
         }
 
         this.draw();
-        // this.drawHitbox();
+        this.drawHitbox();
         this.animateFrames();
 
         if (!this.isLoadingImage) {
@@ -190,6 +210,12 @@ class Fighter extends Sprite {
         setTimeout(() => {
             this.isAttacking = false
         }, 100);
+    }
+
+    logCoords() {
+        console.log("X: {0} Y:{1}", this.position.x, this.position.y)
+        console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
+        console.log("Weird: {0}", (canvas.width-this.position.x));
     }
 }
 
