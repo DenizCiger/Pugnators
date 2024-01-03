@@ -223,7 +223,11 @@ class Fighter extends Sprite {
         ) {
             this.position.y = previousPosition.y
             this.movementVelocity.y = 0;
-            this.availableJumps = 2;
+
+            if (!this.checkBottomMapCollision(map[0]) || this.position.y + this.height >= canvas.height) {
+                this.availableJumps = 2;
+            }
+
         } else {
             this.movementVelocity.y += gravity;
         }     
@@ -248,6 +252,11 @@ class Fighter extends Sprite {
         console.log("X: {0} Y:{1}", this.position.x, this.position.y)
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
+    }
+
+    checkBottomMapCollision(ground) {
+        let bottomSide = this.position.y+this.height;
+        return bottomSide >= ground.position.y + ground.height;
     }
 
     isOnGround(ground) {
