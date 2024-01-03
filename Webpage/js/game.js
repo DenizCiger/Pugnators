@@ -74,7 +74,7 @@ function setupBackground() {
 function setupObstacles() {
   map = [
     new Obstacle({
-      position: { x: 600, y: 550 },
+      position: { x: 600, y: 400 },
       height: 30,
       width: 200
     })
@@ -82,8 +82,8 @@ function setupObstacles() {
 }
 
 function setupPlayers() {
-  // playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
-  playerCharacters = ['Nerd'];
+  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  // playerCharacters = ['Nerd'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({
@@ -111,6 +111,10 @@ window.addEventListener('keydown', (event) => {
     if (event.key === keys.attackNormal && !players[0].isAttacking) {
       players[0].attack('nlight');
     }
+  
+  }
+  if (event.key === 'r') {
+    players[0].position = {x: 800, y: 100};
   }
 });
 
