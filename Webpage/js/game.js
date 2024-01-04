@@ -6,6 +6,7 @@ ctx.imageSmoothingEnabled = false;
 // Constants
 const gravity = 0.2;
 const wallSlideFriction = 0.05;
+const wallJumpXForce = 10;
 const keys = {
   left: 'a',
   right: 'd',
@@ -40,9 +41,7 @@ function animate() {
   }
 
   if (keyPressed[keys.jump] && players[0].availableJumps > 0) {
-    players[0].movementVelocity.y = -9;
-    keyPressed[keys.jump] = false;
-    players[0].availableJumps--;
+    players[0].jump();
   }
 
   updatePercentageDisplays();
@@ -81,13 +80,8 @@ function setupObstacles() {
       width: (canvas.width-450)/4
     }),
     new Obstacle({
-      position: { x: 400, y: 600 },
-      height: 45,
-      width: 20
-    }),
-    new Obstacle({
-      position: { x: 800, y: 400 },
-      height: 80,
+      position: { x: 800, y: 500 },
+      height: 65,
       width: 20
     }),
     new Obstacle({

@@ -21,7 +21,7 @@ class Sprite {
         this.height = height;
         this.width = width;
 
-        this.top = this.position.y;
+        this.topSide = this.position.y;
         this.bottomSide = this.position.y + this.height;
         this.leftSide = this.position.x;
         this.rightSide = this.position.x + this.width;
@@ -121,7 +121,6 @@ class Fighter extends Sprite {
     constructor({
         characterType,
         position = { x: 0, y: 0 },
-        movementVelocity = { x: 0, y: 0 },
         color,
         pixelMultiplier = 4,
         height = 48,
@@ -140,7 +139,10 @@ class Fighter extends Sprite {
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
 
         this.scale = this.action.scale * pixelMultiplier;
-        this.movementVelocity = movementVelocity;
+        this.movementVelocity = { x: 0, y: 0 };
+        this.jumpVelocity = { x: 0, y: 0 };
+        this.knockbackVelocity = { x: 0, y: 0 };
+        this.fullVelocity = { x: 0, y: 0 };
         this.direction = 0;
         this.availableJumps = 2;
         this.color = color;
@@ -154,6 +156,7 @@ class Fighter extends Sprite {
         this.percentage = Math.floor(Math.random() * 400);
 
         this.canWallJump = false;
+        this.isWallJumping = false;
         this.isOnGround = false;
         this.maxGravityVelocity = maxYMovementVelocity;
 
@@ -188,6 +191,7 @@ class Fighter extends Sprite {
         }
 
         this.animateFrames();
+        this.updateSides()
 
         if (!this.isLoadingImage) {
             if (!this.isAttacking) {
@@ -205,10 +209,20 @@ class Fighter extends Sprite {
         this.updateVelocities()
     }
 
+    updateSides() {
+        this.topSide = this.position.y;
+        this.bottomSide = this.position.y + this.height;
+        this.leftSide = this.position.x;
+        this.rightSide = this.position.x + this.width;
+    }
+
     updateVelocities() {
         var previousPosition = {x: this.position.x, y: this.position.y};
+        
+        this.fullVelocity.x = this.jumpVelocity.x + this.movementVelocity.x + this.knockbackVelocity.x;
+        this.fullVelocity.y = this.jumpVelocity.y + this.movementVelocity.y + this.knockbackVelocity.y;
 
-        this.position.x += this.movementVelocity.x;
+        this.position.x += this.fullVelocity.x;
 
         if (this.position.x >= canvas.width) {
             this.position.x = 0
@@ -217,9 +231,12 @@ class Fighter extends Sprite {
         }
         if (this.checkCollisionWithWholeMap(map)) {
 
-            if (this.isAgainstAnyWall(map) && this.movementVelocity.y > gravity) {
+            if (
+                this.movementVelocity.y > gravity
+            ) {
                 this.canWallJump = true;
                 this.maxGravityVelocity = maxYMovementVelocity * wallSlideFriction;
+                this.availableJumps = 2;
             }
             else {
                 this.canWallJump = false;
@@ -228,32 +245,43 @@ class Fighter extends Sprite {
 
             this.position.x = previousPosition.x
             this.movementVelocity.x = 0;
+            this.jumpVelocity.x = 0;
+            this.knockbackVelocity.x *= -1;
         }
         else {
             this.canWallJump = false;
             this.maxGravityVelocity = maxYMovementVelocity;
         }
 
-        this.position.y += this.movementVelocity.y;
+        this.position.y += this.fullVelocity.y;
 
-        if (this.position.y + this.height >= canvas.height) {
+        if (this.position.y >= canvas.height) {
             this.position.y = 0;
+        }
+        else if (this.position.y+this.height <= 0) {
+            this.position.y = canvas.height-1;
         }
         
         if (this.checkCollisionWithWholeMap(map)) {
             this.position.y = previousPosition.y
             this.movementVelocity.y = 0;
+            this.jumpVelocity.y = 0;
+            this.knockbackVelocity.y *= -1;
 
             if (!this.checkBottomMapCollision(map[0]) || this.position.y + this.height >= canvas.height) {
                 this.availableJumps = 2;
                 this.isOnGround = true;
+                this.jumpVelocity.x = 0;
             }
             else {
                 this.isOnGround = false;
             }
 
         } else {
-            this.isOnGround = false;
+            if (this.checkIsGrounded(map)) {
+            } else {
+                this.isOnGround = false;
+            }
             if (this.movementVelocity.y + gravity < this.maxGravityVelocity) {
                 if (!this.canWallJump) {
                     this.movementVelocity.y += gravity;
@@ -264,7 +292,13 @@ class Fighter extends Sprite {
             } else {
                 this.movementVelocity.y = this.maxGravityVelocity
             }
-        }     
+        }
+
+        this.jumpVelocity.x *= 0.96;
+
+        if (Math.abs(this.jumpVelocity.x) < 0.5) {
+            this.jumpVelocity.x = 0
+        }
     }
 
     drawHitbox() {
@@ -280,6 +314,23 @@ class Fighter extends Sprite {
         setTimeout(() => {
             this.currentAttack = '';
         }, 100);
+    }
+
+    jump() {
+        this.movementVelocity.y = -9;
+        keyPressed[keys.jump] = false;
+        this.availableJumps--;
+
+        console.log(this.canWallJump);
+        if (this.canWallJump) {
+            this.isWallJumping = true;
+            if (this.direction == 0) {
+                this.jumpVelocity.x = -wallJumpXForce;
+            }
+            else {
+                this.jumpVelocity.x = wallJumpXForce;
+            }
+        }
     }
 
     logCoords() {
@@ -302,6 +353,18 @@ class Fighter extends Sprite {
                                 );
         }
 
+        return detectedCollision;
+    }
+
+    checkIsGrounded(mapArray) {
+        var detectedCollision = false;
+
+        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
+            detectedCollision |= checkRectangleCollision(
+                                    this.position.x, this.position.y + this.height, this.width, this.height+1,
+                                    mapArray[i].position.x, mapArray[i].position.y, mapArray[i].width, mapArray[i].height
+                                );
+        }
         return detectedCollision;
     }
 
@@ -331,14 +394,14 @@ class Obstacle extends Sprite {
     }) {
 
         super({
-            position,
-            pixelMultiplier
+            position: position,
+            pixelMultiplier: pixelMultiplier,
+            width: width*pixelMultiplier,
+            height: height*pixelMultiplier
         });
 
         this.color = color;
         this.dropThrough = dropThrough;
-        this.height = height * this.pixelMultiplier;
-        this.width = width * this.pixelMultiplier;
     }
 
     update() {
