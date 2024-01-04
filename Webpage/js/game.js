@@ -5,6 +5,7 @@ ctx.imageSmoothingEnabled = false;
 
 // Constants
 const gravity = 0.2;
+const wallSlideFriction = 0.05;
 const keys = {
   left: 'a',
   right: 'd',
@@ -13,7 +14,8 @@ const keys = {
 };
 const keyPressed = {};
 let lastMoveKeyPressed;
-const horizontalSpeed = 4
+const horizontalSpeed = 4;
+const maxYMovementVelocity = 50;
 
 // Static variables
 let playerInfoDisplays;
@@ -74,10 +76,25 @@ function setupBackground() {
 function setupObstacles() {
   map = [
     new Obstacle({
-      position: { x: 600, y: 400 },
+      position: { x: 200, y: canvas.height-(30*4) },
       height: 30,
-      width: 200
-    })
+      width: (canvas.width-450)/4
+    }),
+    new Obstacle({
+      position: { x: 400, y: 600 },
+      height: 45,
+      width: 20
+    }),
+    new Obstacle({
+      position: { x: 800, y: 400 },
+      height: 80,
+      width: 20
+    }),
+    new Obstacle({
+      position: { x: 1772, y: 0 },
+      height: canvas.height/4,
+      width: 10
+    }),
   ];
 }
 

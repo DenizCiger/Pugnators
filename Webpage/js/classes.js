@@ -21,6 +21,11 @@ class Sprite {
         this.height = height;
         this.width = width;
 
+        this.top = this.position.y;
+        this.bottomSide = this.position.y + this.height;
+        this.leftSide = this.position.x;
+        this.rightSide = this.position.x + this.width;
+
         if (this.animationData.imageSrc) {
             this.setAnimationData({ imageSrc: this.animationData.imageSrc, offset: this.animationData.offset, numberOfFrames: this.animationData.numberOfFrames });
         }
@@ -148,6 +153,10 @@ class Fighter extends Sprite {
         this.currentAttack = '';
         this.percentage = Math.floor(Math.random() * 400);
 
+        this.canWallJump = false;
+        this.isOnGround = false;
+        this.maxGravityVelocity = maxYMovementVelocity;
+
         this.setState('idle');
     }
 
@@ -200,36 +209,61 @@ class Fighter extends Sprite {
         var previousPosition = {x: this.position.x, y: this.position.y};
 
         this.position.x += this.movementVelocity.x;
-        
 
-        if (this.position.x + this.width >= canvas.width ||
-            this.position.x <= 0 ||
-            checkRectangleCollision(
-                this.position.x, this.position.y, this.width, this.height,
-                map[0].position.x, map[0].position.y, map[0].width, map[0].height
-            )
-        ) {
+        if (this.position.x >= canvas.width) {
+            this.position.x = 0
+        } else if (this.position.x+this.width <= 0) {
+            this.position.x = canvas.width - this.width-1 
+        }
+        if (this.checkCollisionWithWholeMap(map)) {
+
+            if (this.isAgainstAnyWall(map) && this.movementVelocity.y > gravity) {
+                this.canWallJump = true;
+                this.maxGravityVelocity = maxYMovementVelocity * wallSlideFriction;
+            }
+            else {
+                this.canWallJump = false;
+                this.maxGravityVelocity = maxYMovementVelocity;
+            }
+
             this.position.x = previousPosition.x
             this.movementVelocity.x = 0;
+        }
+        else {
+            this.canWallJump = false;
+            this.maxGravityVelocity = maxYMovementVelocity;
         }
 
         this.position.y += this.movementVelocity.y;
 
-        if (this.position.y + this.height >= canvas.height ||
-            checkRectangleCollision(
-                this.position.x, this.position.y, this.width, this.height,
-                map[0].position.x, map[0].position.y, map[0].width, map[0].height
-            )
-        ) {
+        if (this.position.y + this.height >= canvas.height) {
+            this.position.y = 0;
+        }
+        
+        if (this.checkCollisionWithWholeMap(map)) {
             this.position.y = previousPosition.y
             this.movementVelocity.y = 0;
 
             if (!this.checkBottomMapCollision(map[0]) || this.position.y + this.height >= canvas.height) {
                 this.availableJumps = 2;
+                this.isOnGround = true;
+            }
+            else {
+                this.isOnGround = false;
             }
 
         } else {
-            this.movementVelocity.y += gravity;
+            this.isOnGround = false;
+            if (this.movementVelocity.y + gravity < this.maxGravityVelocity) {
+                if (!this.canWallJump) {
+                    this.movementVelocity.y += gravity;
+                }
+                else {
+                    this.movementVelocity.y += gravity * wallSlideFriction;
+                }
+            } else {
+                this.movementVelocity.y = this.maxGravityVelocity
+            }
         }     
     }
 
@@ -255,16 +289,34 @@ class Fighter extends Sprite {
     }
 
     checkBottomMapCollision(ground) {
-        let bottomSide = this.position.y+this.height;
-        return bottomSide >= ground.position.y + ground.height;
+        return this.bottomSide >= ground.position.y + ground.height;
     }
 
-    isOnGround(ground) {
-        let bottomSide = this.position.y+this.height
+    checkCollisionWithWholeMap(mapArray) {
+        var detectedCollision = false;
 
-        return bottomSide >= ground.position.y && 
-        player.bottomSide <= ground.position.y
-        // && player.ySpeed <= 0
+        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
+            detectedCollision |= checkRectangleCollision(
+                                    this.position.x, this.position.y, this.width, this.height,
+                                    mapArray[i].position.x, mapArray[i].position.y, mapArray[i].width, mapArray[i].height
+                                );
+        }
+
+        return detectedCollision;
+    }
+
+    isAgainstAnyWall(mapArray) {
+        var detectedCollision = false;
+        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
+            detectedCollision |= this.isAgainstWall(mapArray[i]);
+        }
+
+        return detectedCollision;
+    }
+
+    isAgainstWall(wall) {
+        return (this.rightSide >= wall.leftSide && this.leftSide <= wall.leftSide) ||
+        (this.leftSide <= wall.rightSide && this.rightSide >= wall.rightSide)
     }
 }
 
