@@ -317,6 +317,15 @@
                 }
             }
         }
+
+        function showContent(sectionId) {
+            toggleTableOfContents()
+
+            var section = document.querySelector(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     </script>    
 </body>
 </html>
