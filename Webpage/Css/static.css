@@ -135,3 +135,13 @@ body {
         transform: translateY(0);
     }
 }
+
+.logo-list {
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+
+.logo-item{
+    text-align: center;
+}
