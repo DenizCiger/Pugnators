@@ -136,12 +136,12 @@ body {
     }
 }
 
-.logo-list {
+.example-list {
     flex-wrap: wrap;
     list-style: none;
     padding: 0;
 }
 
-.logo-item{
+.example-item{
     text-align: center;
 }
