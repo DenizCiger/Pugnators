@@ -367,7 +367,7 @@
             const content = document.getElementById('content');
             // const collapseButton = document.getElementById('collapse');
     
-            if (window.innerWidth <= 750) {
+            if (window.innerWidth <= 1100) {
                 if (isCollapsed) {
                     toc.style.transform = 'translateX(0%)';
                     content.style.display = 'none';
@@ -385,7 +385,7 @@
         function resize() {
             const toc = document.getElementById('table-of-contents');
 
-            if(window.innerWidth > 750)
+            if(window.innerWidth > 1100)
             {
                 toc.style.display = 'grid';
                 toc.style.transform = 'translateX(0%)';
