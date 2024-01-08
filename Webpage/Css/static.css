@@ -112,11 +112,11 @@ body {
     }
 
     #table-of-contents li a {
-        font-size: 3.2vw;
+        font-size: 3vw;
     }
 
     #table-of-contents li a:hover {
-        font-size: 3.5vw;
+        font-size: 3.2vw;
     }
 
     #table-of-contents ul {
