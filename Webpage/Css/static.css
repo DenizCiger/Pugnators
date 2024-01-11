@@ -93,6 +93,10 @@ body {
         padding-top: 2rem;
     }
 
+    h3 {
+        padding-top: 2rem;
+    }
+    
     #content {
         font-size: 3vw;
         margin: auto;
