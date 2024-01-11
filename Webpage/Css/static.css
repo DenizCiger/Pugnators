@@ -80,7 +80,7 @@ body {
     position: fixed;
     transform: translateY(-100%);
     transition: 0.2s ease-in;
-    z-index: 1000;
+    z-index: 1;
 }
 
 .collapse:hover {
@@ -91,6 +91,10 @@ body {
     #content {
         font-size: 3vw;
         margin: auto;
+    }
+
+    img {
+        max-width: 90%;
     }
     
     body {
@@ -133,6 +137,7 @@ body {
 
     .collapse{
         transform: translateY(0);
+        margin-bottom: 2rem;
     }
 }
 
