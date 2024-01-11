@@ -11,6 +11,10 @@ html {
     display: grid;
 }
 
+#content h2 {
+    text-decoration: underline;
+}
+
 #table-of-contents {
     width: max-content;
     display: grid;
