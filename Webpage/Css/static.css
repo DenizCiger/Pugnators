@@ -34,7 +34,7 @@ p {
     font-family: 'Red Hat Mono', monospace;
 }
 
-#table-of-contents, #content h1, #content h2, #content h3{
+#table-of-contents, #content h1{
     text-shadow:0 0 30px rgb(153, 148, 190);
 }
 
