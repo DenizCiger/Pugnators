@@ -35,7 +35,7 @@ p {
 }
 
 #table-of-contents, #content h1{
-    text-shadow:0 0 30px rgb(153, 148, 190);
+    text-shadow:0 0 30px rgba(125, 119, 162, 1);
 }
 
 #table-of-contents {
