@@ -34,6 +34,10 @@ p {
     font-family: 'Red Hat Mono', monospace;
 }
 
+#table-of-contents, #content h1, #content h2, #content h3{
+    text-shadow:0 0 30px rgb(153, 148, 190);
+}
+
 #table-of-contents {
     width: max-content;
     display: grid;
@@ -41,9 +45,8 @@ p {
     grid-column: 1;
     transform: translateX(0%);
     overflow: auto;
-    top: 2rem;
+    padding-top: 2rem;
     transition: transform 0.4s ease-out;
-    text-shadow:0 0 30px rgb(153, 148, 190);
 }
 
 #table-of-contents-list{
@@ -85,9 +88,10 @@ body {
     grid-template-columns: 30% auto;
     margin: 0px;
     transition: background-color 0.5s;
-    color:white;    
-    background: rgb(13, 11, 22);
-    background: linear-gradient(0deg, rgba(13, 11, 22, 1) 0%, rgba(23, 21, 38, 1) 100%);
+    color:white;
+    background: rgb(29, 25, 50);
+    background: linear-gradient(0deg, rgba(13, 11, 22, 1) 0%, rgb(33, 30, 55) 100%);
+    
 }
 
 .collapse {
@@ -147,6 +151,7 @@ body {
     body {
         display: flex;
         justify-content: center;
+        transition: opacity 0.5s;
     }
     
     #table-of-contents {
@@ -188,7 +193,8 @@ body {
     }
 
     body.toc-visible {
-        background: rgb(13, 11, 22);
+        background: linear-gradient(rgba(29, 25, 50, 1) 0%, rgba(29, 25, 50, 1) 100%);
+        
     }
 }
 
