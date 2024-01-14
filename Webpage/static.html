@@ -383,22 +383,25 @@
         function toggleTableOfContents() {
             const toc = document.getElementById('table-of-contents');
             const content = document.getElementById('content');
-            // const collapseButton = document.getElementById('collapse');
-    
+            const body = document.body;
+
             if (window.innerWidth <= 1100) {
                 if (isCollapsed) {
                     toc.style.transform = 'translateX(0%)';
                     content.style.display = 'none';
                     toc.style.display = 'flex';
+                    body.classList.add('toc-visible'); // Add class when ToC is visible
                 } else {
                     toc.style.transform = 'translateX(-100%)';
                     content.style.display = 'block';
                     toc.style.display = 'none';
+                    body.classList.remove('toc-visible'); // Remove class when ToC is not visible
                 }
             }
-    
+
             isCollapsed = !isCollapsed; // Toggle collapsed state variable
         }
+
 
         function resize() {
             const toc = document.getElementById('table-of-contents');
