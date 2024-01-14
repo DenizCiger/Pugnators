@@ -11,6 +11,18 @@ html {
     display: grid;
 }
 
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+p {
+  font-size: 20px;
+}
+
 #content h1 {
     text-decoration: underline;
 }
@@ -93,13 +105,28 @@ body {
 
 @media (max-width: 1100px) {
     
-    content h1, h2, h3 {
+    #content h1, #content h2, #content h3 {
         padding-top: 2rem;
     }
     
     #content {
-        font-size: 3vw;
         margin: auto;
+    }
+
+    #content p {
+        font-size: 2.5vw;
+    }
+
+    #content h1{
+        font-size: 5vw;
+    }
+
+    #content h2{
+        font-size: 4vw;
+    }
+
+    #content h3{
+        font-size: 3vw;
     }
 
     img {
