@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@300&display=swap');
+
 html {
     scroll-behavior: smooth;
     font-family: Arial, Helvetica, sans-serif;
@@ -25,6 +27,7 @@ p {
 
 #content h1 {
     text-decoration: underline;
+    font-family: 'Red Hat Mono', monospace;
 }
 
 #table-of-contents {
@@ -40,11 +43,13 @@ p {
 
 #table-of-contents-list{
     padding-left: 2vw;
+    padding-top: 2rem;
+    margin: 0;
 }
 
 #table-of-contents h1 {
     top: 2vw;
-    margin: 2vh 2vw;
+    margin: 0 2vw;
     font-size: 1.5vw;
 }
 
