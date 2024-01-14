@@ -85,8 +85,8 @@ body {
     margin: 0px;
     transition: background-color 0.5s;
     color:white;
-    background: rgb(0,0,4);
-    background: linear-gradient(0deg, rgb(33, 33, 69) 0%, rgb(54, 50, 99) 100%);
+    background: rgb(11,10,19);
+    background: linear-gradient(0deg, rgba(11,10,19,1) 0%, rgba(28,26,48,1) 100%);
 }
 
 .collapse {
