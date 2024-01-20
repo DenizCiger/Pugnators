@@ -10,7 +10,6 @@ function getPlayerColor(index) {
   }
   
   function updateAnimations() {
-    window.requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background.update();
     // players[0].logCoords()

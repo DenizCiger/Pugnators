@@ -17,6 +17,7 @@ const keyPressed = {};
 let lastMoveKeyPressed;
 const horizontalSpeed = 4;
 const maxYMovementVelocity = 50;
+const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
 let playerInfoDisplays;
@@ -45,6 +46,10 @@ function animate() {
   }
 
   updatePercentageDisplays();
+
+  setTimeout(() => {
+    animate();
+  }, gameSpeed/10);
 }
 
 // Setup functions
