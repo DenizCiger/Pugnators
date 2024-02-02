@@ -346,7 +346,7 @@ section {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
   position: relative;
   color: #173b6c;
 }
@@ -355,7 +355,7 @@ section {
   font-size: 48px;
   font-weight: bold;
   margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
   position: relative;
   color: #173b6c;
 }
