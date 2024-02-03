@@ -1,0 +1,2 @@
+idle.png;10
+run.png;5
