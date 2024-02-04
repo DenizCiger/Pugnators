@@ -43,17 +43,17 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/idle.png',
-            numberOfFrames: 4,
+            numberOfFrames: 5,
             offset: { x: 6, y: 0 },
-            framesHold: 15
+            framesHold: 11
         },
         {
             actionName: 'running',
             isAttack: false,
-            animationSrc: './images/Game-Textures/Characters/Nerd/animations/walk.png',
-            numberOfFrames: 11,
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/run.png',
+            numberOfFrames: 8,
             offset: { x: 10, y: 0 },
-            framesHold: 5
+            framesHold: 10
         },
         {
             actionName: 'nlight',

@@ -82,7 +82,8 @@ function setupObstacles() {
     new Obstacle({
       position: { x: 200, y: canvas.height-(30*4) },
       height: 30,
-      width: (canvas.width-450)/4
+      // width: (canvas.width-450)/4
+      width: 400
     }),
     new Obstacle({
       position: { x: 800, y: 500 },

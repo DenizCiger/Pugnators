@@ -184,7 +184,7 @@ class Fighter extends Sprite {
         }
 
         this.draw();
-        this.drawHitbox();
+        // this.drawHitbox();
 
         if (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) {
                 this.isAttacking = false;
@@ -321,7 +321,7 @@ class Fighter extends Sprite {
         keyPressed[keys.jump] = false;
         this.availableJumps--;
 
-        console.log(this.canWallJump);
+        // console.log(this.canWallJump);
         if (this.canWallJump) {
             this.isWallJumping = true;
             if (this.direction == 0) {
