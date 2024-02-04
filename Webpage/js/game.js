@@ -16,8 +16,8 @@ const keys = {
 const keyPressed = {};
 let lastMoveKeyPressed;
 const horizontalAcceleration = .8;
-const airResistance = 0.0001;
-const groundFriction = 0.1;
+const airResistance = 1;
+const groundFriction = .5;
 const maxYMovementVelocity = 50;
 const maxXMovementVelocity = 7;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
@@ -41,7 +41,7 @@ function animate() {
     players[0].movementVelocity.x += horizontalAcceleration;
   } else {
     if (players[0].checkIsGrounded(map)) {
-      players[0].drawHitbox();
+      // players[0].drawHitbox();
     }
     players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(map) ? groundFriction : airResistance);
   }

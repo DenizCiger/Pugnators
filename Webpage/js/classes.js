@@ -160,6 +160,7 @@ class Fighter extends Sprite {
         this.isOnGround = false;
         this.maxGravityVelocity = maxYMovementVelocity;
 
+        this.hitboxes = [];
         this.setState('idle');
     }
 
@@ -189,8 +190,9 @@ class Fighter extends Sprite {
             this.flipHorizontally = false
         }
 
+        this.updateHitboxes();
         this.draw();
-        // this.drawHitbox();
+        this.drawHitbox();
 
         if (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) {
                 this.isAttacking = false;
@@ -220,6 +222,26 @@ class Fighter extends Sprite {
         this.bottomSide = this.position.y + this.height;
         this.leftSide = this.position.x;
         this.rightSide = this.position.x + this.width;
+    }
+
+    updateHitboxes() {
+        this.hitboxes = [
+            new Hitbox ({
+                position: this.position,
+                height: this.height,
+                width: this.width,
+                color: 'cyan'
+            }),
+            new Hitbox ({
+                position: {
+                    x: this.position.x,
+                    y: this.position.y+this.height-5
+                },
+                height: 5,
+                width: this.width,
+                color: 'blue'
+            }),
+        ]
     }
 
     updateVelocities() {
@@ -318,12 +340,9 @@ class Fighter extends Sprite {
     }
 
     drawHitbox() {
-        ctx.fillStyle = 'cyan';
-        ctx.globalAlpha = 0.5
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height); // Base hitbox
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(this.position.x, this.position.y+this.height-10, this.width, 10); // Foot hitbox
-        ctx.globalAlpha = 1
+        for (let i = 0; i < this.hitboxes.length; i++) {
+            this.hitboxes[i].draw();
+        }
     }
 
     attack(attackType) {
@@ -404,7 +423,6 @@ class Obstacle extends Sprite {
     constructor({
         position = { x: 0, y: 0 },
         pixelMultiplier = 4,
-        color = 'purple',
         dropThrough = false,
         height = 10,
         width = 40,
@@ -417,8 +435,15 @@ class Obstacle extends Sprite {
             height: height*pixelMultiplier
         });
 
-        this.color = color;
         this.dropThrough = dropThrough;
+        this.hitboxes = [
+            new Hitbox ({
+                position: this.position,
+                height: this.height,
+                width: this.width,
+                color: 'purple'
+            }),
+        ]
     }
 
     update() {
@@ -427,6 +452,27 @@ class Obstacle extends Sprite {
     }
 
     drawHitbox() {
+        for (let i = 0; i < this.hitboxes.length; i++) {
+            this.hitboxes[i].draw();
+        }
+    }
+}
+
+class Hitbox {
+    constructor ({
+        position = { x: 0, y: 0 },
+        height = 10,
+        width = 10,
+        color = 'blue'
+    }) {
+        this.position = position;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+
+    }
+
+    draw () {
         ctx.fillStyle = this.color;
         ctx.globalAlpha = 0.5
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
