@@ -14,12 +14,12 @@ function getPlayerColor(index) {
     background.update();
     // players[0].logCoords()
   
-    for (let i = 0; i < players.length; i++) {
-      players[i].update();
-    }
-  
     for (let i = 0; i < map.length; i++) {
       map[i].update();
+    }
+
+    for (let i = 0; i < players.length; i++) {
+      players[i].update();
     }
   }
   

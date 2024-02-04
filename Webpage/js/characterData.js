@@ -8,9 +8,9 @@ const characterData = {
         {
             actionName: 'idle',
             isAttack: false,
-            animationSrc: './images/Game-Textures/Characters/Troller/Troller.png',
-            numberOfFrames: 1,
-            offset: { x: 6, y: 0 },
+            animationSrc: './images/Game-Textures/Characters/Troller/Animations/idle.png',
+            numberOfFrames: 8,
+            offset: { x: 7, y: 0 },
             framesHold: 10
             // Other ability details
         },
@@ -52,8 +52,8 @@ const characterData = {
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/run.png',
             numberOfFrames: 8,
-            offset: { x: 10, y: 0 },
-            framesHold: 10
+            offset: { x: 5, y: 2 },
+            framesHold: 7
         },
         {
             actionName: 'nlight',

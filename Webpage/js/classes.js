@@ -177,6 +177,12 @@ class Fighter extends Sprite {
     }
 
     update() {
+        if (this.movementVelocity.x > 0) {
+            this.direction = 0;
+        } else if (this.movementVelocity.x < 0) {
+            this.direction = 180;
+        }
+
         if (this.direction == 180) {
             this.flipHorizontally = true;
         } else {
@@ -218,6 +224,16 @@ class Fighter extends Sprite {
 
     updateVelocities() {
         var previousPosition = {x: this.position.x, y: this.position.y};
+
+        if (this.movementVelocity.x > maxXMovementVelocity) {
+            this.movementVelocity.x = maxXMovementVelocity;
+        } else if (this.movementVelocity.x < -maxXMovementVelocity) {
+            this.movementVelocity.x = -maxXMovementVelocity;
+        }
+
+        if (Math.abs(this.movementVelocity.x) < horizontalAcceleration) {
+            this.movementVelocity.x = 0;
+        }
         
         this.fullVelocity.x = this.jumpVelocity.x + this.movementVelocity.x + this.knockbackVelocity.x;
         this.fullVelocity.y = this.jumpVelocity.y + this.movementVelocity.y + this.knockbackVelocity.y;
@@ -302,9 +318,11 @@ class Fighter extends Sprite {
     }
 
     drawHitbox() {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = 'cyan';
         ctx.globalAlpha = 0.5
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height); // Base hitbox
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(this.position.x, this.position.y+this.height-10, this.width, 10); // Foot hitbox
         ctx.globalAlpha = 1
     }
 
@@ -321,7 +339,6 @@ class Fighter extends Sprite {
         keyPressed[keys.jump] = false;
         this.availableJumps--;
 
-        // console.log(this.canWallJump);
         if (this.canWallJump) {
             this.isWallJumping = true;
             if (this.direction == 0) {

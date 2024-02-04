@@ -15,8 +15,11 @@ const keys = {
 };
 const keyPressed = {};
 let lastMoveKeyPressed;
-const horizontalSpeed = 4;
+const horizontalAcceleration = .8;
+const airResistance = 0.0001;
+const groundFriction = 0.1;
 const maxYMovementVelocity = 50;
+const maxXMovementVelocity = 7;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
@@ -31,14 +34,16 @@ let players;
 // Animation function
 function animate() {
   updateAnimations();
-  players[0].movementVelocity.x = 0;
-
+  
   if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
-    players[0].movementVelocity.x = -horizontalSpeed;
-    players[0].direction = 180;
+    players[0].movementVelocity.x -= horizontalAcceleration;
   } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
-    players[0].movementVelocity.x = horizontalSpeed;
-    players[0].direction = 0;
+    players[0].movementVelocity.x += horizontalAcceleration;
+  } else {
+    if (players[0].checkIsGrounded(map)) {
+      players[0].drawHitbox();
+    }
+    players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(map) ? groundFriction : airResistance);
   }
 
   if (keyPressed[keys.jump] && players[0].availableJumps > 0) {
@@ -80,33 +85,36 @@ function setupBackground() {
 function setupObstacles() {
   map = [
     new Obstacle({
-      position: { x: 200, y: canvas.height-(30*4) },
+      position: { x: 0, y: canvas.height-(30*4) },
+      // position: { x: 200, y: canvas.height-(30*4) },
       height: 30,
-      // width: (canvas.width-450)/4
-      width: 400
+      width: canvas.width/4
+      // width: 400
     }),
-    new Obstacle({
-      position: { x: 800, y: 500 },
-      height: 65,
-      width: 20
-    }),
-    new Obstacle({
-      position: { x: 1772, y: 0 },
-      height: canvas.height/4,
-      width: 10
-    }),
+    // new Obstacle({
+    //   position: { x: 800, y: 500 },
+    //   height: 65,
+    //   width: 20
+    // }),
+    // new Obstacle({
+    //   position: { x: 1772, y: 0 },
+    //   height: canvas.height/4,
+    //   width: 10
+    // }),
   ];
 }
 
 function setupPlayers() {
-  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  // playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  playerCharacters = ['Nerd', 'Troller'];
   // playerCharacters = ['Nerd'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({
       characterType: character,
       position: { x: 200+index*500, y: 100 },
-      color: getPlayerColor(index)
+      // color: getPlayerColor(index)
+      color: 'blue'
     });
   });
 }
