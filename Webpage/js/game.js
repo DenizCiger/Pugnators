@@ -91,16 +91,16 @@ function setupObstacles() {
       width: canvas.width/4
       // width: 400
     }),
-    // new Obstacle({
-    //   position: { x: 800, y: 500 },
-    //   height: 65,
-    //   width: 20
-    // }),
-    // new Obstacle({
-    //   position: { x: 1772, y: 0 },
-    //   height: canvas.height/4,
-    //   width: 10
-    // }),
+    new Obstacle({
+      position: { x: 800, y: 500 },
+      height: 65,
+      width: 20
+    }),
+    new Obstacle({
+      position: { x: 1772, y: 0 },
+      height: canvas.height/4,
+      width: 10
+    }),
   ];
 }
 
