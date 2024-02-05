@@ -1,8 +1,45 @@
 const actionIndexMap = {
-    'idle': 0,
-    'running': 2,
-    'nlight': 11,
-  };
+    // Movement
+    'idle':       0,
+    'walking':    1,
+    'running':    2,
+    'jumping':    3,
+    'falling':    4,
+    // Light Attacks
+    'nlight':    11,
+    'slight':    12,
+    'dlight':    13,
+    'ulight':    14,
+    // Air Attacks
+    'nair':      21,
+    'sair':      22,
+    'dair':      23,
+    'uair':      24,
+    // Heavy Attacks
+    'sheavy':    32,
+    'dheavy':    33,
+    'uheavy':    34,
+    // Special Attacks
+    'nspecial':  41,
+    'sspecial':  42,
+    'dspecial':  43,
+    'uspecial':  44,
+    // Interaction
+    'spawn':     50,
+    'damaged':   51,
+    'hang':      52,
+    'pickup':    53,
+    'grab':      54,
+    'block':     55,
+    'dodge':     56,
+    // EndGame
+    'win':       61,
+    'lose':      62,
+    // Emotes
+    'emote1':   101,
+    'emote2':   102,
+    'emote3':   103,
+};
 
 const characterData = {
     'Troller': [
