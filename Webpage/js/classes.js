@@ -161,6 +161,7 @@ class Fighter extends Sprite {
         this.maxGravityVelocity = maxYMovementVelocity;
 
         this.hitboxes = [];
+        this.againstWall = 0;
         this.setState('idle');
     }
 
@@ -178,28 +179,16 @@ class Fighter extends Sprite {
     }
 
     update() {
-        if (this.movementVelocity.x > 0) {
-            this.direction = 0;
-        } else if (this.movementVelocity.x < 0) {
-            this.direction = 180;
-        }
-
-        if (this.direction == 180) {
-            this.flipHorizontally = true;
-        } else {
-            this.flipHorizontally = false
-        }
+        this.direction = this.movementVelocity.x > 0 ? 0 : (this.movementVelocity.x < 0 ? 180 : this.direction);
+        this.flipHorizontally = (this.direction == 180);
 
         this.updateHitboxes();
         this.draw();
         this.drawHitbox();
 
-        if (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) {
-                this.isAttacking = false;
-        }
+        this.isAttacking = (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) ? false : this.isAttacking;
 
         this.animateFrames();
-        this.updateSides()
 
         if (!this.isLoadingImage) {
             if (!this.isAttacking) {
@@ -217,126 +206,112 @@ class Fighter extends Sprite {
         this.updateVelocities()
     }
 
-    updateSides() {
-        this.topSide = this.position.y;
-        this.bottomSide = this.position.y + this.height;
-        this.leftSide = this.position.x;
-        this.rightSide = this.position.x + this.width;
-    }
-
     updateHitboxes() {
         this.hitboxes = [
+            /* Base */
             new Hitbox ({
                 position: this.position,
                 height: this.height,
                 width: this.width,
                 color: 'cyan'
             }),
+            /* Foot */
             new Hitbox ({
                 position: {
                     x: this.position.x,
                     y: this.position.y+this.height-5
                 },
-                height: 5,
+                height: 10,
                 width: this.width,
                 color: 'blue'
+            }),
+            /* Left Side */
+            new Hitbox ({
+                position: {
+                    x: this.position.x-5,
+                    y: this.position.y
+                },
+                height: this.height,
+                width: 10,
+                color: 'green'
+            }),
+            /* Right Side */
+            new Hitbox ({
+                position: {
+                    x: this.position.x+this.width-5,
+                    y: this.position.y
+                },
+                height: this.height,
+                width: 10,
+                color: 'green'
             }),
         ]
     }
 
     updateVelocities() {
+        /* Saving position before collision */
         var previousPosition = {x: this.position.x, y: this.position.y};
 
-        if (this.movementVelocity.x > maxXMovementVelocity) {
-            this.movementVelocity.x = maxXMovementVelocity;
-        } else if (this.movementVelocity.x < -maxXMovementVelocity) {
-            this.movementVelocity.x = -maxXMovementVelocity;
-        }
+        /* Limiting the horizontal movement velocity */
+        this.movementVelocity.x = Math.max(-maxXMovementVelocity, Math.min(this.movementVelocity.x, maxXMovementVelocity));
 
-        if (Math.abs(this.movementVelocity.x) < horizontalAcceleration) {
-            this.movementVelocity.x = 0;
-        }
-        
+        /* Set horizontal movement velocity to zero if it's below the acceleration threshold */
+        this.movementVelocity.x = Math.abs(this.movementVelocity.x) < horizontalAcceleration ? 0 : this.movementVelocity.x;
+
+        /* Calculating overall velocity to apply */
         this.fullVelocity.x = this.jumpVelocity.x + this.movementVelocity.x + this.knockbackVelocity.x;
         this.fullVelocity.y = this.jumpVelocity.y + this.movementVelocity.y + this.knockbackVelocity.y;
 
+        /* Updating X-Position */
         this.position.x += this.fullVelocity.x;
 
-        if (this.position.x >= canvas.width) {
-            this.position.x = 0
-        } else if (this.position.x+this.width <= 0) {
-            this.position.x = canvas.width - this.width-1 
-        }
+        /* Wrap around horizontally when reaching canvas boundaries */
+        this.position.x = this.position.x >= canvas.width ? 0 : (this.position.x + this.width <= 0 ? canvas.width - this.width - 1 : this.position.x);
+
+        /* Handle collision with the map */
         if (this.checkCollisionWithWholeMap(map)) {
+            this.canWallJump = this.movementVelocity.y > gravity; // TODO: Find out why tf everything breaks when I move this???
+            this.maxGravityVelocity = this.canWallJump ? maxYMovementVelocity * wallSlideFriction : maxYMovementVelocity;
+            this.availableJumps = this.canWallJump ? 2 : 0;
 
-            if (
-                this.movementVelocity.y > gravity
-            ) {
-                this.canWallJump = true;
-                this.maxGravityVelocity = maxYMovementVelocity * wallSlideFriction;
-                this.availableJumps = 2;
-            }
-            else {
-                this.canWallJump = false;
-                this.maxGravityVelocity = maxYMovementVelocity;
-            }
-
-            this.position.x = previousPosition.x
-            this.movementVelocity.x = 0;
-            this.jumpVelocity.x = 0;
-            this.knockbackVelocity.x *= -1;
+            this.position.x = this.checkCollisionWithWholeMap(map) ? previousPosition.x : this.position.x;
+            this.movementVelocity.x = this.jumpVelocity.x = 0;
+            this.knockbackVelocity.x *= -this.checkCollisionWithWholeMap(map);
         }
         else {
             this.canWallJump = false;
             this.maxGravityVelocity = maxYMovementVelocity;
         }
 
+        /* Updating Y-Position */
         this.position.y += this.fullVelocity.y;
 
-        if (this.position.y >= canvas.height) {
-            this.position.y = 0;
-        }
-        else if (this.position.y+this.height <= 0) {
-            this.position.y = canvas.height-1;
-        }
+        /* Wrap around vertically when reaching canvas boundaries */
+        this.position.y = this.position.y >= canvas.height ? 0 : (this.position.y + this.height <= 0 ? canvas.height - 1 : this.position.y);
         
+        /* Handle collision with the map */
         if (this.checkCollisionWithWholeMap(map)) {
-            this.position.y = previousPosition.y
-            this.movementVelocity.y = 0;
-            this.jumpVelocity.y = 0;
+            this.position.y = previousPosition.y;
+            this.movementVelocity.y = this.jumpVelocity.y = 0;
             this.knockbackVelocity.y *= -1;
 
-            if (!this.checkBottomMapCollision(map[0]) || this.position.y + this.height >= canvas.height) {
+            if (this.checkIsGrounded(map)) {
                 this.availableJumps = 2;
                 this.isOnGround = true;
                 this.jumpVelocity.x = 0;
-            }
-            else {
+            } else {
                 this.isOnGround = false;
             }
-
         } else {
-            if (this.checkIsGrounded(map)) {
-            } else {
-                this.isOnGround = false;
-            }
-            if (this.movementVelocity.y + gravity < this.maxGravityVelocity) {
-                if (!this.canWallJump) {
-                    this.movementVelocity.y += gravity;
-                }
-                else {
-                    this.movementVelocity.y += gravity * wallSlideFriction;
-                }
-            } else {
-                this.movementVelocity.y = this.maxGravityVelocity
-            }
+            this.isOnGround = !this.checkIsGrounded(map);
+            this.movementVelocity.y += (!this.canWallJump ? gravity : gravity * wallSlideFriction);
+            this.movementVelocity.y = Math.min(this.movementVelocity.y, this.maxGravityVelocity);
         }
 
-        this.jumpVelocity.x *= 0.96;
+        this.jumpVelocity.x *= 0.96; // TODO: Find out what this is and why
 
-        if (Math.abs(this.jumpVelocity.x) < 0.5) {
-            this.jumpVelocity.x = 0
-        }
+        /* Set horizontal velocity from walljumps to zero if it's below the acceleration threshold */
+        this.jumpVelocity.x = (Math.abs(this.jumpVelocity.x) < 0.5) ? 0 : this.jumpVelocity.x;
     }
 
     drawHitbox() {
@@ -353,57 +328,39 @@ class Fighter extends Sprite {
         }, 100);
     }
 
+    // Handle jumping logic
     jump() {
+        // Initiate jump action
         this.movementVelocity.y = -9;
         keyPressed[keys.jump] = false;
         this.availableJumps--;
 
+        // Check for wall jump
         if (this.canWallJump) {
+            console.log(this.againstWall); // TODO: find out why 'againstWall' is 0
             this.isWallJumping = true;
-            if (this.direction == 0) {
-                this.jumpVelocity.x = -wallJumpXForce;
-            }
-            else {
-                this.jumpVelocity.x = wallJumpXForce;
-            }
+            this.jumpVelocity.x = this.againstWall * wallJumpXForce;
         }
     }
 
+    // Send coordinate info to Console
     logCoords() {
         console.log("X: {0} Y:{1}", this.position.x, this.position.y)
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
 
-    checkBottomMapCollision(ground) {
-        return this.bottomSide >= ground.position.y + ground.height;
-    }
-
+    // Check for collision between hitbox and map elements
     checkCollisionWithWholeMap(mapArray) {
-        var detectedCollision = false;
-
-        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
-            detectedCollision |= checkRectangleCollision(
-                                    this.position.x, this.position.y, this.width, this.height,
-                                    mapArray[i].position.x, mapArray[i].position.y, mapArray[i].width, mapArray[i].height
-                                );
-        }
-
-        return detectedCollision;
+        return mapArray.some(element => this.hitboxes[0].collidesWith(element));
     }
 
+    // Check for collision between hitbox and mapArray elements
     checkIsGrounded(mapArray) {
-        var detectedCollision = false;
-
-        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
-            detectedCollision |= checkRectangleCollision(
-                                    this.position.x, this.position.y + this.height, this.width, this.height+1,
-                                    mapArray[i].position.x, mapArray[i].position.y, mapArray[i].width, mapArray[i].height
-                                );
-        }
-        return detectedCollision;
+        return mapArray.some(element => this.hitboxes[1].collidesWith(element));
     }
 
+    // Player standing close to any wall
     isAgainstAnyWall(mapArray) {
         var detectedCollision = false;
         for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
@@ -413,9 +370,19 @@ class Fighter extends Sprite {
         return detectedCollision;
     }
 
+    // Player standing close to a certain wall
     isAgainstWall(wall) {
-        return (this.rightSide >= wall.leftSide && this.leftSide <= wall.leftSide) ||
-        (this.leftSide <= wall.rightSide && this.rightSide >= wall.rightSide)
+        /* Wall on the side */
+        if (this.hitboxes[2].collidesWith(wall) || this.hitboxes[3].collidesWith(wall)) {
+            this.againstWall = this.hitboxes[2].collidesWith(wall) ? -1 : 1;
+            canWallJump = true;
+            return true;
+        }
+        
+        /* No Wall collision */
+        this.againstWall = 0;
+        return false;
+        
     }
 }
 
@@ -452,9 +419,7 @@ class Obstacle extends Sprite {
     }
 
     drawHitbox() {
-        for (let i = 0; i < this.hitboxes.length; i++) {
-            this.hitboxes[i].draw();
-        }
+        this.hitboxes.forEach(hitbox => hitbox.draw());
     }
 }
 
@@ -477,5 +442,19 @@ class Hitbox {
         ctx.globalAlpha = 0.5
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         ctx.globalAlpha = 1
+    }
+
+    collidesWith(other) {
+        if (
+            this.position.x < other.position.x + other.width &&
+            this.position.x + this.width > other.position.x &&
+            this.position.y < other.position.y + other.height &&
+            this.position.y + this.height > other.position.y
+          ) {
+          return true;
+        }
+        else {
+          return false;
+        }
     }
 }
