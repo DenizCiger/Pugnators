@@ -1,3 +1,9 @@
+const actionIndexMap = {
+    'idle': 0,
+    'running': 2,
+    'nlight': 11,
+  };
+
 const characterData = {
     'Troller': [
         {

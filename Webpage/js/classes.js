@@ -37,17 +37,12 @@ class Sprite {
         numberOfFrames = 1,
         framesHold = 5
     }) {
-        this.isLoadingImage = true; // Set loading flag before starting image load
         this.currentFrame = 0;
 
         this.animationData.imageSrc = imageSrc;
         this.animationData.offset = offset;
         this.animationData.numberOfFrames = numberOfFrames;
         this.animationData.framesHold = framesHold;
-
-        this.image.onload = () => {
-            this.isLoadingImage = false; // Reset loading flag when image is loaded
-        };
 
         this.image.src = imageSrc;
     }
@@ -137,7 +132,7 @@ class Fighter extends Sprite {
         this.state = 'info';
         this.characterType = characterType;
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
-
+        
         this.scale = this.action.scale * pixelMultiplier;
         this.movementVelocity = { x: 0, y: 0 };
         this.jumpVelocity = { x: 0, y: 0 };
@@ -154,15 +149,36 @@ class Fighter extends Sprite {
         this.isAttacking = false;
         this.currentAttack = '';
         this.percentage = Math.floor(Math.random() * 400);
-
+        
         this.canWallJump = false;
         this.isWallJumping = false;
         this.isOnGround = false;
         this.maxGravityVelocity = maxYMovementVelocity;
+        this.animations = []
 
         this.hitboxes = [];
         this.againstWall = 0;
-        this.setState('idle');
+        this.load()
+        this.setState("idle");
+    }
+
+    load() {
+        var info = characterData[this.characterType]
+
+        for (const [actionName, index] of Object.entries(actionIndexMap)) {
+            const actionDetails = info.find(action => action.actionName === actionName);
+            
+            if (actionDetails) {
+                this.animations[index] = new AnimationSprite ({
+                                                                imageSrc: actionDetails.animationSrc,
+                                                                numberOfFrames: actionDetails.numberOfFrames,
+                                                                offset: actionDetails.offset,
+                                                                framesHold: actionDetails.framesHold
+                                                            });
+            }
+        }
+
+        console.log(this.animations);
     }
 
     setState(newState) {
@@ -190,17 +206,15 @@ class Fighter extends Sprite {
 
         this.animateFrames();
 
-        if (!this.isLoadingImage) {
-            if (!this.isAttacking) {
+        if (!this.isAttacking) {
 
-                if (this.movementVelocity.x !== 0 && this.state !== 'running') {
-                    this.setState('running');
-                } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
-                    this.setState('idle');
-                }
-            } else {
-                this.setState(this.currentAttack);
+            if (this.movementVelocity.x !== 0 && this.state !== 'running') {
+                this.setState('running');
+            } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
+                this.setState('idle');
             }
+        } else {
+            this.setState(this.currentAttack);
         }
         
         this.updateVelocities()
@@ -456,5 +470,25 @@ class Hitbox {
         else {
           return false;
         }
+    }
+}
+
+class AnimationSprite {
+    constructor({
+        imageSrc,
+        numberOfFrames = 1,
+        offset = { x: 0, y: 0 },
+        framesHold = 10,
+        width = -1,
+        height = -1
+    }) {
+        this.numberOfFrames = numberOfFrames;
+        this.offset = offset;
+        this.framesHold = framesHold;
+        this.readSrc = imageSrc;
+        
+        this.image = new Image();
+        this.image.src = this.readSrc;
+        this.width = width > 0 ? width : this.image.width;
     }
 }
