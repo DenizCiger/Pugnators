@@ -186,9 +186,7 @@ class Fighter extends Sprite {
         this.draw();
         this.drawHitbox();
 
-        if (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) {
-                this.isAttacking = false;
-        }
+        this.isAttacking = (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) ? false : this.isAttacking;
 
         this.animateFrames();
 
@@ -257,7 +255,7 @@ class Fighter extends Sprite {
         /* Limiting the horizontal movement velocity */
         this.movementVelocity.x = Math.max(-maxXMovementVelocity, Math.min(this.movementVelocity.x, maxXMovementVelocity));
 
-        /* Set horizontal velocity to zero if it's below the acceleration threshold */
+        /* Set horizontal movement velocity to zero if it's below the acceleration threshold */
         this.movementVelocity.x = Math.abs(this.movementVelocity.x) < horizontalAcceleration ? 0 : this.movementVelocity.x;
 
         /* Calculating overall velocity to apply */
@@ -270,73 +268,50 @@ class Fighter extends Sprite {
         /* Wrap around horizontally when reaching canvas boundaries */
         this.position.x = this.position.x >= canvas.width ? 0 : (this.position.x + this.width <= 0 ? canvas.width - this.width - 1 : this.position.x);
 
-        /* New Position is colliding with something */
+        /* Handle collision with the map */
         if (this.checkCollisionWithWholeMap(map)) {
-            if (this.movementVelocity.y > gravity) {
-                this.maxGravityVelocity = maxYMovementVelocity * wallSlideFriction;
-                this.availableJumps = 2;
-            }
-            else {
-                this.canWallJump = false;
-                this.maxGravityVelocity = maxYMovementVelocity;
-            }
+            this.canWallJump = this.movementVelocity.y > gravity; // TODO: Find out why tf everything breaks when I move this???
+            this.maxGravityVelocity = this.canWallJump ? maxYMovementVelocity * wallSlideFriction : maxYMovementVelocity;
+            this.availableJumps = this.canWallJump ? 2 : 0;
 
-            this.position.x = previousPosition.x
-            this.movementVelocity.x = 0;
-            this.jumpVelocity.x = 0;
-            this.knockbackVelocity.x *= -1;
+            this.position.x = this.checkCollisionWithWholeMap(map) ? previousPosition.x : this.position.x;
+            this.movementVelocity.x = this.jumpVelocity.x = 0;
+            this.knockbackVelocity.x *= -this.checkCollisionWithWholeMap(map);
         }
         else {
             this.canWallJump = false;
             this.maxGravityVelocity = maxYMovementVelocity;
         }
 
+        /* Updating Y-Position */
         this.position.y += this.fullVelocity.y;
 
-        if (this.position.y >= canvas.height) {
-            this.position.y = 0;
-        }
-        else if (this.position.y+this.height <= 0) {
-            this.position.y = canvas.height-1;
-        }
+        /* Wrap around vertically when reaching canvas boundaries */
+        this.position.y = this.position.y >= canvas.height ? 0 : (this.position.y + this.height <= 0 ? canvas.height - 1 : this.position.y);
         
+        /* Handle collision with the map */
         if (this.checkCollisionWithWholeMap(map)) {
-            this.position.y = previousPosition.y
-            this.movementVelocity.y = 0;
-            this.jumpVelocity.y = 0;
+            this.position.y = previousPosition.y;
+            this.movementVelocity.y = this.jumpVelocity.y = 0;
             this.knockbackVelocity.y *= -1;
 
             if (this.checkIsGrounded(map)) {
                 this.availableJumps = 2;
                 this.isOnGround = true;
                 this.jumpVelocity.x = 0;
-            }
-            else {
+            } else {
                 this.isOnGround = false;
             }
-
         } else {
-            if (this.checkIsGrounded(map)) {
-            } else {
-                this.isOnGround = false;
-            }
-            if (this.movementVelocity.y + gravity < this.maxGravityVelocity) {
-                if (!this.canWallJump) {
-                    this.movementVelocity.y += gravity;
-                }
-                else {
-                    this.movementVelocity.y += gravity * wallSlideFriction;
-                }
-            } else {
-                this.movementVelocity.y = this.maxGravityVelocity
-            }
+            this.isOnGround = !this.checkIsGrounded(map);
+            this.movementVelocity.y += (!this.canWallJump ? gravity : gravity * wallSlideFriction);
+            this.movementVelocity.y = Math.min(this.movementVelocity.y, this.maxGravityVelocity);
         }
 
-        this.jumpVelocity.x *= 0.96;
+        this.jumpVelocity.x *= 0.96; // TODO: Find out what this is and why
 
-        if (Math.abs(this.jumpVelocity.x) < 0.5) {
-            this.jumpVelocity.x = 0
-        }
+        /* Set horizontal velocity from walljumps to zero if it's below the acceleration threshold */
+        this.jumpVelocity.x = (Math.abs(this.jumpVelocity.x) < 0.5) ? 0 : this.jumpVelocity.x;
     }
 
     drawHitbox() {
@@ -353,47 +328,39 @@ class Fighter extends Sprite {
         }, 100);
     }
 
+    // Handle jumping logic
     jump() {
+        // Initiate jump action
         this.movementVelocity.y = -9;
         keyPressed[keys.jump] = false;
         this.availableJumps--;
 
+        // Check for wall jump
         if (this.canWallJump) {
+            console.log(this.againstWall); // TODO: find out why 'againstWall' is 0
             this.isWallJumping = true;
-            if (this.againstWall == -1) {
-                this.jumpVelocity.x = -wallJumpXForce;
-            }
-            else if (this.againstWall == 1){
-                this.jumpVelocity.x = wallJumpXForce;
-            }
+            this.jumpVelocity.x = this.againstWall * wallJumpXForce;
         }
     }
 
+    // Send coordinate info to Console
     logCoords() {
         console.log("X: {0} Y:{1}", this.position.x, this.position.y)
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
 
+    // Check for collision between hitbox and map elements
     checkCollisionWithWholeMap(mapArray) {
-        var detectedCollision = false;
-
-        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
-            detectedCollision |= this.hitboxes[0].collidesWith(mapArray[i]);
-        }
-
-        return detectedCollision;
+        return mapArray.some(element => this.hitboxes[0].collidesWith(element));
     }
 
+    // Check for collision between hitbox and mapArray elements
     checkIsGrounded(mapArray) {
-        var detectedCollision = false;
-
-        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
-            detectedCollision |= this.hitboxes[1].collidesWith(mapArray[i]);                
-        }
-        return detectedCollision;
+        return mapArray.some(element => this.hitboxes[1].collidesWith(element));
     }
 
+    // Player standing close to any wall
     isAgainstAnyWall(mapArray) {
         var detectedCollision = false;
         for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
@@ -403,6 +370,7 @@ class Fighter extends Sprite {
         return detectedCollision;
     }
 
+    // Player standing close to a certain wall
     isAgainstWall(wall) {
         /* Wall on the side */
         if (this.hitboxes[2].collidesWith(wall) || this.hitboxes[3].collidesWith(wall)) {
