@@ -48,7 +48,6 @@ class Sprite {
         this.animationData.offset = animationSprite.offset;
         this.animationData.numberOfFrames = animationSprite.numberOfFrames;
         this.animationData.framesHold = animationSprite.framesHold;
-        console.log(this.animationData);
     }
     
     animateFrames() {
@@ -184,9 +183,7 @@ class Fighter extends Sprite {
     // Set the state of the character
     setState(newState) {
         this.state = newState;
-        console.log(this.state);
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
-        console.log(actionIndexMap[this.state]);
         if (this.action && actionIndexMap[this.state] !== undefined) {
             let index = actionIndexMap[this.state];
             this.setAnimationData({
