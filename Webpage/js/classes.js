@@ -44,9 +44,11 @@ class Sprite {
         this.currentFrame = 0;
 
         this.image = animationSprite.image;
+        this.animationData.imageSrc = animationSprite.readSrc;
         this.animationData.offset = animationSprite.offset;
         this.animationData.numberOfFrames = animationSprite.numberOfFrames;
         this.animationData.framesHold = animationSprite.framesHold;
+        console.log(this.animationData);
     }
     
     animateFrames() {
@@ -103,9 +105,6 @@ class Sprite {
             }
     
             ctx.restore(); // Restore the saved canvas state
-        } else {
-            console.log(this.characterType  );
-            console.log(this.animationData);
         }
     } 
 
@@ -181,16 +180,17 @@ class Fighter extends Sprite {
             }
         }
 
-        console.log(this.animations);
     }
     // Set the state of the character
     setState(newState) {
         this.state = newState;
         console.log(this.state);
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
-        if (this.action && this.actionIndexMap && this.actionIndexMap[this.state] !== undefined && this.animations && this.animations[this.actionIndexMap[this.state]]) {
+        console.log(actionIndexMap[this.state]);
+        if (this.action && actionIndexMap[this.state] !== undefined) {
+            let index = actionIndexMap[this.state];
             this.setAnimationData({
-                animationSprite: this.animations[this.actionIndexMap[this.state]]
+                animationSprite: this.animations[index]
             });
         }
     }
@@ -471,8 +471,7 @@ class AnimationSprite {
         numberOfFrames = 1,
         offset = { x: 0, y: 0 },
         framesHold = 10,
-        width = -1,
-        height = -1
+        width = -1
     }) {
         this.numberOfFrames = numberOfFrames;
         this.offset = offset;
