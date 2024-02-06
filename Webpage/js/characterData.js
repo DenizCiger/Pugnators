@@ -5,6 +5,7 @@ const actionIndexMap = {
     'running':    2,
     'jumping':    3,
     'falling':    4,
+    'duck':       5,
     // Light Attacks
     'nlight':    10,
     'slight':    11,
