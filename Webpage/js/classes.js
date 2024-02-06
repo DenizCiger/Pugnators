@@ -1,9 +1,19 @@
 class Sprite {
     constructor({
-        position = { x: 0, y: 0 },
+        position = {
+            x: 0,
+            y: 0
+        },
         scale = 1,
         pixelMultiplier = 4,
-        animationData = { imageSrc: null, offset: { x: 0, y: 0 }, numberOfFrames: 1 },
+        animationData = {
+            imageSrc: null,
+            offset: {
+                x: 0,
+                y: 0
+            },
+            numberOfFrames: 1 
+        },
         height,
         width
     }) {
@@ -17,6 +27,7 @@ class Sprite {
         this.flipHorizontally = false;
 
         this.image = new Image();
+        this.image.src = this.animationData.imageSrc;
 
         this.height = height;
         this.width = width;
@@ -25,26 +36,17 @@ class Sprite {
         this.bottomSide = this.position.y + this.height;
         this.leftSide = this.position.x;
         this.rightSide = this.position.x + this.width;
-
-        if (this.animationData.imageSrc) {
-            this.setAnimationData({ imageSrc: this.animationData.imageSrc, offset: this.animationData.offset, numberOfFrames: this.animationData.numberOfFrames });
-        }
     }
 
     setAnimationData({
-        imageSrc,
-        offset = { x: 0, y: 0 },
-        numberOfFrames = 1,
-        framesHold = 5
+        animationSprite = null,
     }) {
         this.currentFrame = 0;
 
-        this.animationData.imageSrc = imageSrc;
-        this.animationData.offset = offset;
-        this.animationData.numberOfFrames = numberOfFrames;
-        this.animationData.framesHold = framesHold;
-
-        this.image.src = imageSrc;
+        this.image = animationSprite.image;
+        this.animationData.offset = animationSprite.offset;
+        this.animationData.numberOfFrames = animationSprite.numberOfFrames;
+        this.animationData.framesHold = animationSprite.framesHold;
     }
     
     animateFrames() {
@@ -87,7 +89,6 @@ class Sprite {
                 );
             }
             else {
-
                 ctx.drawImage(
                     this.image,
                     this.currentFrame * this.image.width / this.animationData.numberOfFrames,
@@ -102,6 +103,9 @@ class Sprite {
             }
     
             ctx.restore(); // Restore the saved canvas state
+        } else {
+            console.log(this.characterType  );
+            console.log(this.animationData);
         }
     } 
 
@@ -111,7 +115,6 @@ class Sprite {
     }
 
 }
-
 class Fighter extends Sprite {
     constructor({
         characterType,
@@ -159,9 +162,9 @@ class Fighter extends Sprite {
         this.hitboxes = [];
         this.againstWall = 0;
         this.load()
-        this.setState("idle");
+        this.setState('idle');
     }
-
+    // Load the character's animations
     load() {
         var info = characterData[this.characterType]
 
@@ -180,20 +183,18 @@ class Fighter extends Sprite {
 
         console.log(this.animations);
     }
-
+    // Set the state of the character
     setState(newState) {
         this.state = newState;
+        console.log(this.state);
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
-        if (this.action) {
+        if (this.action && this.actionIndexMap && this.actionIndexMap[this.state] !== undefined && this.animations && this.animations[this.actionIndexMap[this.state]]) {
             this.setAnimationData({
-                imageSrc: this.action.animationSrc,
-                offset: this.action.offset,
-                numberOfFrames: this.action.numberOfFrames,
-                framesHold: this.action.framesHold
+                animationSprite: this.animations[this.actionIndexMap[this.state]]
             });
         }
     }
-
+    // Update the character's position and state
     update() {
         this.direction = this.movementVelocity.x > 0 ? 0 : (this.movementVelocity.x < 0 ? 180 : this.direction);
         this.flipHorizontally = (this.direction == 180);
@@ -219,7 +220,7 @@ class Fighter extends Sprite {
         
         this.updateVelocities()
     }
-
+    // Update the character's hitboxes
     updateHitboxes() {
         this.hitboxes = [
             /* Base */
@@ -261,7 +262,7 @@ class Fighter extends Sprite {
             }),
         ]
     }
-
+    // Update the character's velocity
     updateVelocities() {
         /* Saving position before collision */
         var previousPosition = {x: this.position.x, y: this.position.y};
@@ -327,13 +328,13 @@ class Fighter extends Sprite {
         /* Set horizontal velocity from walljumps to zero if it's below the acceleration threshold */
         this.jumpVelocity.x = (Math.abs(this.jumpVelocity.x) < 0.5) ? 0 : this.jumpVelocity.x;
     }
-
+    // Draw the character's hitbox
     drawHitbox() {
         for (let i = 0; i < this.hitboxes.length; i++) {
             this.hitboxes[i].draw();
         }
     }
-
+    // Handle the character's attack
     attack(attackType) {
         this.isAttacking = true;
         this.currentAttack = attackType
@@ -341,7 +342,6 @@ class Fighter extends Sprite {
             this.currentAttack = '';
         }, 100);
     }
-
     // Handle jumping logic
     jump() {
         // Initiate jump action
@@ -356,24 +356,20 @@ class Fighter extends Sprite {
             this.jumpVelocity.x = this.againstWall * wallJumpXForce;
         }
     }
-
     // Send coordinate info to Console
     logCoords() {
         console.log("X: {0} Y:{1}", this.position.x, this.position.y)
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
-
     // Check for collision between hitbox and map elements
     checkCollisionWithWholeMap(mapArray) {
         return mapArray.some(element => this.hitboxes[0].collidesWith(element));
     }
-
     // Check for collision between hitbox and mapArray elements
     checkIsGrounded(mapArray) {
         return mapArray.some(element => this.hitboxes[1].collidesWith(element));
     }
-
     // Player standing close to any wall
     isAgainstAnyWall(mapArray) {
         var detectedCollision = false;
@@ -383,7 +379,6 @@ class Fighter extends Sprite {
 
         return detectedCollision;
     }
-
     // Player standing close to a certain wall
     isAgainstWall(wall) {
         /* Wall on the side */
@@ -400,7 +395,7 @@ class Fighter extends Sprite {
     }
 }
 
-class Obstacle extends Sprite {
+class Obstacle {
     constructor({
         position = { x: 0, y: 0 },
         pixelMultiplier = 4,
@@ -409,12 +404,10 @@ class Obstacle extends Sprite {
         width = 40,
     }) {
 
-        super({
-            position: position,
-            pixelMultiplier: pixelMultiplier,
-            width: width*pixelMultiplier,
-            height: height*pixelMultiplier
-        });
+        this.position = position,
+        this.pixelMultiplier = pixelMultiplier,
+        this.width = width*pixelMultiplier,
+        this.height = height*pixelMultiplier
 
         this.dropThrough = dropThrough;
         this.hitboxes = [
@@ -428,7 +421,6 @@ class Obstacle extends Sprite {
     }
 
     update() {
-        this.draw();
         this.drawHitbox();
     }
 
@@ -450,14 +442,14 @@ class Hitbox {
         this.color = color;
 
     }
-
+    // Draw the hitbox
     draw () {
         ctx.fillStyle = this.color;
         ctx.globalAlpha = 0.5
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
         ctx.globalAlpha = 1
     }
-
+    // Check for collision with another hitbox
     collidesWith(other) {
         if (
             this.position.x < other.position.x + other.width &&

@@ -77,7 +77,11 @@ function setupDisplays() {
 function setupBackground() {
   background = new Sprite({
     position: { x: 0, y: 0 },
-    animationData: { imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png' },
+    animationData: {
+      imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
+      offset: { x: 0, y: 0 },
+      numberOfFrames: 1,
+    },
     scale: 1.25
   });
 }
