@@ -28,6 +28,7 @@ let playerIconDisplays;
 let percentageDisplays;
 let background;
 let obstacles;
+let foreground;
 let playerCharacters;
 let players;
 
@@ -62,6 +63,7 @@ function setup() {
   setupDisplays();
   setupBackground();
   setupObstacles();
+  setupForeground();
   setupPlayers();
   hideNonExistentPlayers();
   setupUserIcons();
@@ -86,25 +88,37 @@ function setupBackground() {
   });
 }
 
+function setupForeground() {
+  foreground = new Sprite({
+    position: { x: canvas.width/7, y: 500 },
+    animationData: {
+      imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform.png',
+      offset: { x: 0, y: 0 },
+      numberOfFrames: 1,
+    },
+    scale: 1
+  })
+}
+
 function setupObstacles() {
   obstacles = [
     new Obstacle({
-      position: { x: 0, y: canvas.height-(30*4) },
-      // position: { x: 200, y: canvas.height-(30*4) },
-      height: 30,
-      width: canvas.width/4
-      // width: 400
+      // position: { x: 0, y: canvas.height-(30*4) },
+      position: { x: 290, y: canvas.height-(30*8) },
+      height: 40,
+      width: 304
+      // width: canvas.width/4
     }),
-    new Obstacle({
-      position: { x: 800, y: 500 },
-      height: 65,
-      width: 20
-    }),
-    new Obstacle({
-      position: { x: 1772, y: 0 },
-      height: canvas.height/4,
-      width: 10
-    }),
+    // new Obstacle({
+    //   position: { x: 800, y: 500 },
+    //   height: 65,
+    //   width: 20
+    // }),
+    // new Obstacle({
+    //   position: { x: 1772, y: 0 },
+    //   height: canvas.height/4,
+    //   width: 10
+    // }),
   ];
 }
 

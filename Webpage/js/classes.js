@@ -198,7 +198,7 @@ class Fighter extends Sprite {
 
         this.updateHitboxes();
         this.draw();
-        this.drawHitbox();
+        // this.drawHitbox();
 
         this.isAttacking = (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) ? false : this.isAttacking;
 
@@ -418,7 +418,7 @@ class Obstacle {
     }
 
     update() {
-        this.drawHitbox();
+        // this.drawHitbox();
     }
 
     drawHitbox() {
