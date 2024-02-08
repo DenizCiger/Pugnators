@@ -15,6 +15,7 @@ const keys = {
 };
 const keyPressed = {};
 let lastMoveKeyPressed;
+
 const horizontalAcceleration = .8;
 const airResistance = 1;
 const groundFriction = .5;
@@ -81,7 +82,7 @@ function setupDisplays() {
 
 function setupMisc() {
   background = new Sprite({
-    position: { x: 0, y: 0 },
+    printPosition: { x: 0, y: 0 },
     animationData: {
       imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
       offset: { x: 0, y: 0 },
@@ -91,7 +92,7 @@ function setupMisc() {
   });
 
   foreground = new Sprite({
-    position: {
+    printPosition: {
       x: canvas.width / 2 - 600, // Center the image horizontally
       y: 500
     },
