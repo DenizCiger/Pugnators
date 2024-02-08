@@ -20,15 +20,19 @@ const airResistance = 1;
 const groundFriction = .5;
 const maxYMovementVelocity = 50;
 const maxXMovementVelocity = 7;
+const maxCameraZoom = 2;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
 let playerInfoDisplays;
 let playerIconDisplays;
 let percentageDisplays;
+
 let background;
-let obstacles;
 let foreground;
+let camera;
+
+let obstacles;
 let playerCharacters;
 let players;
 
@@ -61,9 +65,8 @@ function animate() {
 // Setup functions
 function setup() {
   setupDisplays();
-  setupBackground();
+  setupMisc();
   setupObstacles();
-  setupForeground();
   setupPlayers();
   hideNonExistentPlayers();
   setupUserIcons();
@@ -76,7 +79,7 @@ function setupDisplays() {
   percentageDisplays = getDisplayElements('percentage', 4);
 }
 
-function setupBackground() {
+function setupMisc() {
   background = new Sprite({
     position: { x: 0, y: 0 },
     animationData: {
@@ -86,11 +89,12 @@ function setupBackground() {
     },
     scale: 1.25
   });
-}
 
-function setupForeground() {
   foreground = new Sprite({
-    position: { x: canvas.width/7, y: 500 },
+    position: {
+      x: canvas.width / 2 - 600, // Center the image horizontally
+      y: 500
+    },
     animationData: {
       imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform.png',
       offset: { x: 0, y: 0 },
@@ -98,27 +102,23 @@ function setupForeground() {
     },
     scale: 1
   })
+
+  camera = new Camera({
+    position: { x: 0, y: 0 },
+    zoom: 1
+  });
 }
 
 function setupObstacles() {
   obstacles = [
     new Obstacle({
-      // position: { x: 0, y: canvas.height-(30*4) },
-      position: { x: 290, y: canvas.height-(30*8) },
+      position: {
+        x: canvas.width / 2 - 600,
+        y: canvas.height-(30*8)
+      },
       height: 40,
-      width: 304
-      // width: canvas.width/4
+      width: 315
     }),
-    // new Obstacle({
-    //   position: { x: 800, y: 500 },
-    //   height: 65,
-    //   width: 20
-    // }),
-    // new Obstacle({
-    //   position: { x: 1772, y: 0 },
-    //   height: canvas.height/4,
-    //   width: 10
-    // }),
   ];
 }
 
