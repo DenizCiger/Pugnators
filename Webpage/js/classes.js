@@ -488,8 +488,8 @@ class Camera {
         this.position = position;
         this.centerPosition = { x: canvas.width / 2, y: canvas.height / 2 };
         this.pixelMultiplier = pixelMultiplier;
-        this.width = width;
-        this.height = height;
+        this.width  = width  /4;
+        this.height = height /4;
         this.zoom = zoom;
     }
     // Update the camera's position
@@ -499,7 +499,7 @@ class Camera {
     }
 
     draw() {
-        // Print centeras circle
+        // Print center as circle
         ctx.beginPath();
         ctx.arc(this.centerPosition.x, this.centerPosition.y, 10, 0, 2 * Math.PI);
         ctx.fillStyle = 'blue';
@@ -507,14 +507,13 @@ class Camera {
         ctx.closePath();
         // Print border as rectangle
         ctx.beginPath();
-        ctx.rect(this.position.x, this.position.y, this.width, this.height);
+        ctx.rect(this.position.x, this.position.y, this.width/this.zoom, this.height/this.zoom);
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'blue';
         ctx.stroke();
     }
 
     updatePosition(players) {
-        // Set center position to center of all player positions
         let x = 0;
         let y = 0;
 
@@ -526,9 +525,73 @@ class Camera {
         x /= players.length;
         y /= players.length;
 
-        this.position.x = x - this.width / 2;
-        this.position.y = y - this.height / 2;
-        this.centerPosition.x = x;
-        this.centerPosition.y = y;
+        this.fixOutOfMapBorder(x, y);
+        
+        this.resizeFix(players);
+    }
+
+    resizeFix(players) {
+        //Check if any player is out of the camera's view
+
+        let distX = 0;
+        let distY = 0;
+
+        for (let i = 0; i < players.length; i++) {
+            let relevantPlayerPos = {x: players[i].position.x + players[i].width / 2, y: players[i].position.y + players[i].height / 2};
+            
+            // Get Distance between player and cameraborder
+            if (relevantPlayerPos.x < this.position.x) {
+                distX = this.position.x - relevantPlayerPos.x;
+            } else if (relevantPlayerPos.x > this.position.x + this.width/this.zoom) {
+                distX = relevantPlayerPos.x - (this.position.x + this.width/this.zoom);
+            } else {
+                distX = 0;
+            }
+
+            if (relevantPlayerPos.y < this.position.y) {
+                distY = this.position.y - relevantPlayerPos.y;
+            } else if (relevantPlayerPos.y > this.position.y + this.height/this.zoom) {
+                distY = relevantPlayerPos.y - (this.position.y + this.height/this.zoom);
+            } else {
+                distY = 0;
+            }
+
+            if (distX != 0 || distY != 0) {
+                console.log(players[i].characterType + " distX: " + distX + " distY: " + distY + " scale: " + this.scale)
+                // let scaleX = ((this.width/this.zoom) + distX) / (this.width/this.zoom);
+                // let scaleY = ((this.height/this.zoom) + distY) / (this.height/this.zoom);
+
+                // this.scale *= Math.max(scaleX, scaleY);
+
+                this.zoom /= 1.01;
+            }
+        }
+    }
+
+    fixOutOfMapBorder(x, y) {
+        if (x-(this.width/this.zoom)/2 < 0) {
+            this.position.x = 0;
+        }
+        else if (x+(this.width/this.zoom)/2 > canvas.width) {
+            this.position.x = canvas.width - this.width/this.zoom;
+        }
+        else {
+            this.position.x = x - (this.width/this.zoom)/2;
+        }
+
+        this.centerPosition.x = this.position.x + (this.width/this.zoom)  / 2;
+
+        if (y-(this.height/this.zoom)/2 < 0) {
+            this.position.y = 0;
+        }
+        else if (y+(this.height/this.zoom)/2 > canvas.height) {
+            this.position.y = canvas.height - this.height/this.zoom;
+        }
+        else {
+            this.position.y = y - (this.height/this.zoom)/2;
+        }
+
+        this.centerPosition.y = this.position.y + (this.height/this.zoom) / 2;
+
     }
 }

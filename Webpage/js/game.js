@@ -106,7 +106,7 @@ function setupMisc() {
 
   camera = new Camera({
     position: { x: 0, y: 0 },
-    zoom: 1
+    zoom: .5
   });
 }
 
