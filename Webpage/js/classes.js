@@ -480,3 +480,24 @@ class AnimationSprite {
         this.width = width > 0 ? width : this.image.width;
     }
 }
+
+class Camera {
+    constructor({
+        position = { x: 0, y: 0 },
+        pixelMultiplier = 4,
+        width = canvas.width,
+        height = canvas.height,
+        zoom = 1
+    }) {
+        this.position = position;
+        this.pixelMultiplier = pixelMultiplier;
+        this.width = width;
+        this.height = height;
+        this.zoom = zoom;
+    }
+    // Update the camera's position
+    update() {
+        this.position.x = players[0].position.x - canvas.width/2;
+        this.position.y = players[0].position.y - canvas.height/2;
+    }
+}
