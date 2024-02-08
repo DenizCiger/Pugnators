@@ -128,3 +128,10 @@ const characterData = {
     ],
     // Define abilities for other characters similarly
   };
+
+const spawnPositions = [
+    { x: 10000, y: 100 },
+    { x: 10000, y: 100 },
+    { x: 10000, y: 300 },
+    { x: 10000, y: 300 }
+];

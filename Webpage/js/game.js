@@ -124,14 +124,14 @@ function setupObstacles() {
 }
 
 function setupPlayers() {
-  // playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
-  playerCharacters = ['Nerd', 'Troller'];
+  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  // playerCharacters = ['Nerd', 'Troller'];
   // playerCharacters = ['Nerd'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({
       characterType: character,
-      position: { x: 200+index*500, y: 100 },
+      position: spawnPositions[index],
       // color: getPlayerColor(index)
       color: 'blue'
     });
