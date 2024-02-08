@@ -280,15 +280,15 @@ class Fighter extends Sprite {
         /* Wrap around horizontally when reaching canvas boundaries */
         this.position.x = this.position.x >= canvas.width ? 0 : (this.position.x + this.width <= 0 ? canvas.width - this.width - 1 : this.position.x);
 
-        /* Handle collision with the map */
-        if (this.checkCollisionWithWholeMap(map)) {
+        /* Handle collision with the obstacles */
+        if (this.checkCollisionWithWholeobstacles(obstacles)) {
             this.canWallJump = this.movementVelocity.y > gravity; // TODO: Find out why tf everything breaks when I move this???
             this.maxGravityVelocity = this.canWallJump ? maxYMovementVelocity * wallSlideFriction : maxYMovementVelocity;
             this.availableJumps = this.canWallJump ? 2 : 0;
 
-            this.position.x = this.checkCollisionWithWholeMap(map) ? previousPosition.x : this.position.x;
+            this.position.x = this.checkCollisionWithWholeobstacles(obstacles) ? previousPosition.x : this.position.x;
             this.movementVelocity.x = this.jumpVelocity.x = 0;
-            this.knockbackVelocity.x *= -this.checkCollisionWithWholeMap(map);
+            this.knockbackVelocity.x *= -this.checkCollisionWithWholeobstacles(obstacles);
         }
         else {
             this.canWallJump = false;
@@ -301,13 +301,13 @@ class Fighter extends Sprite {
         /* Wrap around vertically when reaching canvas boundaries */
         this.position.y = this.position.y >= canvas.height ? 0 : (this.position.y + this.height <= 0 ? canvas.height - 1 : this.position.y);
         
-        /* Handle collision with the map */
-        if (this.checkCollisionWithWholeMap(map)) {
+        /* Handle collision with the obstacles */
+        if (this.checkCollisionWithWholeobstacles(obstacles)) {
             this.position.y = previousPosition.y;
             this.movementVelocity.y = this.jumpVelocity.y = 0;
             this.knockbackVelocity.y *= -1;
 
-            if (this.checkIsGrounded(map)) {
+            if (this.checkIsGrounded(obstacles)) {
                 this.availableJumps = 2;
                 this.isOnGround = true;
                 this.jumpVelocity.x = 0;
@@ -315,7 +315,7 @@ class Fighter extends Sprite {
                 this.isOnGround = false;
             }
         } else {
-            this.isOnGround = !this.checkIsGrounded(map);
+            this.isOnGround = !this.checkIsGrounded(obstacles);
             this.movementVelocity.y += (!this.canWallJump ? gravity : gravity * wallSlideFriction);
             this.movementVelocity.y = Math.min(this.movementVelocity.y, this.maxGravityVelocity);
         }
@@ -359,19 +359,19 @@ class Fighter extends Sprite {
         console.log("PrintX: {0} PrintY:{1}", (this.position.x - this.animationData.offset.x * this.pixelMultiplier), (this.position.y - this.animationData.offset.y * this.pixelMultiplier))
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
-    // Check for collision between hitbox and map elements
-    checkCollisionWithWholeMap(mapArray) {
-        return mapArray.some(element => this.hitboxes[0].collidesWith(element));
+    // Check for collision between hitbox and obstacles elements
+    checkCollisionWithWholeobstacles(obstaclesArray) {
+        return obstaclesArray.some(element => this.hitboxes[0].collidesWith(element));
     }
-    // Check for collision between hitbox and mapArray elements
-    checkIsGrounded(mapArray) {
-        return mapArray.some(element => this.hitboxes[1].collidesWith(element));
+    // Check for collision between hitbox and obstaclesArray elements
+    checkIsGrounded(obstaclesArray) {
+        return obstaclesArray.some(element => this.hitboxes[1].collidesWith(element));
     }
     // Player standing close to any wall
-    isAgainstAnyWall(mapArray) {
+    isAgainstAnyWall(obstaclesArray) {
         var detectedCollision = false;
-        for (let i = 0; i < mapArray.length && detectedCollision == false; i++) {
-            detectedCollision |= this.isAgainstWall(mapArray[i]);
+        for (let i = 0; i < obstaclesArray.length && detectedCollision == false; i++) {
+            detectedCollision |= this.isAgainstWall(obstaclesArray[i]);
         }
 
         return detectedCollision;

@@ -14,8 +14,8 @@ function updateAnimations() {
   background.update();
   // players[0].logCoords()
 
-  for (let i = 0; i < map.length; i++) {
-    map[i].update();
+  for (let i = 0; i < obstacles.length; i++) {
+    obstacles[i].update();
   }
   for (let i = 0; i < players.length; i++) {
     players[i].update();

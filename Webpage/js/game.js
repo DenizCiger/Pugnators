@@ -27,7 +27,7 @@ let playerInfoDisplays;
 let playerIconDisplays;
 let percentageDisplays;
 let background;
-let map;
+let obstacles;
 let playerCharacters;
 let players;
 
@@ -40,10 +40,10 @@ function animate() {
   } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
     players[0].movementVelocity.x += horizontalAcceleration;
   } else {
-    if (players[0].checkIsGrounded(map)) {
+    if (players[0].checkIsGrounded(obstacles)) {
       // players[0].drawHitbox();
     }
-    players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(map) ? groundFriction : airResistance);
+    players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(obstacles) ? groundFriction : airResistance);
   }
 
   if (keyPressed[keys.jump] && players[0].availableJumps > 0) {
@@ -87,7 +87,7 @@ function setupBackground() {
 }
 
 function setupObstacles() {
-  map = [
+  obstacles = [
     new Obstacle({
       position: { x: 0, y: canvas.height-(30*4) },
       // position: { x: 200, y: canvas.height-(30*4) },
