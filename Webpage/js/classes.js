@@ -1,6 +1,6 @@
 class Sprite {
     constructor({
-        position = {
+        printPosition = {
             x: 0,
             y: 0
         },
@@ -17,7 +17,7 @@ class Sprite {
         height,
         width
     }) {
-        this.position = position;
+        this.printPosition = printPosition;
         this.pixelMultiplier = pixelMultiplier;
         this.scale = scale * this.pixelMultiplier;
         this.animationData = animationData;
@@ -31,11 +31,6 @@ class Sprite {
 
         this.height = height;
         this.width = width;
-
-        this.topSide = this.position.y;
-        this.bottomSide = this.position.y + this.height;
-        this.leftSide = this.position.x;
-        this.rightSide = this.position.x + this.width;
     }
 
     setAnimationData({
@@ -96,8 +91,8 @@ class Sprite {
                     0,
                     this.image.width / this.animationData.numberOfFrames,
                     this.image.height,
-                    this.position.x - this.animationData.offset.x * this.pixelMultiplier,
-                    this.position.y - this.animationData.offset.y * this.pixelMultiplier,
+                    this.printPosition.x - this.animationData.offset.x * this.pixelMultiplier,
+                    this.printPosition.y - this.animationData.offset.y * this.pixelMultiplier,
                     this.image.width * this.scale / this.animationData.numberOfFrames,
                     this.image.height * this.scale
                 );
@@ -124,12 +119,13 @@ class Fighter extends Sprite {
     }) {
 
         super({
-            position: position,
+            printPosition: position,
             pixelMultiplier: pixelMultiplier,
             height: height * pixelMultiplier,
             width: width * pixelMultiplier
         });
 
+        this.position = position;
         this.state = 'info';
         this.characterType = characterType;
         this.action = characterData[this.characterType].find(a => a.actionName === this.state);
@@ -198,7 +194,7 @@ class Fighter extends Sprite {
 
         this.updateHitboxes();
         this.draw();
-        this.drawHitbox();
+        // this.drawHitbox();
 
         this.isAttacking = (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) ? false : this.isAttacking;
 
@@ -418,7 +414,7 @@ class Obstacle {
     }
 
     update() {
-        this.drawHitbox();
+        // this.drawHitbox();
     }
 
     drawHitbox() {
@@ -478,5 +474,61 @@ class AnimationSprite {
         this.image = new Image();
         this.image.src = this.readSrc;
         this.width = width > 0 ? width : this.image.width;
+    }
+}
+
+class Camera {
+    constructor({
+        position = { x: 0, y: 0 },
+        pixelMultiplier = 4,
+        width = canvas.width,
+        height = canvas.height,
+        zoom = 1
+    }) {
+        this.position = position;
+        this.centerPosition = { x: canvas.width / 2, y: canvas.height / 2 };
+        this.pixelMultiplier = pixelMultiplier;
+        this.width = width;
+        this.height = height;
+        this.zoom = zoom;
+    }
+    // Update the camera's position
+    update() {
+        this.updatePosition(players);
+        this.draw();
+    }
+
+    draw() {
+        // Print centeras circle
+        ctx.beginPath();
+        ctx.arc(this.centerPosition.x, this.centerPosition.y, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+        ctx.closePath();
+        // Print border as rectangle
+        ctx.beginPath();
+        ctx.rect(this.position.x, this.position.y, this.width, this.height);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'blue';
+        ctx.stroke();
+    }
+
+    updatePosition(players) {
+        // Set center position to center of all player positions
+        let x = 0;
+        let y = 0;
+
+        for (let i = 0; i < players.length; i++) {
+            x += players[i].position.x + players[i].width / 2;
+            y += players[i].position.y + players[i].height / 2;
+        }
+
+        x /= players.length;
+        y /= players.length;
+
+        this.position.x = x - this.width / 2;
+        this.position.y = y - this.height / 2;
+        this.centerPosition.x = x;
+        this.centerPosition.y = y;
     }
 }

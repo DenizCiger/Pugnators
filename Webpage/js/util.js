@@ -12,7 +12,7 @@ function hideNonExistentPlayers() {
 function updateAnimations() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.update();
-  // players[0].logCoords()
+  foreground.update();
 
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].update();
@@ -20,6 +20,9 @@ function updateAnimations() {
   for (let i = 0; i < players.length; i++) {
     players[i].update();
   }
+
+  camera.update();
+
 }
 
 function updatePercentageDisplays() {

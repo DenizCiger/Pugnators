@@ -15,18 +15,24 @@ const keys = {
 };
 const keyPressed = {};
 let lastMoveKeyPressed;
+
 const horizontalAcceleration = .8;
 const airResistance = 1;
 const groundFriction = .5;
 const maxYMovementVelocity = 50;
 const maxXMovementVelocity = 7;
+const maxCameraZoom = 2;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
 let playerInfoDisplays;
 let playerIconDisplays;
 let percentageDisplays;
+
 let background;
+let foreground;
+let camera;
+
 let obstacles;
 let playerCharacters;
 let players;
@@ -60,7 +66,7 @@ function animate() {
 // Setup functions
 function setup() {
   setupDisplays();
-  setupBackground();
+  setupMisc();
   setupObstacles();
   setupPlayers();
   hideNonExistentPlayers();
@@ -74,9 +80,9 @@ function setupDisplays() {
   percentageDisplays = getDisplayElements('percentage', 4);
 }
 
-function setupBackground() {
+function setupMisc() {
   background = new Sprite({
-    position: { x: 0, y: 0 },
+    printPosition: { x: 0, y: 0 },
     animationData: {
       imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
       offset: { x: 0, y: 0 },
@@ -84,39 +90,48 @@ function setupBackground() {
     },
     scale: 1.25
   });
+
+  foreground = new Sprite({
+    printPosition: {
+      x: canvas.width / 2 - 600, // Center the image horizontally
+      y: 500
+    },
+    animationData: {
+      imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform.png',
+      offset: { x: 0, y: 0 },
+      numberOfFrames: 1,
+    },
+    scale: 1
+  })
+
+  camera = new Camera({
+    position: { x: 0, y: 0 },
+    zoom: 1
+  });
 }
 
 function setupObstacles() {
   obstacles = [
     new Obstacle({
-      position: { x: 0, y: canvas.height-(30*4) },
-      // position: { x: 200, y: canvas.height-(30*4) },
-      height: 30,
-      width: canvas.width/4
-      // width: 400
-    }),
-    new Obstacle({
-      position: { x: 800, y: 500 },
-      height: 65,
-      width: 20
-    }),
-    new Obstacle({
-      position: { x: 1772, y: 0 },
-      height: canvas.height/4,
-      width: 10
+      position: {
+        x: canvas.width / 2 - 600,
+        y: canvas.height-(30*8)
+      },
+      height: 40,
+      width: 315
     }),
   ];
 }
 
 function setupPlayers() {
-  // playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
-  playerCharacters = ['Nerd', 'Troller'];
+  playerCharacters = ['Nerd', 'Snowy', 'LeondingChan', 'Troller'];
+  // playerCharacters = ['Nerd', 'Troller'];
   // playerCharacters = ['Nerd'];
 
   players = playerCharacters.map((character, index) => {
     return new Fighter({
       characterType: character,
-      position: { x: 200+index*500, y: 100 },
+      position: spawnPositions[index],
       // color: getPlayerColor(index)
       color: 'blue'
     });
