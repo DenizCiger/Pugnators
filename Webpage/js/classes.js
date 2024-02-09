@@ -277,14 +277,14 @@ class Fighter extends Sprite {
         this.position.x = this.position.x >= canvas.width ? 0 : (this.position.x + this.width <= 0 ? canvas.width - this.width - 1 : this.position.x);
 
         /* Handle collision with the obstacles */
-        if (this.checkCollisionWithWholeobstacles(obstacles)) {
+        if (this.checkCollisionWithWholeObstacles(obstacles)) {
             this.canWallJump = this.movementVelocity.y > gravity; // TODO: Find out why tf everything breaks when I move this???
             this.maxGravityVelocity = this.canWallJump ? maxYMovementVelocity * wallSlideFriction : maxYMovementVelocity;
             this.availableJumps = this.canWallJump ? 2 : 0;
 
-            this.position.x = this.checkCollisionWithWholeobstacles(obstacles) ? previousPosition.x : this.position.x;
+            this.position.x = this.checkCollisionWithWholeObstacles(obstacles) ? previousPosition.x : this.position.x;
             this.movementVelocity.x = this.jumpVelocity.x = 0;
-            this.knockbackVelocity.x *= -this.checkCollisionWithWholeobstacles(obstacles);
+            this.knockbackVelocity.x *= -this.checkCollisionWithWholeObstacles(obstacles);
         }
         else {
             this.canWallJump = false;
@@ -298,7 +298,7 @@ class Fighter extends Sprite {
         this.position.y = this.position.y >= canvas.height ? 0 : (this.position.y + this.height <= 0 ? canvas.height - 1 : this.position.y);
         
         /* Handle collision with the obstacles */
-        if (this.checkCollisionWithWholeobstacles(obstacles)) {
+        if (this.checkCollisionWithWholeObstacles(obstacles)) {
             this.position.y = previousPosition.y;
             this.movementVelocity.y = this.jumpVelocity.y = 0;
             this.knockbackVelocity.y *= -1;
@@ -356,7 +356,7 @@ class Fighter extends Sprite {
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
     // Check for collision between hitbox and obstacles elements
-    checkCollisionWithWholeobstacles(obstaclesArray) {
+    checkCollisionWithWholeObstacles(obstaclesArray) {
         return obstaclesArray.some(element => this.hitboxes[0].collidesWith(element));
     }
     // Check for collision between hitbox and obstaclesArray elements
