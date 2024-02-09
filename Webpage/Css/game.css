@@ -50,7 +50,7 @@ p {
     image-rendering: pixelated;
     background-repeat: no-repeat;
     background-size: 20vw;
-    background-position: 1.54vw;
+    background-position: 1.5vw;
 }
 
 .player-image-container {
@@ -58,8 +58,8 @@ p {
 }
   
 .player-image {
-    width:  7.135vw; /*this was altered*/
-    height: 7.13vw;  /*this was altered*/
+    width:  7.1vw;
+    height: 7.1vw;
     image-rendering: pixelated;
 }
   
