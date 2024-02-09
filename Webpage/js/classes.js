@@ -532,38 +532,33 @@ class Camera {
 
     resizeFix(players) {
         //Check if any player is out of the camera's view
+        // this.zoom = 1;
 
         let distX = 0;
         let distY = 0;
+        // this.zoom = 1;
 
         for (let i = 0; i < players.length; i++) {
             let relevantPlayerPos = {x: players[i].position.x + players[i].width / 2, y: players[i].position.y + players[i].height / 2};
             
             // Get Distance between player and cameraborder
-            if (relevantPlayerPos.x < this.position.x) {
-                distX = this.position.x - relevantPlayerPos.x;
-            } else if (relevantPlayerPos.x > this.position.x + this.width/this.zoom) {
-                distX = relevantPlayerPos.x - (this.position.x + this.width/this.zoom);
-            } else {
-                distX = 0;
-            }
 
-            if (relevantPlayerPos.y < this.position.y) {
-                distY = this.position.y - relevantPlayerPos.y;
-            } else if (relevantPlayerPos.y > this.position.y + this.height/this.zoom) {
-                distY = relevantPlayerPos.y - (this.position.y + this.height/this.zoom);
-            } else {
-                distY = 0;
-            }
+            distX = Math.abs(relevantPlayerPos.x - this.centerPosition.x) - this.width/this.zoom/2;
+            distY = Math.abs(relevantPlayerPos.y - this.centerPosition.y) - this.height/this.zoom/2;
+            
 
-            if (distX != 0 || distY != 0) {
-                console.log(players[i].characterType + " distX: " + distX + " distY: " + distY + " scale: " + this.scale)
-                // let scaleX = ((this.width/this.zoom) + distX) / (this.width/this.zoom);
-                // let scaleY = ((this.height/this.zoom) + distY) / (this.height/this.zoom);
+            if (distX > 0 || distY > 0) {
+                // Adjust zoom to fit all players
+                let scaleX = (distX) / (this.width/this.zoom);
+                let scaleY = (distY) / (this.height/this.zoom);
+                let scale = Math.max(scaleX, scaleY);
+                console.log( 
+                    "Current Zoom: " + this.zoom + "\n"
+                    + "DistX: " + distX + " DistY: " + distY + "\n"
+                    + "ScaleX: " + scaleX + " ScaleY: " + scaleY + "\n" + "Scale: " + scale + "\n"
+                    );
 
-                // this.scale *= Math.max(scaleX, scaleY);
-
-                this.zoom /= 1.01;
+                this.zoom *= scale;
             }
         }
     }
