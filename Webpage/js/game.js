@@ -21,7 +21,8 @@ const airResistance = 1;
 const groundFriction = .5;
 const maxYMovementVelocity = 50;
 const maxXMovementVelocity = 7;
-const maxCameraZoom = 2;
+const maxCameraZoomLevel = 2;
+const minCameraZoomLevel = .25;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
@@ -106,7 +107,7 @@ function setupMisc() {
 
   camera = new Camera({
     position: { x: 0, y: 0 },
-    zoom: .5
+    zoom: 4
   });
 }
 
@@ -132,16 +133,15 @@ function setupPlayers() {
     return new Fighter({
       characterType: character,
       position: spawnPositions[index],
-      // color: getPlayerColor(index)
       color: 'blue'
     });
   });
 }
 
 function setupUserIcons() {
-  for (let i = 0; i < players.length; i++) {
+  players.forEach((player, i) => {
     playerIconDisplays[i].src = characterData[playerCharacters[i]].find(a => a.actionName === 'info').logoSrc;
-  }
+  });
 }
 
 // Event listeners
