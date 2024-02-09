@@ -14,7 +14,16 @@ body {
 }
 
 canvas {
-    width: 100%;
+    min-height: 90vh;
+    max-width: 100%;
+    display: block;
+    background-color: black;
+    height: 90vh;
+    max-width: 100%;
+    display: block;
+    background-color: black;
+    image-rendering: pixelated;
+    height: 100%;
     max-width: 100%;
     display: block;
     background-color: black;
