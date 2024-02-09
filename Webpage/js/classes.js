@@ -558,7 +558,7 @@ class Camera {
                     + "ScaleX: " + scaleX + " ScaleY: " + scaleY + "\n" + "Scale: " + scale + "\n"
                     );
 
-                this.zoom *= scale;
+                this.zoom /= 1+scale;
             }
         }
     }
