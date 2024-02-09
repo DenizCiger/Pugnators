@@ -1,12 +1,8 @@
-function getPlayerColor(index) {
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  return colors[index] || 'white';
-}
-
+// Hide player info displays for non-active players
 function hideNonExistentPlayers() {
-  for (let i = players.length; i < playerInfoDisplays.length; i++) {
-    playerInfoDisplays[i].style.display = 'none';
-  }
+  playerInfoDisplays.slice(players.length).forEach(display => {
+    display.style.display = 'none';
+  });
 }
 
 function updateAnimations() {
@@ -14,22 +10,21 @@ function updateAnimations() {
   background.update();
   foreground.update();
 
-  for (let i = 0; i < obstacles.length; i++) {
-    obstacles[i].update();
-  }
-  for (let i = 0; i < players.length; i++) {
-    players[i].update();
-  }
+  obstacles.forEach(obstacle => {
+    obstacle.update();
+  });
+  players.forEach(player => {
+    player.update();
+  });
 
   camera.update();
-
 }
 
 function updatePercentageDisplays() {
-  for (let i = 0; i < players.length; i++) {
-    percentageDisplays[i].textContent = players[i].percentage + "%";
-    percentageDisplays[i].style.color = getColorForPercentage(players[i].percentage);
-  }
+  players.forEach((player, i) => {
+    percentageDisplays[i].textContent = `${player.percentage}%`;
+    percentageDisplays[i].style.color = getColorForPercentage(player.percentage);
+  });
 }
 
 function getColorForPercentage(percentage) {
@@ -48,5 +43,7 @@ function getColorForPercentage(percentage) {
 }
 
 function getDisplayElements(elementName, count) {
-  return Array.from({ length: count }, (_, i) => document.getElementById(`${elementName}${i + 1}`));
+  return Array.from({ length: count }, (_, i) => 
+        document.getElementById(`${elementName}${i + 1}`)
+    );
 }
