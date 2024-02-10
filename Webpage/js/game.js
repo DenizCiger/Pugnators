@@ -22,8 +22,12 @@ const airResistance = 1;
 const groundFriction = .5;
 const maxYMovementVelocity = 25;
 const maxXMovementVelocity = 4;
-const maxCameraZoomLevel = 2;
+const maxCameraZoomLevel = 1;
 const minCameraZoomLevel = .25;
+const extraViewDistance =  {
+  x: 150,
+  y: 200
+};
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
 
 // Static variables
@@ -111,7 +115,7 @@ function setupMisc() {
 
   camera = new Camera({
     position: { x: 0, y: 0 },
-    zoom: 4
+    zoom: maxCameraZoomLevel
   });
 }
 

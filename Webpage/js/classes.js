@@ -531,6 +531,7 @@ class Camera {
     }
     // Update the camera's position
     update() {
+        console.log(this.zoom)
         this.updatePosition(players);
         this.draw();
     }
@@ -569,26 +570,31 @@ class Camera {
 
     // Fix the camera's zoom level
     resizeFix(players) {
-        let distX = 0;
-        let distY = 0;
         players.forEach(player => {
-            let relevantPlayerPos = {
+            const relevantPlayerPos = {
                 x: player.position.x + player.width / 2,
                 y: player.position.y + player.height / 2
             };
-
-            let distX = (Math.abs(relevantPlayerPos.x - this.centerPosition.x) - this.width / this.zoom / 2)+150; //this can be tweaked if we want to make the map bigger           
-            let distY = (Math.abs(relevantPlayerPos.y - this.centerPosition.y) - this.height / this.zoom / 2)+150;
-
-            if (distX > 0 || distY > 0) {
-                let scaleX = distX / (this.width / this.zoom);
-                let scaleY = distY / (this.height / this.zoom);
-                let scale = Math.max(scaleX, scaleY);
-                this.zoom /= 1 + scale;
-            }
-
-            if (distX <= 0 || distY <= 0) {
-                this.zoom *= 1.01
+            if (!this.viewIsOutOfMap) {
+                const positionToCenter = {
+                    x: Math.abs(relevantPlayerPos.x - this.centerPosition.x),
+                    y: Math.abs(relevantPlayerPos.y - this.centerPosition.y)
+                };
+                const distX = (positionToCenter.x - this.width  / this.zoom / 2) + extraViewDistance.x;
+                const distY = (positionToCenter.y - this.height / this.zoom / 2) + extraViewDistance.y;
+                
+                if (distX > 0 || distY > 0) {
+                    const scaleX = distX / (this.width / this.zoom);
+                    const scaleY = distY / (this.height / this.zoom);
+                    const scale = Math.max(scaleX, scaleY);
+                    if (this.viewWouldBeOutOfMap(scale)) {
+                        this.zoom /= 1 + scale;
+                    }
+                }
+                
+                if (distX <= 0 || distY <= 0) {
+                    this.zoom *= 1.01
+                }
             }
         });
 
@@ -625,5 +631,18 @@ class Camera {
 
         this.centerPosition.y = this.position.y + (this.height/this.zoom) / 2;
 
+    }
+
+    viewWouldBeOutOfMap(scale) {
+        const usedZoom   =   this.zoom   /= 1 + scale;
+        const halfWidth  = ((this.width  / scale) / 2);
+        const halfHeight = ((this.height / scale) / 2);
+
+        return (
+            (this.centerPosition.x - halfWidth) / usedZoom  < 0 ||
+            (this.centerPosition.x + halfWidth) / usedZoom > canvas.width ||
+            (this.centerPosition.y - halfHeight) / usedZoom < 0 ||
+            (this.centerPosition.y + halfHeight) / usedZoom > canvas.height
+        );
     }
 }
