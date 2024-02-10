@@ -4,9 +4,10 @@ const ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
 // Constants
-const gravity = 0.2;
+const gravity = 0.15;
 const wallSlideFriction = 0.05;
 const wallJumpXForce = 10;
+const jumpForce = 6;
 const keys = {
   left: 'a',
   right: 'd',
@@ -16,11 +17,11 @@ const keys = {
 const keyPressed = {};
 let lastMoveKeyPressed;
 
-const horizontalAcceleration = .8;
+const horizontalAcceleration = .4;
 const airResistance = 1;
 const groundFriction = .5;
-const maxYMovementVelocity = 50;
-const maxXMovementVelocity = 7;
+const maxYMovementVelocity = 25;
+const maxXMovementVelocity = 4;
 const maxCameraZoomLevel = 2;
 const minCameraZoomLevel = .25;
 const gameSpeed = 60; // game loop refresh rate (pictures per second)
@@ -96,7 +97,7 @@ function setupMisc() {
 
   foreground = new Sprite({
     printPosition: {
-      x: canvas.width / 2 - 600, // Center the image horizontally
+      x: 960 - 295,
       y: 500
     },
     animationData: {
@@ -104,7 +105,8 @@ function setupMisc() {
       offset: { x: 0, y: 0 },
       numberOfFrames: 1,
     },
-    scale: 1
+    scale: 1,
+    pixelMultiplier: 2
   })
 
   camera = new Camera({
@@ -117,11 +119,11 @@ function setupObstacles() {
   obstacles = [
     new Obstacle({
       position: {
-        x: canvas.width / 2 - 600,
-        y: canvas.height-(30*8)
+        x: 960 - 294,
+        y: 590
       },
-      height: 40,
-      width: 315
+      height: 16,
+      width: 155
     }),
   ];
 }

@@ -113,7 +113,7 @@ class Fighter extends Sprite {
         characterType,
         position = { x: 0, y: 0 },
         color,
-        pixelMultiplier = 4,
+        pixelMultiplier = 2,
         height = 48,
         width = 18
     }) {
@@ -375,7 +375,7 @@ class Fighter extends Sprite {
     // Handle jumping logic
     jump() {
         // Initiate jump action
-        this.movementVelocity.y = -9;
+        this.movementVelocity.y = -jumpForce;
         keyPressed[keys.jump] = false;
         this.availableJumps--;
 
@@ -451,7 +451,7 @@ class Obstacle {
     }
 
     update() {
-        // this.drawHitbox();
+        this.drawHitbox();
     }
 
     drawHitbox() {
