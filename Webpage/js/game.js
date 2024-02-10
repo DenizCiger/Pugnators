@@ -160,7 +160,9 @@ window.addEventListener('keydown', (event) => {
   
   }
   if (event.key === 'r') {
-    players[0].position = {x: 800, y: 100};
+    players.forEach(player => {
+      player.die();
+    });
   }
 });
 
