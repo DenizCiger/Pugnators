@@ -152,6 +152,10 @@ class Fighter extends Sprite {
         this.isOnGround = false;
         this.maxGravityVelocity = maxYMovementVelocity;
         this.animations = []
+        this.respawnPos = {
+            x: this.position.x,
+            y: this.position.y
+        }
 
         this.hitboxes = [];
         this.againstWall = 0;
@@ -258,7 +262,7 @@ class Fighter extends Sprite {
     // Update the character's velocity
     updateVelocities() {
         /* Saving position before collision */
-        var previousPosition = {x: this.position.x, y: this.position.y};
+        const previousPosition = {x: this.position.x, y: this.position.y};
 
         /* Limiting the horizontal movement velocity */
         this.movementVelocity.x = Math.max(-maxXMovementVelocity, Math.min(this.movementVelocity.x, maxXMovementVelocity));
@@ -273,18 +277,20 @@ class Fighter extends Sprite {
         /* Updating X-Position */
         this.position.x += this.fullVelocity.x;
 
-        /* Wrap around horizontally when reaching canvas boundaries */
-        this.position.x = this.position.x >= canvas.width ? 0 : (this.position.x + this.width <= 0 ? canvas.width - this.width - 1 : this.position.x);
+        /* Kill player when going out of x-boundaries */
+        if (this.position.x >= canvas.width || this.position.x + this.width <= 0) {
+            this.die(previousPosition);
+        }
 
         /* Handle collision with the obstacles */
-        if (this.checkCollisionWithWholeObstacles(obstacles)) {
+        if (this.checkCollisionWithAllObstacles(obstacles)) {
             this.canWallJump = this.movementVelocity.y > gravity; // TODO: Find out why tf everything breaks when I move this???
             this.maxGravityVelocity = this.canWallJump ? maxYMovementVelocity * wallSlideFriction : maxYMovementVelocity;
             this.availableJumps = this.canWallJump ? 2 : 0;
 
-            this.position.x = this.checkCollisionWithWholeObstacles(obstacles) ? previousPosition.x : this.position.x;
+            this.position.x = this.checkCollisionWithAllObstacles(obstacles) ? previousPosition.x : this.position.x;
             this.movementVelocity.x = this.jumpVelocity.x = 0;
-            this.knockbackVelocity.x *= -this.checkCollisionWithWholeObstacles(obstacles);
+            this.knockbackVelocity.x *= -this.checkCollisionWithAllObstacles(obstacles);
         }
         else {
             this.canWallJump = false;
@@ -294,11 +300,13 @@ class Fighter extends Sprite {
         /* Updating Y-Position */
         this.position.y += this.fullVelocity.y;
 
-        /* Wrap around vertically when reaching canvas boundaries */
-        this.position.y = this.position.y >= canvas.height ? 0 : (this.position.y + this.height <= 0 ? canvas.height - 1 : this.position.y);
-        
+        /* Kill player when going out of y-boundaries */
+        if (this.position.y >= canvas.height || this.position.y + this.height <= 0) {
+            this.die();
+        }
+
         /* Handle collision with the obstacles */
-        if (this.checkCollisionWithWholeObstacles(obstacles)) {
+        if (this.checkCollisionWithAllObstacles(obstacles)) {
             this.position.y = previousPosition.y;
             this.movementVelocity.y = this.jumpVelocity.y = 0;
             this.knockbackVelocity.y *= -1;
@@ -326,6 +334,23 @@ class Fighter extends Sprite {
         for (let i = 0; i < this.hitboxes.length; i++) {
             this.hitboxes[i].draw();
         }
+    }
+    // Handle dying logic
+    die() {
+        this.percentage = 0;
+        this.respawn();
+    }
+    // Respawn logic
+    respawn() {
+        this.jumpVelocity.x = 0;
+        this.jumpVelocity.y = 0;
+        this.movementVelocity.x = 0;
+        this.movementVelocity.y = 0;
+        this.knockbackVelocity.x = 0;
+        this.knockbackVelocity.y = 0;
+        this.position.x = this.respawnPos.x
+        this.position.y = this.respawnPos.y
+        this.availableJumps = 0;
     }
     // Handle the character's attack
     attack(attackType) {
@@ -356,7 +381,7 @@ class Fighter extends Sprite {
         console.log("Weird: {0}", (canvas.width-this.position.x));
     }
     // Check for collision between hitbox and obstacles elements
-    checkCollisionWithWholeObstacles(obstaclesArray) {
+    checkCollisionWithAllObstacles(obstaclesArray) {
         return obstaclesArray.some(element => this.hitboxes[0].collidesWith(element));
     }
     // Check for collision between hitbox and obstaclesArray elements
