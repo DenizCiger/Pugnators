@@ -212,6 +212,7 @@ label {
 }
 
 .login-container input {
+    width: -moz-fit-content;
     width: fit-content;
     padding: 10px 0 10px 10px;
     border: solid;
