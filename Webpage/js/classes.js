@@ -351,6 +351,7 @@ class Fighter extends Sprite {
         this.position.x = this.respawnPos.x
         this.position.y = this.respawnPos.y
         this.availableJumps = 0;
+        camera.zoom = 4;
     }
     // Handle the character's attack
     attack(attackType) {
