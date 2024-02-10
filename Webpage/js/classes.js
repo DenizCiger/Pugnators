@@ -540,14 +540,18 @@ class Camera {
                 y: player.position.y + player.height / 2
             };
 
-            let distX = Math.abs(relevantPlayerPos.x - this.centerPosition.x) - this.width / this.zoom / 2;
-            let distY = Math.abs(relevantPlayerPos.y - this.centerPosition.y) - this.height / this.zoom / 2;
+            let distX = (Math.abs(relevantPlayerPos.x - this.centerPosition.x) - this.width / this.zoom / 2)+150; //this can be tweaked if we want to make the map bigger           
+            let distY = (Math.abs(relevantPlayerPos.y - this.centerPosition.y) - this.height / this.zoom / 2)+150;
 
             if (distX > 0 || distY > 0) {
                 let scaleX = distX / (this.width / this.zoom);
                 let scaleY = distY / (this.height / this.zoom);
                 let scale = Math.max(scaleX, scaleY);
                 this.zoom /= 1 + scale;
+            }
+
+            if (distX <= 0 || distY <= 0) {
+                this.zoom *= 1.01
             }
         });
 
