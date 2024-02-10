@@ -152,15 +152,19 @@ class Fighter extends Sprite {
         this.isOnGround = false;
         this.maxGravityVelocity = maxYMovementVelocity;
         this.animations = []
+        
         this.respawnPos = {
             x: this.position.x,
             y: this.position.y
         }
+        this.isRespawning = false;
+        this.canMove = false;
 
         this.hitboxes = [];
         this.againstWall = 0;
         this.load()
         this.setState('idle');
+        this.spawn();
     }
     // Load the character's animations
     load() {
@@ -338,10 +342,10 @@ class Fighter extends Sprite {
     // Handle dying logic
     die() {
         this.percentage = 0;
-        this.respawn();
+        this.spawn();
     }
-    // Respawn logic
-    respawn() {
+    // Handle spawning logic
+    spawn() {
         this.jumpVelocity.x = 0;
         this.jumpVelocity.y = 0;
         this.movementVelocity.x = 0;
@@ -351,7 +355,14 @@ class Fighter extends Sprite {
         this.position.x = this.respawnPos.x
         this.position.y = this.respawnPos.y
         this.availableJumps = 0;
-        camera.zoom = 4;
+        camera.zoom = maxCameraZoomLevel;
+        
+        this.isRespawning = true;
+        this.canMove = false;
+        setTimeout(() => {
+            this.isRespawning = false;
+            this.canMove = true;
+        }, 500);
     }
     // Handle the character's attack
     attack(attackType) {
