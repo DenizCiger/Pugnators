@@ -41,20 +41,22 @@ let players;
 // Animation function
 function animate() {
   updateAnimations();
-  
-  if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
-    players[0].movementVelocity.x -= horizontalAcceleration;
-  } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
-    players[0].movementVelocity.x += horizontalAcceleration;
-  } else {
-    if (players[0].checkIsGrounded(obstacles)) {
-      // players[0].drawHitbox();
-    }
-    players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(obstacles) ? groundFriction : airResistance);
-  }
 
-  if (keyPressed[keys.jump] && players[0].availableJumps > 0) {
-    players[0].jump();
+  if (players[0].canMove) {
+    if (keyPressed[keys.left] && lastMoveKeyPressed === keys.left) {
+      players[0].movementVelocity.x -= horizontalAcceleration;
+    } else if (keyPressed[keys.right] && lastMoveKeyPressed === keys.right) {
+      players[0].movementVelocity.x += horizontalAcceleration;
+    } else {
+      if (players[0].checkIsGrounded(obstacles)) {
+        // players[0].drawHitbox();
+      }
+      players[0].movementVelocity.x *= 1-(players[0].checkIsGrounded(obstacles) ? groundFriction : airResistance);
+    }
+
+    if (keyPressed[keys.jump] && players[0].availableJumps > 0) {
+      players[0].jump();
+    }
   }
 
   updatePercentageDisplays();
@@ -158,7 +160,9 @@ window.addEventListener('keydown', (event) => {
   
   }
   if (event.key === 'r') {
-    players[0].position = {x: 800, y: 100};
+    players.forEach(player => {
+      player.die();
+    });
   }
 });
 
