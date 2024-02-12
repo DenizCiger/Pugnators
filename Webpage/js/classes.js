@@ -451,7 +451,7 @@ class Obstacle {
     }
 
     update() {
-        this.drawHitbox();
+        // this.drawHitbox();
     }
 
     drawHitbox() {
@@ -531,7 +531,6 @@ class Camera {
     }
     // Update the camera's position
     update() {
-        console.log(this.zoom)
         this.updatePosition(players);
         this.draw();
     }
