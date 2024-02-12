@@ -1,65 +1,108 @@
+/* Default options */
 
 .setting-option {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.setting-option span, .buttons > *{
-    padding: 8px 12px;
-    margin: 0;
+body {
+    padding:20px;
 }
 
-.setting-option .op{
-    background-color: #999;
-}
+/* Slider */
 
-.setting-option *{
-    margin: 0;
-}
-
-.option-title {
-    margin-right: 10px;
-}
-
-
-.checkbox {
+.switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
 }
 
-input {
-    display: none;
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .slider {
     position: absolute;
-    top: 0;
-    height: 1em;
-    width: 3em;
-    background-color: #f46b64; /* Background color of the slider */
     cursor: pointer;
-    border: solid #fff 2px;
-    transition: 0.4s;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #f46b64; /* Dark grey for dark mode */
+    transition: .4s;
 }
 
 .slider:before {
     position: absolute;
-    content: '';
-    height: 2em;
-    width: 2em;
-    left: 0em;
-    bottom: 0em;
-    background-color: #fff; /* Color of the slider handle */
-    transition: 0.1s;
-}
-
-input:checked + .slider:before {
-    transform: translateX(2.5em); /* Move the handle to the checked position */
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff; /* Light grey for dark mode */
+    transition: .4s;
 }
 
 input:checked + .slider {
-    background-color: #64f46b;
+    background-color: #64f46b; /* Lighter green for dark mode */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #64f46b; /* Lighter green for dark mode */
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+input:not(:checked) + .slider {
+    background-color: #A52A2A;
+}
+
+input:not(:checked):focus + .slider {
+    box-shadow: 0 0 1px #A52A2A; /* Dark red for dark mode */
+}
+
+/* Number */
+
+input[type="number"] {
+    background: #444; /* Dark grey for dark mode */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+/* Map Select */
+
+.select-map {
+    background: #444; /* Dark grey for dark mode */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px;
+    font-size: 16px;
 }
