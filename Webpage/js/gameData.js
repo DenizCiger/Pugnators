@@ -103,9 +103,9 @@ const characterData = {
             actionName: 'nlight',
             isAttack: true,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/default-combo.png',
-            numberOfFrames: 12,
-            offset: { x: 10, y: 0 },
-            framesHold: 5
+            numberOfFrames: 11,
+            offset: { x: 14, y: 0 }, //character need to move 1 step for each punch
+            framesHold: 7
         },
         // Define more abilities for Nerd
     ],
