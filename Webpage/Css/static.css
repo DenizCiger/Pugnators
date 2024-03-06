@@ -33,6 +33,14 @@ h6 {
   font-family: "Raleway", sans-serif;
 }
 
+.dynamic-link {
+  transition: 0.3s;
+}
+
+.dynamic-link:hover {
+  transform: scale(1.1);
+}
+
 /*--------------------------------------------------------------
 # Example list
 --------------------------------------------------------------*/
