@@ -33,8 +33,8 @@ function register() {
         return;
         // Don't continue running the code
     }
-    if (validate_field(full_name) == false || validate_field(username) == false) {
-        alert('One or More Fields is Outta Line!!');
+    if (validate_field(username) == false) {
+        alert('Invalid username! Please enter a username.');
         return;
     }
     // Move on with Auth
