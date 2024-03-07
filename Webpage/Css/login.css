@@ -1,40 +1,26 @@
 body {
-  background-color: #1a1a1a;
+  background-color: #121212;
+  color: #f5f5f5;
   font-family: Arial, sans-serif;
-  color: #f0f0f0;
-}
-
-.button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  text-align: center;
-  text-decoration: none;
-  color: #1a1a1a;
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #1f1f1f;
+  width: 300px;
+  padding: 40px;
+  margin: 0 auto;
+  margin-top: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
-.login-form {
-  width: 300px;
-  padding: 20px;
-  background-color: #2b2b2b;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.login-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .input-container {
-  margin: 10px 0;
+  margin-bottom: 20px;
 }
 
 .input-container label {
@@ -45,19 +31,51 @@ body {
 .input-container input {
   width: 280px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #2b2b2b;
-  color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
 }
 
 .button-container {
-  display: flex;
-  justify-content: space-between;
+  text-align: center;
 }
 
-/* Hover effects for login/register buttons */
+.button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:not(.button-container .button) {
+  width: 100vw;
+}
+
+
+.button {
+  background-color: #673ab7;
+  color: #f5f5f5;
+}
 
 .button:hover {
-  background-color: #e0e0e0;
+  background-color: #7a4fbf;
+}
+
+.button:active {
+  background-color: #8c64c8;
+  transform: translateY(4px);
+}
+
+p {
+  text-align: center;
+}
+
+p a {
+  color: #382bf0;
+  text-decoration: underline;
+}
+
+p a:hover {
+  text-decoration: underline;
+  color: #5e43f3; /* Add the desired color value here */
 }
