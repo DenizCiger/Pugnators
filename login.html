@@ -10,21 +10,28 @@
     <body>
         <a href="home.html" class="button" id="login-button">Back</a>
         <div class="login-container">
-            <form class="login-form" id="login-form">
-                <h1>Login</h1>
-                <div class="input-container">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="input-container">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="button-container">
-                    <input type="submit" name="Submit" class="button" value="Login">
-                </div>
-                <p>No account? <a href="register.html">Register</a></p>
-            </form>
+            <h1>Login</h1>
+            <div class="input-container">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="button-container">
+                <button onclick="login()" class="button">Login</button>
+            </div>
+            <p>No account? <a href="register.html">Register</a></p>
         </div>
     </body>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+    </script>
+    <script src="./js/login.js"></script>
 </html>
