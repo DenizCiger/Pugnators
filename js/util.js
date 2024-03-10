@@ -7,15 +7,16 @@ function hideNonExistentPlayers() {
 
 function updateAnimations() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  background.update();
-  foreground.update();
-
+  backGround.update();
+  middleGround.update();
+  
   obstacles.forEach(obstacle => {
     obstacle.update();
   });
   players.forEach(player => {
     player.update();
   });
+  foreGround.update();
 
   camera.update();
 }

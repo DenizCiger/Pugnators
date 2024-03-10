@@ -35,8 +35,9 @@ let playerInfoDisplays;
 let playerIconDisplays;
 let percentageDisplays;
 
-let background;
-let foreground;
+let backGround;
+let middleGround;
+let foreGround;
 let camera;
 
 let obstacles;
@@ -89,7 +90,7 @@ function setupDisplays() {
 }
 
 function setupMisc() {
-  background = new Sprite({
+  backGround = new Sprite({
     printPosition: { x: 0, y: 0 },
     animationData: {
       imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
@@ -99,13 +100,29 @@ function setupMisc() {
     scale: 1.25
   });
 
-  foreground = new Sprite({
+  middleGround = new Sprite({
     printPosition: {
       x: 960 - 295,
       y: 500
     },
     animationData: {
-      imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform.png',
+      imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform_Middleground.png',
+      offset: { x: 0, y: 0 },
+      numberOfFrames: 1,
+    },
+    scale: 1,
+    pixelMultiplier: 2
+  })
+
+  
+
+  foreGround = new Sprite({
+    printPosition: {
+      x: 960 - 295,
+      y: 500
+    },
+    animationData: {
+      imageSrc: './images/Game-Textures/Map/Mushroom_Sky/Mushroom_Platform_Foreground.png',
       offset: { x: 0, y: 0 },
       numberOfFrames: 1,
     },
@@ -126,7 +143,7 @@ function setupObstacles() {
         x: 960 - 294,
         y: 590
       },
-      height: 16,
+      height: 22,
       width: 155
     }),
   ];
