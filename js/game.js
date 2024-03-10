@@ -90,7 +90,7 @@ function setupDisplays() {
 }
 
 function setupMisc() {
-  backGround = new Sprite({
+  backGround = [new Sprite({
     printPosition: { x: 0, y: 0 },
     animationData: {
       imageSrc: './images/Game-Textures/Copy/Glacial-mountains/background_glacial_mountains_lightened.png',
@@ -98,9 +98,9 @@ function setupMisc() {
       numberOfFrames: 1,
     },
     scale: 1.25
-  });
+  })];
 
-  middleGround = new Sprite({
+  middleGround = [new Sprite({
     printPosition: {
       x: 960 - 295,
       y: 500
@@ -112,11 +112,9 @@ function setupMisc() {
     },
     scale: 1,
     pixelMultiplier: 2
-  })
-
+  })];
   
-
-  foreGround = new Sprite({
+  foreGround = [new Sprite({
     printPosition: {
       x: 960 - 295,
       y: 500
@@ -128,7 +126,7 @@ function setupMisc() {
     },
     scale: 1,
     pixelMultiplier: 2
-  })
+  })];
 
   camera = new Camera({
     position: { x: 0, y: 0 },
