@@ -528,6 +528,7 @@ class Camera {
         this.width  = width  /4;
         this.height = height /4;
         this.zoom = zoom;
+        this.aspectRatio = this.width/this.height;
     }
     // Update the camera's position
     update() {
@@ -562,40 +563,32 @@ class Camera {
         x /= players.length;
         y /= players.length;
 
-        this.fixOutOfMapBorder(x, y);
+        // console.log(x); //for testing purposes
+        // console.log(y);
+
+        this.centerPosition.x = x;
+        this.centerPosition.y = y;
+        this.position.x = x - (this.width/this.zoom)/2;
+        this.position.y = y - (this.height/this.zoom)/2;
         
         this.resizeFix(players);
     }
 
     // Fix the camera's zoom level
     resizeFix(players) {
+        let distances = [];
+
         players.forEach(player => {
-            const relevantPlayerPos = {
-                x: player.position.x + player.width / 2,
-                y: player.position.y + player.height / 2
-            };
-            if (!this.viewIsOutOfMap) {
-                const positionToCenter = {
-                    x: Math.abs(relevantPlayerPos.x - this.centerPosition.x),
-                    y: Math.abs(relevantPlayerPos.y - this.centerPosition.y)
-                };
-                const distX = (positionToCenter.x - this.width  / this.zoom / 2) + extraViewDistance.x;
-                const distY = (positionToCenter.y - this.height / this.zoom / 2) + extraViewDistance.y;
-                
-                if (distX > 0 || distY > 0) {
-                    const scaleX = distX / (this.width / this.zoom);
-                    const scaleY = distY / (this.height / this.zoom);
-                    const scale = Math.max(scaleX, scaleY);
-                    if (this.viewWouldBeOutOfMap(scale)) {
-                        this.zoom /= 1 + scale;
-                    }
-                }
-                
-                if (distX <= 0 || distY <= 0) {
-                    this.zoom *= 1.01
-                }
-            }
+            let distX = extraViewDistance.x + Math.abs(player.position.x + player.width / 2);
+            let distY = (extraViewDistance.y + Math.abs(player.position.y + player.width / 2)) * this.aspectRatio;
+
+            distances.push(distX);
+            distances.push(distY);
         });
+
+        console.log((this.width/2)/(Math.max(...distances))); //for testing, almost always prints 0.15801671465692815
+
+        this.zoom = ((this.width/2)/(Math.max(...distances)));
 
         // Limit the zoom level
         if (this.zoom < minCameraZoomLevel) {
@@ -603,45 +596,5 @@ class Camera {
         } else if (this.zoom > maxCameraZoomLevel) {
             this.zoom = maxCameraZoomLevel;
         }
-    }
-
-    fixOutOfMapBorder(x, y) {
-        if (x-(this.width/this.zoom)/2 < 0) {
-            this.position.x = 0;
-        }
-        else if (x+(this.width/this.zoom)/2 > canvas.width) {
-            this.position.x = canvas.width - this.width/this.zoom;
-        }
-        else {
-            this.position.x = x - (this.width/this.zoom)/2;
-        }
-
-        this.centerPosition.x = this.position.x + (this.width/this.zoom)  / 2;
-
-        if (y-(this.height/this.zoom)/2 < 0) {
-            this.position.y = 0;
-        }
-        else if (y+(this.height/this.zoom)/2 > canvas.height) {
-            this.position.y = canvas.height - this.height/this.zoom;
-        }
-        else {
-            this.position.y = y - (this.height/this.zoom)/2;
-        }
-
-        this.centerPosition.y = this.position.y + (this.height/this.zoom) / 2;
-
-    }
-
-    viewWouldBeOutOfMap(scale) {
-        const usedZoom   =   this.zoom   /= 1 + scale;
-        const halfWidth  = ((this.width  / scale) / 2);
-        const halfHeight = ((this.height / scale) / 2);
-
-        return (
-            (this.centerPosition.x - halfWidth) / usedZoom  < 0 ||
-            (this.centerPosition.x + halfWidth) / usedZoom > canvas.width ||
-            (this.centerPosition.y - halfHeight) / usedZoom < 0 ||
-            (this.centerPosition.y + halfHeight) / usedZoom > canvas.height
-        );
     }
 }
