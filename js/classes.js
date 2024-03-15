@@ -568,7 +568,7 @@ class Camera {
 
         this.centerPosition.x = x;
         this.centerPosition.y = y;
-        this.position.x = x - (this.width/this.zoom)/2;
+        this.position.x = x - (this.width/this.zoom)/2; //sets the rectangle representing the camera to the point between the characters, was previously in a deleted function
         this.position.y = y - (this.height/this.zoom)/2;
         
         this.resizeFix(players);
