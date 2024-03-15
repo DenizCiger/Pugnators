@@ -579,14 +579,15 @@ class Camera {
         let distances = [];
 
         players.forEach(player => {
-            let distX = extraViewDistance.x + Math.abs(player.position.x + player.width / 2);
-            let distY = (extraViewDistance.y + Math.abs(player.position.y + player.width / 2)) * this.aspectRatio;
+            let distX = extraViewDistance.x + Math.abs((player.position.x + player.width / 2)-this.centerPosition.x);
+            let distY = ((extraViewDistance.y + Math.abs(player.position.y + player.width / 2))-this.centerPosition.y) * this.aspectRatio;
 
             distances.push(distX);
             distances.push(distY);
         });
 
-        console.log((this.width/2)/(Math.max(...distances))); //for testing, almost always prints 0.15801671465692815
+        console.log(distances);
+        //console.log((this.width/2)/(Math.max(...distances))); //for testing, almost always prints 0.15801671465692815
 
         this.zoom = ((this.width/2)/(Math.max(...distances)));
 
