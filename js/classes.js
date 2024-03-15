@@ -568,7 +568,7 @@ class Camera {
 
         this.centerPosition.x = x;
         this.centerPosition.y = y;
-        this.position.x = x - (this.width/this.zoom)/2; //sets the rectangle representing the camera to the point between the characters, was previously in a deleted function
+        this.position.x = x - (this.width/this.zoom)/2;
         this.position.y = y - (this.height/this.zoom)/2;
         
         this.resizeFix(players);
@@ -580,14 +580,11 @@ class Camera {
 
         players.forEach(player => {
             let distX = extraViewDistance.x + Math.abs((player.position.x + player.width / 2)-this.centerPosition.x);
-            let distY = ((extraViewDistance.y + Math.abs(player.position.y + player.width / 2))-this.centerPosition.y) * this.aspectRatio;
+            let distY = ((extraViewDistance.y + Math.abs(player.position.y + player.width / 2))-this.centerPosition.y) * this.aspectRatio; //needs some tweaking to look perfect
 
             distances.push(distX);
             distances.push(distY);
         });
-
-        console.log(distances);
-        //console.log((this.width/2)/(Math.max(...distances))); //for testing, almost always prints 0.15801671465692815
 
         this.zoom = ((this.width/2)/(Math.max(...distances)));
 
