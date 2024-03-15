@@ -571,16 +571,16 @@ class Camera {
         this.position.x = x - (this.width/this.zoom)/2;
         this.position.y = y - (this.height/this.zoom)/2;
         
-        this.resizeFix(players);
+        this.resize(players);
     }
 
     // Fix the camera's zoom level
-    resizeFix(players) {
+    resize(players) {
         let distances = [];
 
         players.forEach(player => {
-            let distX = extraViewDistance.x + Math.abs((player.position.x + player.width / 2)-this.centerPosition.x);
-            let distY = ((extraViewDistance.y + Math.abs(player.position.y + player.width / 2))-this.centerPosition.y) * this.aspectRatio; //needs some tweaking to look perfect
+            let distX = extraViewDistance.x + Math.abs((player.position.x + player.width / 2-this.centerPosition.x));
+            let distY = ((extraViewDistance.y + Math.abs(player.position.y + player.width / 2)-this.centerPosition.y)) * this.aspectRatio; //needs some tweaking to look perfect
 
             distances.push(distX);
             distances.push(distY);
