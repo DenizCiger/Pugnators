@@ -49,3 +49,16 @@ function getDisplayElements(elementName, count) {
         document.getElementById(`${elementName}${i + 1}`)
     );
 }
+
+function checkImageExists(imageUrl) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    try {
+      img.src = imageUrl;
+    } catch (error) {
+      resolve(false);
+    }
+  });
+}

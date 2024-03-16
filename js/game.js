@@ -163,7 +163,13 @@ function setupPlayers() {
 
 function setupUserIcons() {
   players.forEach((player, i) => {
-    playerIconDisplays[i].src = characterData[playerCharacters[i]].find(a => a.actionName === 'info').logoSrc;
+    
+    const logoSrc = characterData[playerCharacters[i]].find(a => a.actionName === 'info').logoSrc;
+
+    checkImageExists(logoSrc).then((imageExists) => {
+      const exists = imageExists && logoSrc.endsWith('.png');
+      playerIconDisplays[i].src = exists ? logoSrc : './null.png';
+    });
   });
 }
 

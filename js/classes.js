@@ -12,7 +12,8 @@ class Sprite {
                 x: 0,
                 y: 0
             },
-            numberOfFrames: 1 
+            numberOfFrames: 1,
+            frameTime: [100]
         },
         height,
         width
@@ -23,38 +24,55 @@ class Sprite {
         this.animationData = animationData;
 
         this.currentFrame = 0;
-        this.framesElapsed = 0;
-        this.flipHorizontally = false;
-
+        this.elapsedMillies = 0;
+        this.lastAnimationCall = null;
+        
         this.image = new Image();
-        this.image.src = this.animationData.imageSrc;
-
+        this.image.src = this.animationData.imageSrc ? this.animationData.imageSrc : "./null.png";
+        
         this.height = height;
         this.width = width;
+        this.flipHorizontally = false;
+
     }
 
-    setAnimationData({
-        animationSprite = null,
-    }) {
+    setAnimationData({ animationSprite = null }) {
         this.currentFrame = 0;
 
         this.image = animationSprite.image;
         this.animationData.imageSrc = animationSprite.readSrc;
         this.animationData.offset = animationSprite.offset;
-        this.animationData.numberOfFrames = animationSprite.numberOfFrames;
-        this.animationData.framesHold = animationSprite.framesHold;
+        this.animationData.frameTime = animationSprite.frameTime;
+        // console.log(animationSprite);
+        this.animationData.numberOfFrames = animationSprite.frameTime.length;
     }
     
     animateFrames() {
-        this.framesElapsed++;
+        if (!this.animationData.numberOfFrames) {
+            this.animationData.numberOfFrames = 1;
+        }
 
-        if (this.framesElapsed % this.animationData.framesHold === 0) {
-            if (this.currentFrame < this.animationData.numberOfFrames - 1) {
-                this.currentFrame++;
-            } else {
-                this.currentFrame = 0;
+        if (!this.animationData.frameTime) {
+            this.animationData.frameTime = [];
+
+            for (let i = 0; i < this.animationData.numberOfFrames; i++) {
+                this.animationData.frameTime.push(100);
             }
         }
+
+        const currentTime = Date.now();
+
+        if (this.lastAnimationCall !== null)
+        {
+            this.elapsedMillies += currentTime - this.lastAnimationCall;
+        }
+
+        while (this.elapsedMillies > this.animationData.frameTime[this.currentFrame]) {
+            this.elapsedMillies -= this.animationData.frameTime[this.currentFrame];
+            this.currentFrame = (this.currentFrame + 1) % this.animationData.numberOfFrames;
+        }
+
+        this.lastAnimationCall = Date.now();
     }
 
     draw() {
@@ -172,13 +190,12 @@ class Fighter extends Sprite {
 
         for (const [actionName, index] of Object.entries(actionIndexMap)) {
             const actionDetails = info.find(action => action.actionName === actionName);
-            
+
             if (actionDetails) {
                 this.animations[index] = new AnimationSprite ({
-                                                                imageSrc: actionDetails.animationSrc,
-                                                                numberOfFrames: actionDetails.numberOfFrames,
-                                                                offset: actionDetails.offset,
-                                                                framesHold: actionDetails.framesHold
+                                                                imageSrc: actionDetails.animationSrc ? actionDetails.animationSrc : "",
+                                                                offset: actionDetails.offset         ? actionDetails.offset : { x: 0, y: 0 },
+                                                                frameTime: actionDetails.frameTime   ? actionDetails.frameTime : [100],
                                                             });
             }
         }
@@ -424,7 +441,6 @@ class Fighter extends Sprite {
         
     }
 }
-
 class Obstacle {
     constructor({
         position = { x: 0, y: 0 },
@@ -458,7 +474,6 @@ class Obstacle {
         this.hitboxes.forEach(hitbox => hitbox.draw());
     }
 }
-
 class Hitbox {
     constructor ({
         position = { x: 0, y: 0 },
@@ -494,26 +509,22 @@ class Hitbox {
         }
     }
 }
-
 class AnimationSprite {
     constructor({
         imageSrc,
-        numberOfFrames = 1,
         offset = { x: 0, y: 0 },
-        framesHold = 10,
+        frameTime = [100],
         width = -1
     }) {
-        this.numberOfFrames = numberOfFrames;
+        this.readSrc = imageSrc ? imageSrc : "./null.png";
         this.offset = offset;
-        this.framesHold = framesHold;
-        this.readSrc = imageSrc;
-        
+        this.frameTime = frameTime;
+
         this.image = new Image();
         this.image.src = this.readSrc;
         this.width = width > 0 ? width : this.image.width;
     }
 }
-
 class Camera {
     constructor({
         position = { x: 0, y: 0 },
@@ -562,9 +573,6 @@ class Camera {
 
         x /= players.length;
         y /= players.length;
-
-        // console.log(x); //for testing purposes
-        // console.log(y);
 
         this.centerPosition.x = x;
         this.centerPosition.y = y;

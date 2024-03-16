@@ -53,9 +53,8 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Troller/Animations/idle.png',
-            numberOfFrames: 8,
             offset: { x: 7, y: 0 },
-            framesHold: 10
+            frameTime: [100, 100, 100, 100, 100, 100, 100, 100]
             // Other ability details
         },
         // Define more abilities for Troller
@@ -70,9 +69,8 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/LeondingChan/LeondingChan_Front.png',
-            numberOfFrames: 1,
             offset: { x: 7, y: 0 },
-            framesHold: 10
+            frameTime: [100]
             // Other ability details
         },
         // Define more abilities for LeondingChan
@@ -87,25 +85,22 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/idle.png',
-            numberOfFrames: 5,
             offset: { x: 6, y: 0 },
-            framesHold: 11
+            frameTime: [100, 100, 100, 100, 100]
         },
         {
             actionName: 'running',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/run.png',
-            numberOfFrames: 8,
             offset: { x: 5, y: 2 },
-            framesHold: 7
+            frameTime: [100, 100, 100, 100, 100, 100, 100, 100]
         },
         {
             actionName: 'nlight',
             isAttack: true,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/default-combo.png',
-            numberOfFrames: 11,
             offset: { x: 14, y: 0 }, //character need to move 1 step for each punch
-            framesHold: 7
+            frameTime: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
         },
         // Define more abilities for Nerd
     ],
@@ -119,9 +114,8 @@ const characterData = {
             actionName: 'idle',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Snowy/Snowy.png',
-            numberOfFrames: 1,
             offset: { x: 8, y: 0 },
-            framesHold: 10
+            frameTime: [100]
             // Other ability details
         },
         // Define more abilities for Frosty
