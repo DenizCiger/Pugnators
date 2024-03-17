@@ -224,13 +224,14 @@ class Fighter extends Sprite {
         this.isAttacking = (this.isAttacking && this.currentFrame == this.animationData.numberOfFrames-1) ? false : this.isAttacking;
 
         this.animateFrames();
-
+        
         if (!this.isAttacking) {
-
-            if (this.movementVelocity.x !== 0 && this.state !== 'running') {
-                this.setState('running');
-            } else if (this.movementVelocity.x === 0 && this.state !== 'idle') {
-                this.setState('idle');
+            if (Math.abs(this.movementVelocity.y) <= gravity) { // Jumping has priority over running
+                if (this.movementVelocity.x !== 0 && this.state !== 'running') { // Running has priority over idle
+                    this.setState('running');
+                } else if (this.movementVelocity.x === 0 && this.state !== 'idle') { // Idle has priority over running
+                    this.setState('idle');
+                }
             }
         } else {
             this.setState(this.currentAttack);
@@ -392,6 +393,7 @@ class Fighter extends Sprite {
     // Handle jumping logic
     jump() {
         // Initiate jump action
+        this.setState('jumping');
         this.movementVelocity.y = -jumpForce;
         keyPressed[keys.jump] = false;
         this.availableJumps--;

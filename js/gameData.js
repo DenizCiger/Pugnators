@@ -106,8 +106,8 @@ const characterData = {
             actionName: 'jumping',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/jump.png',
-            offset: { x: 7, y: 0 }, //character need to move 1 step for each punch
-            frameTime: [20, 30, 40, 50, 50, 50, 250, 40,] //the 80 for a better looking animation and the 100 so the hand stays up a little bit longer
+            offset: { x: 7, y: 0 },
+            frameTime: [10, 20, 30, 40, 40, 40, 250, 40,] //the 80 for a better looking animation and the 100 so the hand stays up a little bit longer
         }
         // Define more abilities for Nerd
     ],
