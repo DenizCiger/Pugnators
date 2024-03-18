@@ -181,10 +181,14 @@ window.addEventListener('keydown', (event) => {
     if (event.key === keys.left || event.key === keys.right) {
       lastMoveKeyPressed = event.key;
     }
-    if (event.key === keys.attackNormal && !players[0].isAttacking) {
-      players[0].attack('nlight');
+    else if((keyPressed[keys.left] || keyPressed[keys.right]) && event.key === keys.attackNormal && !players[0].isAttacking) {
+      players[0].attack('nside');
+      console.log('testcase: nside')
     }
-  
+    else if (event.key === keys.attackNormal && !players[0].isAttacking) {
+      players[0].attack('nlight');
+      console.log('testcase: nlight')
+    }
   }
   if (event.key === 'r') {
     players.forEach(player => {
@@ -196,6 +200,7 @@ window.addEventListener('keydown', (event) => {
 window.addEventListener('keyup', (event) => {
   if (Object.values(keys).includes(event.key)) {
     keyPressed[event.key] = false;
+    console.log(event.key);
   }
 });
 

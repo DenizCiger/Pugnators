@@ -89,6 +89,13 @@ const characterData = {
             frameTime: [70, 70, 70, 70, 70]
         },
         {
+            actionName: 'jumping',
+            isAttack: false,
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/jump.png',
+            offset: { x: 7, y: 0 },
+            frameTime: [10, 20, 30, 40, 40, 40, 250, 40,] //the 80 for a better looking animation and the 100 so the hand stays up a little bit longer
+        },
+        {
             actionName: 'running',
             isAttack: false,
             animationSrc: './images/Game-Textures/Characters/Nerd/animations/run.png',
@@ -103,11 +110,11 @@ const characterData = {
             frameTime: [50, 50, 50, 80, 50, 50, 50, 50, 100, 50, 50] //the 80 for a better looking animation and the 100 so the hand stays up a little bit longer
         },
         {
-            actionName: 'jumping',
-            isAttack: false,
-            animationSrc: './images/Game-Textures/Characters/Nerd/animations/jump.png',
-            offset: { x: 7, y: 0 },
-            frameTime: [10, 20, 30, 40, 40, 40, 250, 40,] //the 80 for a better looking animation and the 100 so the hand stays up a little bit longer
+            actionName: 'nside',
+            isAttack: true,
+            animationSrc: './images/Game-Textures/Characters/Nerd/animations/normal-attack-side.png',
+            offset: { x: 14, y: 0 }, 
+            frameTime: [2000,2000] 
         }
         // Define more abilities for Nerd
     ],
