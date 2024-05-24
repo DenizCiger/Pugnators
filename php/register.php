@@ -1,6 +1,21 @@
 <?php 
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=user', 'root', '');
+
+$host_name = 'db5015759728.hosting-data.io';
+$database = 'dbs12859313';
+$user_name = 'dbu723475';
+$password = 'H^3@ah#8f9Mu5]xFN&J{dVYPW[72_%';
+$errorMessage = "";
+$dbh = null;
+
+try {
+  $dbh = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password);
+  echo "Connected to db!";
+} catch (PDOException $e) {
+  echo "Fehler!:" . $e->getMessage() . "<br/>";
+  die();
+}
+    
 ?>
 <!DOCTYPE html> 
 <html lang="en">
