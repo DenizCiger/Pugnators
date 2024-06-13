@@ -1,4 +1,4 @@
-const socket = io('ws://localhost:8443');
+const socket = io('https://socket.wohlschlager.net:443');
 
 socket.on('message', text => {
 
