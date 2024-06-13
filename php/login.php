@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($user !== false) {
         // Store the result of password verification
-        $password_verify_result = password_verify($password, $user['password']);
+        $password_verify_result = password_verify($password, $user['passwort']);
 
         // Print out the result of password_verify
         echo '<pre>';
