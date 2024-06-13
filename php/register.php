@@ -1,6 +1,21 @@
 <?php 
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=user', 'root', '');
+
+$host_name = 'db5015759728.hosting-data.io';
+$database = 'dbs12859313';
+$user_name = 'dbu723475';
+$password = 'H^3@ah#8f9Mu5]xFN&J{dVYPW[72_%';
+$errorMessage = "";
+$pdo = null;
+
+try {
+  $pdo = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password);
+  echo "Connected to db!";
+} catch (PDOException $e) {
+  echo "Fehler!:" . $e->getMessage() . "<br/>";
+  die();
+}
+    
 ?>
 <!DOCTYPE html> 
 <html lang="en">
@@ -8,7 +23,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=user', 'root', '');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Register</title>
-        <link rel="stylesheet" type="text/css" href="login.css">
+        <link rel="stylesheet" type="text/css" href="../Css/login.css">
     </head> 
 <body>
  
@@ -66,7 +81,7 @@ if(isset($_GET['register'])) {
 if($showFormular) {
 ?>
  
- <a href="home.html" class="button" id="login-button">Back</a>
+ <a href="../home.html" class="button" id="login-button">Back</a>
         <div class="login-container">
             <h1>Register</h1>
             <form action="?register=1" method="post">
