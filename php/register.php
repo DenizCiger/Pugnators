@@ -81,7 +81,7 @@ if(isset($_GET['register'])) {
 if($showFormular) {
 ?>
  
- <a href="home.html" class="button" id="login-button">Back</a>
+ <a href="../home.html" class="button" id="login-button">Back</a>
         <div class="login-container">
             <h1>Register</h1>
             <form action="?register=1" method="post">
