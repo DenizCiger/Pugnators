@@ -24,7 +24,6 @@ function collidesWithAny(a, b) {
 }
 // Update player velocity
 function updateVelocity(player) {
-    console.log(player.pressedKeys)
     // Walk handling
     if (player.pressedKeys.left != player.pressedKeys.right) {  
         if (player.pressedKeys.left) {
