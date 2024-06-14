@@ -5,6 +5,99 @@ const io = require('socket.io')(http, {
     cors: { origin: '*' }
 });
 
+
+// Collision detection
+function collides(a, b) {
+    return a.position.x < b.position.x + b.width &&
+           a.position.x + a.width > b.position.x &&
+           a.position.y < b.position.y + b.height &&
+           a.position.y + a.height > b.position.y;
+}
+// Collision detection with array
+function collidesWithAny(a, b) {
+    for (const element of b) {
+        if (collides(a, element)) {
+            return true;
+        }
+    }
+    return false;
+}
+// Update player velocity
+function updateVelocity(player) {
+    console.log(player.pressedKeys)
+    // Walk handling
+    if (player.pressedKeys.left != player.pressedKeys.right) {  
+        if (player.pressedKeys.left) {
+            if (player.moveVelos.x > -maxSpeeds.walk) {
+                player.moveVelos.x -= moveVeloConsts.walk.x;
+            } else {
+                player.moveVelos.x = -maxSpeeds.walk;
+            }
+        }
+        if (player.pressedKeys.right) {
+            if (player.moveVelos.x < maxSpeeds.walk) {
+                player.moveVelos.x += moveVeloConsts.walk.x;
+            } else {
+                player.moveVelos.x = maxSpeeds.walk;
+            }
+        }
+    } else {
+        if (Math.abs(player.moveVelos.x) < 0.1) {
+            player.moveVelos.x = 0;
+        } else {
+            player.moveVelos.x /= 3;
+        }
+    }
+
+    // Gravity handling
+    if (player.moveVelos.y < maxSpeeds.fall) {
+        player.moveVelos.y += moveVeloConsts.gravity.y;
+    } else {
+        player.moveVelos.y = maxSpeeds.fall;
+    }
+
+    // Jump handling
+    if (player.pressedKeys.jump) {
+        player.moveVelos.y = moveVeloConsts.jump.y;
+    }
+}
+// Fix out of bounds player position
+function fixOutOfBounds(player) {
+    if (player.position.x > 480+player.width) {
+        player.position.x = -player.width;
+    }
+    if (player.position.y > 270+player.height) {
+        player.position.y = -player.height;
+    }
+    if (player.position.x < -player.width) {
+        player.position.x = 480+player.width;
+    }
+    if (player.position.y < -player.height) {
+        player.position.y = 270+player.height;
+    }
+}
+// Update player position
+function updatePosition(player) {
+    updateVelocity(player);
+    const solids = obstacles.filter(obstacle => !obstacle.isPassable);
+
+    player.position.x += player.moveVelos.x;
+
+    if (collidesWithAny(player, solids)) {
+        player.position.x -= player.moveVelos.x;
+        player.moveVelos.x = 0;
+    }
+
+    player.position.y += player.moveVelos.y;
+    if (collidesWithAny(player, solids)) {
+        player.position.y -= player.moveVelos.y;
+        player.moveVelos.y = 0;
+    }
+
+    // Out of bounds handling
+    fixOutOfBounds(player);
+}
+
 // Game classes
 class Fighter {
     constructor({
@@ -20,40 +113,30 @@ class Fighter {
             up: false,
             left: false,
             down: false,
-            right: false
+            right: false,
+            jump: false
         };
         this.width = 20;
-        this.height = 60;
+        this.height = 50;
         this.moveVelos = {
             x: 0,
             y: 0
         };
     }
-
-    collidesWith(other) {
-        for (const element of other) {
-            if (this.position.x < element.position.x + element.width &&
-                this.position.x + this.width > element.position.x &&
-                this.position.y < element.position.y + element.height &&
-                this.position.y + this.height > element.position.y) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
-
 class Obstacle {
     constructor({
         position = { x: 0, y: 0 },
         color,
-        width = 200,
-        height = 20
+        width = 280,
+        height = 20,
+        isPassable = false
     }) {
         this.position = position;
         this.color = color;
         this.width = width;
         this.height = height;
+        this.isPassable = isPassable;
     }
 }
 
@@ -68,9 +151,9 @@ let obstacles = [
 ];
 const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
 const moveVeloConsts = {
-    jump:       { x:  0,    y: -15 },
-    gravity:    { x:  0,    y:   1 },
-    walk:      { x:  4,    y:   0 },
+    jump:       { x:  0,    y: -10 },
+    gravity:    { x:  0,    y:   2 },
+    walk:       { x:  6,    y:   0 },
 };
 const maxSpeeds = {
     fall:      10,
@@ -108,54 +191,7 @@ setInterval(() => {
 
     // Update player physics
     for (const player of Object.values(players)) {
-        // Walk handling
-
-        if (player.pressedKeys.left != player.pressedKeys.right) {  
-            if (player.pressedKeys.left) {
-                if (player.moveVelos.x > -maxSpeeds.walk) {
-                    player.moveVelos.x -= moveVeloConsts.walk.x;
-                } else {
-                    player.moveVelos.x = -maxSpeeds.walk;
-                }
-            }
-            if (player.pressedKeys.right) {
-                if (player.moveVelos.x < maxSpeeds.walk) {
-                    player.moveVelos.x += moveVeloConsts.walk.x;
-                } else {
-                    player.moveVelos.x = maxSpeeds.walk;
-                }
-            }
-        } else {
-            if (Math.abs(player.moveVelos.x) < 0.1) {
-                player.moveVelos.x = 0;
-            } else {
-                player.moveVelos.x /= 1.1;
-            }
-        }
-
-        // Gravity handling
-        if (player.moveVelos.y < maxSpeeds.fall) {
-            player.moveVelos.y += moveVeloConsts.gravity.y;
-        } else {
-            player.moveVelos.y = maxSpeeds.fall;
-        }
-
-        player.position.x += player.moveVelos.x;
-        player.position.y += player.moveVelos.y;
-
-        // Out of bounds handling
-        if (player.position.x > 480) {
-            player.position.x = -20;
-        }
-        if (player.position.y > 270) {
-            player.position.y = -20;
-        }
-        if (player.position.x < -20) {
-            player.position.x = 480;
-        }
-        if (player.position.y < -20) {
-            player.position.y = 270;
-        }
+        updatePosition(player);
 
         // Saving relevant player data
         pack.push({

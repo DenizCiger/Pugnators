@@ -3,14 +3,14 @@ const socket = io('https://socket.wohlschlager.net:443');
 // Game variables
 const ctx = document.getElementById('game').getContext('2d');
 const availableKeys = {
-    space: 32,  // Space
-    up: 87,     // W
-    left: 65,   // A
-    down: 83,   // S
+    jump:  32,  // Space
+    up:    87,  // W
+    left:  65,  // A
+    down:  83,  // S
     right: 68,  // D
 };
 const pressedKeys = {
-    space: false,
+    jump: false,
     up: false,
     left: false,
     down: false,
@@ -24,7 +24,7 @@ socket.on('update', (pack) => {
 
     for (const element of pack) {
         ctx.fillStyle = element.color;
-        ctx.fillRect(element.position.x, element.position.y, element.width, 20);
+        ctx.fillRect(element.position.x, element.position.y, element.width, element.height);
     }
 });
 
@@ -45,6 +45,11 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode === availableKeys.right) {
         pressedKeys.right = true;
     }
+    if (event.keyCode === availableKeys.jump) {
+        pressedKeys.jump = true;
+    }
+
+
 
     socket.emit('keyPressUpdate', pressedKeys);
 });
@@ -64,6 +69,9 @@ window.addEventListener('keyup', (event) => {
     }
     if (event.keyCode === availableKeys.right) {
         pressedKeys.right = false;
+    }
+    if (event.keyCode === availableKeys.jump) {
+        pressedKeys.jump = false;
     }
 
     socket.emit('keyPressUpdate', pressedKeys);
