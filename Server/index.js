@@ -48,16 +48,31 @@ function updateVelocity(player) {
         }
     }
 
-    // Gravity handling
-    if (player.moveVelos.y < maxSpeeds.fall) {
-        player.moveVelos.y += moveVeloConsts.gravity.y;
-    } else {
-        player.moveVelos.y = maxSpeeds.fall;
+    if (player.isOnWall() != 0) {
+        // Wall slide handling
+        if (player.moveVelos.y < 0) {
+            player.moveVelos.y /= 2;
+        }
+        if (player.moveVelos.y < maxSpeeds.wallSlide) {
+            player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+        } else {
+            player.moveVelos.y = maxSpeeds.wallSlide;
+        }
     }
+    else {
+        // Gravity handling
+        if (player.moveVelos.y < maxSpeeds.fall) {
+            player.moveVelos.y += moveVeloConsts.gravity.y;
+        } else {
+            player.moveVelos.y = maxSpeeds.fall;
+        }
+    }
+    
+    player.rechargeJumps();
 
     // Jump handling
     if (player.pressedKeys.jump) {
-        player.moveVelos.y = moveVeloConsts.jump.y;
+        player.jump();
     }
 }
 // Fix out of bounds player position
@@ -92,10 +107,26 @@ function updatePosition(player) {
         player.position.y -= player.moveVelos.y;
         player.moveVelos.y = 0;
     }
-
+        
     // Out of bounds handling
     fixOutOfBounds(player);
 }
+
+// Constants
+const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
+const wallCheckTolerance = 7;
+const groundCheckTolerance = 5;
+const moveVeloConsts = {
+    jump:       { x:  0,    y: -10 },
+    gravity:    { x:  0,    y:   2 },
+    walk:       { x:  6,    y:   0 },
+    wallSlideAcceleration:  { x:  0,    y:   .5 },
+};
+const maxSpeeds = {
+    fall:      10,
+    walk:       8,
+    wallSlide:  2.5,
+};
 
 // Game classes
 class Fighter {
@@ -103,10 +134,10 @@ class Fighter {
         characterType,
         position = { x: 0, y: 0 },
         color
-    }) {
-        this.characterType = characterType;
-        this.position = position;
-        this.color = color;
+        }) {
+            this.characterType = characterType;
+            this.position = position;
+            this.color = color;
         this.pressedKeys = {
             space: false,
             up: false,
@@ -121,6 +152,58 @@ class Fighter {
             x: 0,
             y: 0
         };
+        this.performedJumps = 0;
+        this.max_jumps = 2;
+    }
+
+    jump() {
+        if (this.performedJumps < this.max_jumps) {
+            this.moveVelos.y = moveVeloConsts.jump.y;
+            this.performedJumps += 1;
+        }
+    }
+
+    isGrounded() {
+        let potentialGrounds = obstacles.filter(obstacle => !obstacle.isPassable);
+        let groundCheck = {
+            position: { x: this.position.x, y: this.position.y + this.height-wallCheckTolerance },
+            width: this.width,
+            height: wallCheckTolerance*2
+        };
+        return collidesWithAny(groundCheck, potentialGrounds);
+    }
+
+    isOnWall() {
+        // -1 = left, 0 = none, 1 = right, 2 = both
+        let onWall = 0;
+        let potentialWalls = obstacles.filter(obstacle => !obstacle.isPassable);
+
+        let leftHitbox = {
+            position: { x: this.position.x - wallCheckTolerance, y: this.position.y },
+            width: wallCheckTolerance*2,
+            height: this.height
+        };
+        let rightHitbox = {
+            position: { x: this.position.x + this.width, y: this.position.y },
+            width: wallCheckTolerance*2,
+            height: this.height
+        };
+
+        if (collidesWithAny(leftHitbox, potentialWalls)) {
+            onWall = -1;
+        }
+        if (collidesWithAny(rightHitbox, potentialWalls)) {
+            onWall = onWall == -1 ? 2 : 1;
+        }
+
+        return onWall;
+    }
+
+    rechargeJumps() {
+        if (this.isGrounded() || this.isOnWall() != 0){
+            console.log('Grounded', this.isGrounded(), 'On wall', this.isOnWall());
+            this.performedJumps = 0;
+        }
     }
 }
 class Obstacle {
@@ -147,17 +230,14 @@ let obstacles = [
         position: { x: 100, y: 200 },
         color: 'black',
     }),
+    new Obstacle({
+        position: { x: 220, y: 100 },
+        color: 'black',
+        width: 20,
+        height: 100
+    }),
 ];
-const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
-const moveVeloConsts = {
-    jump:       { x:  0,    y: -10 },
-    gravity:    { x:  0,    y:   2 },
-    walk:       { x:  6,    y:   0 },
-};
-const maxSpeeds = {
-    fall:      10,
-    walk:       8,
-};
+
 
 // Handle incoming connections
 io.on('connection', (socket) => {
