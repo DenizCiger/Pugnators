@@ -1,4 +1,5 @@
 const socket = io('https://socket.wohlschlager.net:443');
+// const socket = io('localhost:8443');
 
 // Game variables
 const ctx = document.getElementById('game').getContext('2d');
@@ -26,6 +27,10 @@ socket.on('update', (data) => {
     // Extract data
     const players = data.players;
     const map = data.map;
+
+
+    ctx.globalAlpha = 0.5; // Set transparency
+
     // Draw map
     for (let i = 0; i < map.length; i++) {
         ctx.fillStyle = map[i].color;
@@ -38,6 +43,8 @@ socket.on('update', (data) => {
         ctx.fillStyle = players[i].color;
         ctx.fillRect(players[i].x, players[i].y, pH.width, pH.height);
     }
+    
+    ctx.globalAlpha = 1;
 });
 
 // Handle incoming key presses
