@@ -5,6 +5,9 @@ const io = require('socket.io')(http, {
     cors: { origin: '*' }
 });
 
+/*--------------------*/
+/*   Game functions   */
+/*--------------------*/
 
 // Collision detection
 function collides(a, b) {
@@ -48,15 +51,18 @@ function updateVelocity(player) {
         }
     }
 
+    // Wall slide handling
     if (player.isOnWall() != 0) {
-        // Wall slide handling
+        // Jumping against wall
         if (player.moveVelos.y < 0) {
-            player.moveVelos.y /= 2;
-        }
-        if (player.moveVelos.y < maxSpeeds.wallSlide) {
-            player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+            player.moveVelos.y += moveVeloConsts.gravity.y;
         } else {
-            player.moveVelos.y = maxSpeeds.wallSlide;
+            // Wall slide acceleration
+            if (player.moveVelos.y < maxSpeeds.wallSlide) {
+                player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+            } else {
+                player.moveVelos.y = maxSpeeds.wallSlide;
+            }
         }
     }
     else {
@@ -112,23 +118,29 @@ function updatePosition(player) {
     fixOutOfBounds(player);
 }
 
-// Constants
+/*--------------------*/
+/*   Game constants   */
+/*--------------------*/
+
 const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
 const wallCheckTolerance = 7;
 const groundCheckTolerance = 5;
 const moveVeloConsts = {
-    jump:       { x:  0,    y: -10 },
-    gravity:    { x:  0,    y:   2 },
+    jump:       { x:  0,    y: -12 },
+    gravity:    { x:  0,    y:   1.5 },
     walk:       { x:  6,    y:   0 },
     wallSlideAcceleration:  { x:  0,    y:   .5 },
+    wallJump:   { x:  10,    y: -10 }
 };
 const maxSpeeds = {
-    fall:      10,
+    fall:      25,
     walk:       8,
     wallSlide:  2.5,
 };
 
-// Game classes
+/*------------------*/
+/*   Game classes   */
+/*------------------*/
 class Fighter {
     constructor({
         characterType,
@@ -146,8 +158,8 @@ class Fighter {
             right: false,
             jump: false
         };
-        this.width = 20;
-        this.height = 50;
+        this.width = 24;
+        this.height = 48;
         this.moveVelos = {
             x: 0,
             y: 0
@@ -158,8 +170,12 @@ class Fighter {
 
     jump() {
         if (this.performedJumps < this.max_jumps) {
+            if (this.isOnWall() != 0) {
+                this.moveVelos.x = moveVeloConsts.wallJump.x * this.isOnWall();
+            }
             this.moveVelos.y = moveVeloConsts.jump.y;
             this.performedJumps += 1;
+            this.pressedKeys.jump = false; // Prevents holding space to jump higher
         }
     }
 
