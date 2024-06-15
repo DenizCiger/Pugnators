@@ -1,3 +1,5 @@
+const { on } = require('events');
+
 // Websocket server for handling key presses and releases
 const PORT = 8443;
 const http = require('http').createServer();
@@ -51,25 +53,26 @@ function updateVelocity(player) {
         }
     }
 
-    // Wall slide handling
-    if (player.isOnWall() != 0) {
+    // Fall handling
+    const onWall = player.isOnWall();
+    // Player is running against a wall
+    if (((onWall == -1 || onWall == 2) && player.pressedKeys.left) ||
+        ((onWall == 1 || onWall == 2) && player.pressedKeys.right)) {
         // Jumping against wall
         if (player.moveVelos.y < 0) {
-            player.moveVelos.y += moveVeloConsts.gravity.y;
+                player.moveVelos.y += moveVeloConsts.gravity.y;
         } else {
-            // Wall slide acceleration
-            if (player.moveVelos.y < maxSpeeds.wallSlide) {
-                player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
-            } else {
-                player.moveVelos.y = maxSpeeds.wallSlide;
-            }
+                // Wall slide acceleration
+                if (player.moveVelos.y < maxSpeeds.wallSlide) {
+                    player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+                } else {
+                    player.moveVelos.y = maxSpeeds.wallSlide;
+                }
         }
-    }
-    else {
+    } else {
         // Gravity handling
-        if (player.moveVelos.y < maxSpeeds.fall) {
-            player.moveVelos.y += moveVeloConsts.gravity.y;
-        } else {
+        player.moveVelos.y += moveVeloConsts.gravity.y;
+        if (player.moveVelos.y > maxSpeeds.fall) {
             player.moveVelos.y = maxSpeeds.fall;
         }
     }
@@ -99,23 +102,34 @@ function fixOutOfBounds(player) {
 // Update player position
 function updatePosition(player) {
     updateVelocity(player);
+
     const solids = obstacles.filter(obstacle => !obstacle.isPassable);
-
-    player.position.x += player.moveVelos.x;
-
-    if (collidesWithAny(player, solids)) {
-        player.position.x -= player.moveVelos.x;
-        player.moveVelos.x = 0;
-    }
-
-    player.position.y += player.moveVelos.y;
-    if (collidesWithAny(player, solids)) {
-        player.position.y -= player.moveVelos.y;
-        player.moveVelos.y = 0;
-    }
+    let steps = Math.max(Math.abs(player.moveVelos.x), Math.abs(player.moveVelos.y));
+    
+    moveInSteps(player, steps, solids)
+    
+}
+// Move player in steps for accurate collision detection
+function moveInSteps(player, steps, solids) {
+    for (let i = 0; i < steps; i++) {
+        let oldPosition = { x: player.position.x, y: player.position.y };
         
-    // Out of bounds handling
-    fixOutOfBounds(player);
+        player.position.x += player.moveVelos.x / steps;
+        if (collidesWithAny(player, solids)) {
+            player.position.x = oldPosition.x;
+            player.moveVelos.x = 0;
+        } else {
+            fixOutOfBounds(player);
+        }
+
+        player.position.y += player.moveVelos.y / steps;
+        if (collidesWithAny(player, solids)) {
+            player.position.y = oldPosition.y;
+            player.moveVelos.y = 0;
+        } else {
+            fixOutOfBounds(player);
+        }
+    }
 }
 
 /*--------------------*/
@@ -217,7 +231,6 @@ class Fighter {
 
     rechargeJumps() {
         if (this.isGrounded() || this.isOnWall() != 0){
-            console.log('Grounded', this.isGrounded(), 'On wall', this.isOnWall());
             this.performedJumps = 0;
         }
     }
@@ -251,6 +264,12 @@ let obstacles = [
         color: 'black',
         width: 20,
         height: 100
+    }),
+    new Obstacle({
+        position: { x: 440, y: -50 },
+        color: 'black',
+        width: 20,
+        height: 400
     }),
 ];
 
