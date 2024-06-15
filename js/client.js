@@ -18,13 +18,25 @@ const pressedKeys = {
 };
 
 // Handle position updates
-socket.on('update', (pack) => {
+socket.on('update', (data) => {
+    // Clear the canvas
     ctx.clearRect(0, 0, 800, 600);
-    console.log(pack)
+    // Log data
+    console.log(data)
+    // Extract data
+    const players = data.players;
+    const map = data.map;
+    // Draw map
+    for (let i = 0; i < map.length; i++) {
+        ctx.fillStyle = map[i].color;
+        ctx.fillRect(map[i].x, map[i].y, map[i].width, map[i].height);
+    }
+    // Draw players
+    for (let i = 0; i < players.length; i++) {
+        const pH = players[i].hitbox;
 
-    for (const element of pack) {
-        ctx.fillStyle = element.color;
-        ctx.fillRect(element.position.x, element.position.y, element.width, element.height);
+        ctx.fillStyle = players[i].color;
+        ctx.fillRect(players[i].x, players[i].y, pH.width, pH.height);
     }
 });
 

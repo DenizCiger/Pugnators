@@ -86,17 +86,22 @@ function updateVelocity(player) {
 }
 // Fix out of bounds player position
 function fixOutOfBounds(player) {
-    if (player.position.x > 480+player.width) {
-        player.position.x = -player.width;
+    const x = player.hitbox.position.x;
+    const y = player.hitbox.position.y;
+    const width = player.hitbox.width;
+    const height = player.hitbox.height;
+
+    if (x > 480+width) {
+        player.position.x = -width;
     }
-    if (player.position.y > 270+player.height) {
-        player.position.y = -player.height;
+    if (y > 270+height) {
+        player.position.y = -height;
     }
-    if (player.position.x < -player.width) {
-        player.position.x = 480+player.width;
+    if (x < -width) {
+        player.position.x = 480+width;
     }
-    if (player.position.y < -player.height) {
-        player.position.y = 270+player.height;
+    if (y < -height) {
+        player.position.y = 270+height;
     }
 }
 // Update player position
@@ -107,7 +112,6 @@ function updatePosition(player) {
     let steps = Math.max(Math.abs(player.moveVelos.x), Math.abs(player.moveVelos.y));
     
     moveInSteps(player, steps, solids)
-    
 }
 // Move player in steps for accurate collision detection
 function moveInSteps(player, steps, solids) {
@@ -115,7 +119,7 @@ function moveInSteps(player, steps, solids) {
         let oldPosition = { x: player.position.x, y: player.position.y };
         
         player.position.x += player.moveVelos.x / steps;
-        if (collidesWithAny(player, solids)) {
+        if (collidesWithAny(player.hitbox, solids)) {
             player.position.x = oldPosition.x;
             player.moveVelos.x = 0;
         } else {
@@ -123,7 +127,7 @@ function moveInSteps(player, steps, solids) {
         }
 
         player.position.y += player.moveVelos.y / steps;
-        if (collidesWithAny(player, solids)) {
+        if (collidesWithAny(player.hitbox, solids)) {
             player.position.y = oldPosition.y;
             player.moveVelos.y = 0;
         } else {
@@ -155,15 +159,47 @@ const maxSpeeds = {
 /*------------------*/
 /*   Game classes   */
 /*------------------*/
+
+class Hitbox {
+    constructor({
+        position = { x: 0, y: 0 },
+        color = 'white',
+        width = 0,
+        height = 0
+    }) {
+        this.position = position;
+        this.color = color;
+        this.width = width;
+        this.height = height;
+    }
+}
+
+class Sprite {
+    constructor({
+        position = { x: 0, y: 0 },
+        color,
+        spriteFileLoc = '../null.png',
+    }) {
+        this.position = position;
+        this.color = color;
+        this.spriteFileLoc = spriteFileLoc;
+    }
+    draw() {
+        // Draw sprite
+    }
+}
+
 class Fighter {
     constructor({
         characterType,
         position = { x: 0, y: 0 },
-        color
-        }) {
-            this.characterType = characterType;
-            this.position = position;
-            this.color = color;
+        hitboxColor = 'white',
+        hitboxWidth = 24,
+        hitboxHeight = 48
+    }) {
+        
+        this.characterType = characterType;
+        this.position = position;
         this.pressedKeys = {
             space: false,
             up: false,
@@ -172,8 +208,13 @@ class Fighter {
             right: false,
             jump: false
         };
-        this.width = 24;
-        this.height = 48;
+        this.hitbox = new Hitbox({
+            position: this.position,
+            color: hitboxColor,
+            width: hitboxWidth,
+            height: hitboxHeight
+        });
+
         this.moveVelos = {
             x: 0,
             y: 0
@@ -196,8 +237,8 @@ class Fighter {
     isGrounded() {
         let potentialGrounds = obstacles.filter(obstacle => !obstacle.isPassable);
         let groundCheck = {
-            position: { x: this.position.x, y: this.position.y + this.height-wallCheckTolerance },
-            width: this.width,
+            position: { x: this.hitbox.position.x, y: this.hitbox.position.y + this.hitbox.height-wallCheckTolerance },
+            width: this.hitbox.width,
             height: wallCheckTolerance*2
         };
         return collidesWithAny(groundCheck, potentialGrounds);
@@ -209,14 +250,14 @@ class Fighter {
         let potentialWalls = obstacles.filter(obstacle => !obstacle.isPassable);
 
         let leftHitbox = {
-            position: { x: this.position.x - wallCheckTolerance, y: this.position.y },
+            position: { x: this.hitbox.position.x - wallCheckTolerance, y: this.hitbox.position.y },
             width: wallCheckTolerance*2,
-            height: this.height
+            height: this.hitbox.height
         };
         let rightHitbox = {
-            position: { x: this.position.x + this.width, y: this.position.y },
+            position: { x: this.hitbox.position.x + this.hitbox.width, y: this.hitbox.position.y },
             width: wallCheckTolerance*2,
-            height: this.height
+            height: this.hitbox.height
         };
 
         if (collidesWithAny(leftHitbox, potentialWalls)) {
@@ -235,7 +276,7 @@ class Fighter {
         }
     }
 }
-class Obstacle {
+class Obstacle extends Hitbox{
     constructor({
         position = { x: 0, y: 0 },
         color,
@@ -243,10 +284,13 @@ class Obstacle {
         height = 20,
         isPassable = false
     }) {
-        this.position = position;
-        this.color = color;
-        this.width = width;
-        this.height = height;
+        super({
+            position, 
+            color,
+            width,
+            height
+        });
+
         this.isPassable = isPassable;
     }
 }
@@ -273,6 +317,9 @@ let obstacles = [
     }),
 ];
 
+/*-------------------------*/
+/*   Connection handling   */
+/*-------------------------*/
 
 // Handle incoming connections
 io.on('connection', (socket) => {
@@ -280,8 +327,8 @@ io.on('connection', (socket) => {
     sockets[socket.id] = socket;
     players[socket.id] = new Fighter({
         characterType: 'Nerd',
-        position: { x: 0, y: 0 },
-        color: colors[Math.floor(Math.random() * colors.length)]
+        position: { x: 100, y: 0 },
+        hitboxColor: colors[Math.floor(Math.random() * colors.length)]
     });
 
     // Handle disconnections
@@ -299,26 +346,32 @@ io.on('connection', (socket) => {
 
 });
 
-// Update
+/*---------------*/
+/*   Game loop   */
+/*---------------*/
+
 setInterval(() => {
     const pack = [];
+    const playerData = [];
+    const mapData = [];
 
     // Update player physics
     for (const player of Object.values(players)) {
         updatePosition(player);
 
         // Saving relevant player data
-        pack.push({
-            position: player.position,
-            color: player.color,
-            width: player.width,
-            height: player.height
+        playerData.push({
+            x: player.position.x,
+            y: player.position.y,
+            color: player.hitbox.color,
+            hitbox: player.hitbox
         });
     }
 
     for (const obstacle of obstacles) {
-        pack.push({
-            position: obstacle.position,
+        mapData.push({
+            x: obstacle.position.x,
+            y: obstacle.position.y,
             color: obstacle.color,
             width: obstacle.width,
             height: obstacle.height
@@ -326,14 +379,14 @@ setInterval(() => {
     }
 
     for (const socket of Object.values(sockets)) {
-        socket.emit('update', pack);
+        socket.emit('update', { players: playerData, map: mapData});
     }
 }, 1000/60);
 
+/*---------------------*/
+/*   Starting Server   */
+/*---------------------*/
 
-
-
-// Start the server
 http.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
