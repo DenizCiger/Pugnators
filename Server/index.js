@@ -141,8 +141,8 @@ function moveInSteps(player, steps, solids) {
 /*--------------------*/
 
 const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
-const wallCheckTolerance = 7;
-const groundCheckTolerance = 5;
+const wallCheckTolerance = 2;
+const groundCheckTolerance = 2;
 const moveVeloConsts = {
     jump:       { x:  0,    y: -12 },
     gravity:    { x:  0,    y:   1.5 },
@@ -173,7 +173,6 @@ class Hitbox {
         this.height = height;
     }
 }
-
 class Sprite {
     constructor({
         position = { x: 0, y: 0 },
@@ -188,7 +187,6 @@ class Sprite {
         // Draw sprite
     }
 }
-
 class Fighter {
     constructor({
         characterType,
@@ -226,7 +224,9 @@ class Fighter {
     jump() {
         if (this.performedJumps < this.max_jumps) {
             if (this.isOnWall() != 0) {
-                this.moveVelos.x = moveVeloConsts.wallJump.x * this.isOnWall();
+                console.log(this.moveVelos.x)
+                this.moveVelos.x = moveVeloConsts.wallJump.x*this.isOnWall() * -1;
+                console.log(this.moveVelos.x)
             }
             this.moveVelos.y = moveVeloConsts.jump.y;
             this.performedJumps += 1;
@@ -237,9 +237,9 @@ class Fighter {
     isGrounded() {
         let potentialGrounds = obstacles.filter(obstacle => !obstacle.isPassable);
         let groundCheck = {
-            position: { x: this.hitbox.position.x, y: this.hitbox.position.y + this.hitbox.height-wallCheckTolerance },
+            position: { x: this.hitbox.position.x, y: this.hitbox.position.y + this.hitbox.height+groundCheckTolerance },
             width: this.hitbox.width,
-            height: wallCheckTolerance*2
+            height: wallCheckTolerance
         };
         return collidesWithAny(groundCheck, potentialGrounds);
     }
@@ -251,12 +251,12 @@ class Fighter {
 
         let leftHitbox = {
             position: { x: this.hitbox.position.x - wallCheckTolerance, y: this.hitbox.position.y },
-            width: wallCheckTolerance*2,
+            width: wallCheckTolerance,
             height: this.hitbox.height
         };
         let rightHitbox = {
             position: { x: this.hitbox.position.x + this.hitbox.width, y: this.hitbox.position.y },
-            width: wallCheckTolerance*2,
+            width: wallCheckTolerance,
             height: this.hitbox.height
         };
 
@@ -295,7 +295,10 @@ class Obstacle extends Hitbox{
     }
 }
 
-// Game variables
+/*--------------------*/
+/*   Game variables   */
+/*--------------------*/
+
 let sockets = [];
 let players = [];
 let obstacles = [
