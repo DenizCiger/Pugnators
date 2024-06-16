@@ -22,11 +22,11 @@ const pressedKeys = {
 socket.on('update', (data) => {
     // Clear the canvas
     ctx.clearRect(0, 0, 800, 600);
-    // Log data
-    console.log(data)
     // Extract data
     const players = data.players;
     const map = data.map;
+
+    // console.log(players[0].state);
 
 
     ctx.globalAlpha = 0.5; // Set transparency

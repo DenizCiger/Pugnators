@@ -1,4 +1,4 @@
-const { on } = require('events');
+const { stat } = require('fs');
 
 // Websocket server for handling key presses and releases
 const PORT = 8443;
@@ -37,6 +37,7 @@ function updateVelocity(player) {
             } else {
                 player.moveVelos.x = -maxSpeeds.walk;
             }
+            player.state = 'walkLeft';
         }
         if (player.pressedKeys.right) {
             if (player.moveVelos.x < maxSpeeds.walk) {
@@ -44,12 +45,17 @@ function updateVelocity(player) {
             } else {
                 player.moveVelos.x = maxSpeeds.walk;
             }
+            player.state = 'walkRight';
         }
     } else {
         if (Math.abs(player.moveVelos.x) < 0.1) {
             player.moveVelos.x = 0;
         } else {
             player.moveVelos.x /= 3;
+        }
+        if (player.moveVelos.x == 0 && player.isGrounded())
+        {
+            player.state = 'idle';
         }
     }
 
@@ -69,11 +75,21 @@ function updateVelocity(player) {
                     player.moveVelos.y = maxSpeeds.wallSlide;
                 }
         }
+        player.state = 'wallSlide' + (onWall == 1 ? 'Right' : 'Left');
     } else {
         // Gravity handling
         player.moveVelos.y += moveVeloConsts.gravity.y;
         if (player.moveVelos.y > maxSpeeds.fall) {
             player.moveVelos.y = maxSpeeds.fall;
+        }
+        if (player.moveVelos.y > 0 && player.isGrounded()) {
+            player.moveVelos.y = 0;
+            player.state = 'idle';
+        }
+
+        if (player.moveVelos.y > 0 && !player.pressedKeys.jump && player.state != 'wallJumpLeft' && player.state != 'wallJumpRight')
+        {
+            player.state = 'fall';
         }
     }
     
@@ -146,9 +162,9 @@ const groundCheckTolerance = 2;
 const moveVeloConsts = {
     jump:       { x:  0,    y: -12 },
     gravity:    { x:  0,    y:   1.5 },
-    walk:       { x:  6,    y:   0 },
+    walk:       { x:  5,    y:   0 },
     wallSlideAcceleration:  { x:  0,    y:   .5 },
-    wallJump:   { x:  10,    y: -10 }
+    wallJump:   { x:  -15,    y: -10 }
 };
 const maxSpeeds = {
     fall:      25,
@@ -219,14 +235,17 @@ class Fighter {
         };
         this.performedJumps = 0;
         this.max_jumps = 2;
+        this.state = 'idle';
     }
 
     jump() {
         if (this.performedJumps < this.max_jumps) {
-            if (this.isOnWall() != 0) {
-                console.log(this.moveVelos.x)
-                this.moveVelos.x = moveVeloConsts.wallJump.x*this.isOnWall() * -1;
-                console.log(this.moveVelos.x)
+            const onWall = this.isOnWall();
+            if (onWall != 0) {
+                this.moveVelos.x = moveVeloConsts.wallJump.x*onWall;
+                this.state = 'wallJump' + (onWall == 1 ? 'Right' : 'Left')
+            } else {
+                this.state = 'jump';
             }
             this.moveVelos.y = moveVeloConsts.jump.y;
             this.performedJumps += 1;
@@ -324,7 +343,6 @@ let obstacles = [
 /*   Connection handling   */
 /*-------------------------*/
 
-// Handle incoming connections
 io.on('connection', (socket) => {
     console.log('A user connected');
     sockets[socket.id] = socket;
@@ -367,7 +385,8 @@ setInterval(() => {
             x: player.position.x,
             y: player.position.y,
             color: player.hitbox.color,
-            hitbox: player.hitbox
+            hitbox: player.hitbox,
+            state: player.state
         });
     }
 
