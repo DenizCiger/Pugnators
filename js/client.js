@@ -2,7 +2,8 @@ const socket = io('https://socket.wohlschlager.net:443');
 // const socket = io('localhost:8443');
 
 // Game variables
-const ctx = document.getElementById('game').getContext('2d');
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
 const availableKeys = {
     jump:  32,  // Space
     up:    87,  // W
@@ -18,21 +19,11 @@ const pressedKeys = {
     right: false,
 };
 
-// Handle position updates
-socket.on('update', (data) => {
+// Draw everything on the canvas
+function drawCanvas(players, map) {
     // Clear the canvas
-    ctx.clearRect(0, 0, 800, 600);
-    // Extract data
-    const players = data.players;
-    const map = data.map;
-
-    // Log state of every player
-    let outPut = '';
-    for (let i = 0; i < players.length; i++) {
-        outPut += `Player ${i+1}: ${players[i].state} | `;
-    }
-    console.log(outPut)
-
+    console.log(canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.globalAlpha = 0.5; // Set transparency
 
@@ -49,23 +40,30 @@ socket.on('update', (data) => {
         ctx.fillRect(players[i].x, players[i].y, pH.width, pH.height);
     }
     
-    ctx.globalAlpha = 1;
-});
-// Handle player connects
-socket.on('userConnect', () => {
-    const userDiv = document.createElement('div');
-    userDiv.id = `user-${userId}`;
-    userDiv.textContent = `User ${userId}`;
-    document.body.appendChild(userDiv);
-});
-// Handle player disconnects
-socket.on('userDisconnect', () => {
-    const userDiv = document.getElementById(`user-${userId}`);
-    if (userDiv) {
-        document.body.removeChild(userDiv);
-    }
-});
+    ctx.globalAlpha = 1; // Reset transparency
+}
+// Update the percentage display
+function updatePercentage(players) {
+    // Get the player list container
+    const playerListContainer = document.getElementById("playerList");
+    playerListContainer.innerHTML = ""; // Clear the container
 
+    // Iterate over the players and create/update the percentage displays
+    players.forEach((player, index) => {
+        const playerDiv = document.createElement("div");
+        playerDiv.textContent = `Player ${index + 1}: ${player.damage}%`;
+        playerListContainer.appendChild(playerDiv);
+    });
+}
+// Handle position updates
+socket.on('update', (data) => {
+    // Extract data
+    const players = data.players;
+    const map = data.map;
+    
+    drawCanvas(players, map);
+    updatePercentage(players);
+});
 // Handle incoming key presses
 window.addEventListener('keydown', (event) => {
     if (event.keyCode === availableKeys.space) {

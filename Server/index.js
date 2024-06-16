@@ -236,7 +236,7 @@ class Fighter {
         this.performedJumps = 0;
         this.max_jumps = 2;
         this.state = 'idle';
-        this.damage = 0;
+        this.damage = Math.floor(Math.random() * 1000);
     }
 
     jump() {
@@ -352,18 +352,12 @@ io.on('connection', (socket) => {
         position: { x: 100, y: 0 },
         hitboxColor: colors[Math.floor(Math.random() * colors.length)]
     });
-    for (const socket of Object.values(sockets)) {
-        socket.emit('userConnect', { id: socket.id });
-    }
 
     // Handle disconnections
     socket.on('disconnect', () => {
         console.log('A user disconnected');
         delete sockets[socket.id];
         delete players[socket.id];
-        for (const socket of Object.values(sockets)) {
-            socket.emit('userDisconnect', { id: socket.id });
-        }
     });
     
     
