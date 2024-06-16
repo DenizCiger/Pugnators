@@ -46,8 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Based on the result, perform the login check
         if ($password_verify_result) {
+           session_regenerate_id();
+            $_SESSION['loggedin'] = TRUE;
             $_SESSION['username'] = $user['username'];
-            echo "Erfolgreich eingeloggt.";
+
+            header('Location: client.php');
+            //echo "Erfolgreich eingeloggt.";
             $showFormular = false;
         } else {
             $errorMessage = "Username oder Passwort war ungültig<br>";
