@@ -26,7 +26,12 @@ socket.on('update', (data) => {
     const players = data.players;
     const map = data.map;
 
-    // console.log(players[0].state);
+    // Log state of every player
+    let outPut = '';
+    for (let i = 0; i < players.length; i++) {
+        outPut += `Player ${i+1}: ${players[i].state} | `;
+    }
+    console.log(outPut)
 
 
     ctx.globalAlpha = 0.5; // Set transparency
@@ -45,6 +50,20 @@ socket.on('update', (data) => {
     }
     
     ctx.globalAlpha = 1;
+});
+// Handle player connects
+socket.on('userConnect', () => {
+    const userDiv = document.createElement('div');
+    userDiv.id = `user-${userId}`;
+    userDiv.textContent = `User ${userId}`;
+    document.body.appendChild(userDiv);
+});
+// Handle player disconnects
+socket.on('userDisconnect', () => {
+    const userDiv = document.getElementById(`user-${userId}`);
+    if (userDiv) {
+        document.body.removeChild(userDiv);
+    }
 });
 
 // Handle incoming key presses
