@@ -318,6 +318,29 @@
                         }
                     }
                 }
+            },
+            "attacks": {
+                "light": {
+                    "nlight": {
+                        "hitboxes": [
+                            {
+                                "width": 10,
+                                "height": 10,
+                                "offset": {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                "damage": 10,
+                                "knockback": {
+                                    "x": 10,
+                                    "y": 10
+                                },
+                                "hold": 10,
+                                "hitstun": 10
+                            }
+                        ]
+                    }
+                }
             }
         }
     }
