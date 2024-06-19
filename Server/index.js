@@ -1,4 +1,4 @@
-const { stat } = require('fs');
+const fs = require('fs');
 
 // Websocket server for handling key presses and releases
 const PORT = 8443;
@@ -51,7 +51,7 @@ function updateVelocity(player) {
         if (Math.abs(player.moveVelos.x) < 0.1) {
             player.moveVelos.x = 0;
         } else {
-            player.moveVelos.x /= 3;
+            player.moveVelos.x *= 0.2;
         }
         if (player.moveVelos.x == 0 && player.isGrounded())
         {
@@ -149,14 +149,20 @@ function moveInSteps(player, steps, solids) {
         } else {
             fixOutOfBounds(player);
         }
+
+        player.hitbox.updatePosition(player.position);
     }
+}
+// Random color generator
+function randomColor() {
+    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
 }
 
 /*--------------------*/
 /*   Game constants   */
 /*--------------------*/
 
-const colors = ['blue', 'red', 'green', 'yellow', 'purple', 'orange'];
+const preLoadGameData = JSON.parse(fs.readFileSync('gameData.json'));
 const wallCheckTolerance = 2;
 const groundCheckTolerance = 2;
 const moveVeloConsts = {
@@ -187,6 +193,35 @@ class Hitbox {
         this.color = color;
         this.width = width;
         this.height = height;
+    }
+    updatePosition(newPosition) {
+        this.position = newPosition;
+    }
+}
+class Attack extends Hitbox {
+    constructor({
+        position = { x: 0, y: 0 },
+        color = 'red',
+        width = 0,
+        height = 0,
+        damage = 0,
+        knockback = { x: 0, y: 0 },
+        hitstun = 0,
+        canMove = true,
+        offset = { x: 0, y: 0 }
+    }) {
+        super({
+            position,
+            color,
+            width,
+            height
+        });
+
+        this.damage = damage;
+        this.knockback = knockback;
+        this.hitstun = hitstun;
+        this.canMove = canMove;
+        this.offset = offset;
     }
 }
 class Sprite {
@@ -220,23 +255,38 @@ class Fighter {
             left: false,
             down: false,
             right: false,
-            jump: false
+            jump: false,
+            light: false,
+            heavy: false,
+            special: false,
         };
-        this.hitbox = new Hitbox({
-            position: this.position,
-            color: hitboxColor,
-            width: hitboxWidth,
-            height: hitboxHeight
-        });
 
+        
         this.moveVelos = {
             x: 0,
             y: 0
         };
         this.performedJumps = 0;
         this.max_jumps = 2;
+        this.canMove = false;
         this.state = 'idle';
         this.damage = Math.floor(Math.random() * 1000);
+        
+        this.hitbox = new Hitbox({
+            position: { x: this.position.x, y: this.position.y },
+            color: hitboxColor,
+            width: hitboxWidth,
+            height: hitboxHeight
+        });
+        this.currentAttack  = new Attack({
+            position: {
+                x: this.position.x,
+                y: this.position.y
+            },
+            color: 'red',
+            width: 0,
+            height: 0,
+        });
     }
 
     jump() {
@@ -253,7 +303,6 @@ class Fighter {
             this.pressedKeys.jump = false; // Prevents holding space to jump higher
         }
     }
-
     isGrounded() {
         let potentialGrounds = obstacles.filter(obstacle => !obstacle.isPassable);
         let groundCheck = {
@@ -263,7 +312,6 @@ class Fighter {
         };
         return collidesWithAny(groundCheck, potentialGrounds);
     }
-
     isOnWall() {
         // -1 = left, 0 = none, 1 = right, 2 = both
         let onWall = 0;
@@ -289,11 +337,29 @@ class Fighter {
 
         return onWall;
     }
-
     rechargeJumps() {
         if (this.isGrounded() || this.isOnWall() != 0){
             this.performedJumps = 0;
         }
+    }
+    attack(category, type) {
+        const attackData  = preLoadGameData.characters[this.characterType].attacks[category][type];
+        const current = attackData.hitboxes[0];
+
+        this.currentAttack = new Attack({
+            position: {
+                x: this.position.x + current.offset.x,
+                y: this.position.y + current.offset.y
+            },
+            width:     current.width,
+            height:    current.height,
+            damage:    current.damage,
+            knockback: current.knockback,
+            hitstun:   current.hitstun,
+            canMove:   current.canMove,
+            offset:    current.offset
+        });
+        console.log(this.currentAttack)
     }
 }
 class Obstacle extends Hitbox{
@@ -350,20 +416,23 @@ io.on('connection', (socket) => {
     players[socket.id] = new Fighter({
         characterType: 'Nerd',
         position: { x: 100, y: 0 },
-        hitboxColor: colors[Math.floor(Math.random() * colors.length)]
+        hitboxColor: randomColor()
     });
-
     // Handle disconnections
     socket.on('disconnect', () => {
         console.log('A user disconnected');
         delete sockets[socket.id];
         delete players[socket.id];
     });
-    
-    
     // Handle incoming key presses
     socket.on('keyPressUpdate', (pressedKeys) => {
-        players[socket.id].pressedKeys = pressedKeys;
+        const player = players[socket.id];
+        const oldPressedKeys = player.pressedKeys;
+        player.pressedKeys = pressedKeys;
+
+        if (oldPressedKeys.light != player.pressedKeys.light && player.pressedKeys.light) {
+            player.attack('light', 'nlight');
+        }
     });
 
 });
