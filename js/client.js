@@ -10,6 +10,9 @@ const availableKeys = {
     left:  65,  // A
     down:  83,  // S
     right: 68,  // D
+    light: 74,  // J
+    heavy: 75,  // K
+    special: 76,  // L
 };
 const pressedKeys = {
     jump: false,
@@ -17,6 +20,9 @@ const pressedKeys = {
     left: false,
     down: false,
     right: false,
+    light: false,
+    heavy: false,
+    special: false,
 };
 
 // Draw everything on the canvas
@@ -64,51 +70,23 @@ socket.on('update', (data) => {
     drawCanvas(players, map);
     updatePercentage(players);
 });
-// Handle incoming key presses
+// Create a reverse lookup object
+const keyMappings = Object.fromEntries(
+    Object.entries(availableKeys).map(([action, keyCode]) => [keyCode, action])
+);
+// Handle key presses
 window.addEventListener('keydown', (event) => {
-    if (event.keyCode === availableKeys.space) {
-        pressedKeys.space = true;
+    const action = keyMappings[event.keyCode];
+    if (action) {
+        pressedKeys[action] = true;
+        socket.emit('keyPressUpdate', pressedKeys);
     }
-    if (event.keyCode === availableKeys.up) {
-        pressedKeys.up = true;
-    }
-    if (event.keyCode === availableKeys.left) {
-        pressedKeys.left = true;
-    }
-    if (event.keyCode === availableKeys.down) {
-        pressedKeys.down = true;
-    }
-    if (event.keyCode === availableKeys.right) {
-        pressedKeys.right = true;
-    }
-    if (event.keyCode === availableKeys.jump) {
-        pressedKeys.jump = true;
-    }
-
-
-
-    socket.emit('keyPressUpdate', pressedKeys);
 });
-// Handle incoming key releases
+// Handle key releases
 window.addEventListener('keyup', (event) => {
-    if (event.keyCode === availableKeys.space) {
-        pressedKeys.space = false;
+    const action = keyMappings[event.keyCode];
+    if (action) {
+        pressedKeys[action] = false;
+        socket.emit('keyPressUpdate', pressedKeys);
     }
-    if (event.keyCode === availableKeys.up) {
-        pressedKeys.up = false;
-    }
-    if (event.keyCode === availableKeys.left) {
-        pressedKeys.left = false;
-    }
-    if (event.keyCode === availableKeys.down) {
-        pressedKeys.down = false;
-    }
-    if (event.keyCode === availableKeys.right) {
-        pressedKeys.right = false;
-    }
-    if (event.keyCode === availableKeys.jump) {
-        pressedKeys.jump = false;
-    }
-
-    socket.emit('keyPressUpdate', pressedKeys);
 });
