@@ -29,75 +29,82 @@ function collidesWithAny(a, b) {
 }
 // Update player velocity
 function updateVelocity(player) {
-    // Walk handling
-    if (player.pressedKeys.left != player.pressedKeys.right) {  
-        if (player.pressedKeys.left) {
-            if (player.moveVelos.x > -maxSpeeds.walk) {
-                player.moveVelos.x -= moveVeloConsts.walk.x;
-            } else {
-                player.moveVelos.x = -maxSpeeds.walk;
-            }
-            player.state = 'walkLeft';
-        }
-        if (player.pressedKeys.right) {
-            if (player.moveVelos.x < maxSpeeds.walk) {
-                player.moveVelos.x += moveVeloConsts.walk.x;
-            } else {
-                player.moveVelos.x = maxSpeeds.walk;
-            }
-            player.state = 'walkRight';
-        }
-    } else {
-        if (Math.abs(player.moveVelos.x) < 0.1) {
-            player.moveVelos.x = 0;
-        } else {
-            player.moveVelos.x *= 0.2;
-        }
-        if (player.moveVelos.x == 0 && player.isGrounded())
-        {
-            player.state = 'idle';
-        }
-    }
-
-    // Fall handling
-    const onWall = player.isOnWall();
-    // Player is running against a wall
-    if (((onWall == -1 || onWall == 2) && player.pressedKeys.left) ||
-        ((onWall == 1 || onWall == 2) && player.pressedKeys.right)) {
-        // Jumping against wall
-        if (player.moveVelos.y < 0) {
-                player.moveVelos.y += moveVeloConsts.gravity.y;
-        } else {
-                // Wall slide acceleration
-                if (player.moveVelos.y < maxSpeeds.wallSlide) {
-                    player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+    if (player.canMove) {
+        // Walk handling
+        if (player.pressedKeys.left != player.pressedKeys.right) {  
+            if (player.pressedKeys.left) {
+                if (player.moveVelos.x > -maxSpeeds.walk) {
+                    player.moveVelos.x -= moveVeloConsts.walk.x;
                 } else {
-                    player.moveVelos.y = maxSpeeds.wallSlide;
+                    player.moveVelos.x = -maxSpeeds.walk;
                 }
+                player.state = 'walkLeft';
+                player.direction = 'left';
+            }
+            if (player.pressedKeys.right) {
+                if (player.moveVelos.x < maxSpeeds.walk) {
+                    player.moveVelos.x += moveVeloConsts.walk.x;
+                } else {
+                    player.moveVelos.x = maxSpeeds.walk;
+                }
+                player.state = 'walkRight';
+                player.direction = 'right';
+            }
+        } else {
+            if (Math.abs(player.moveVelos.x) < 0.1) {
+                player.moveVelos.x = 0;
+            } else {
+                player.moveVelos.x *= 0.2;
+            }
+            if (player.moveVelos.x == 0 && player.isGrounded())
+            {
+                player.state = 'idle';
+            }
         }
-        player.state = 'wallSlide' + (onWall == 1 ? 'Right' : 'Left');
+
+        // Fall handling
+        const onWall = player.isOnWall();
+        // Player is running against a wall
+        if (((onWall == -1 || onWall == 2) && player.pressedKeys.left) ||
+            ((onWall == 1 || onWall == 2) && player.pressedKeys.right)) {
+            // Jumping against wall
+            if (player.moveVelos.y < 0) {
+                    player.moveVelos.y += moveVeloConsts.gravity.y;
+            } else {
+                    // Wall slide acceleration
+                    if (player.moveVelos.y < maxSpeeds.wallSlide) {
+                        player.moveVelos.y += moveVeloConsts.wallSlideAcceleration.y;
+                    } else {
+                        player.moveVelos.y = maxSpeeds.wallSlide;
+                    }
+            }
+            player.state = 'wallSlide' + (onWall == 1 ? 'Right' : 'Left');
+        } else {
+            // Gravity handling
+            player.moveVelos.y += moveVeloConsts.gravity.y;
+            if (player.moveVelos.y > maxSpeeds.fall) {
+                player.moveVelos.y = maxSpeeds.fall;
+            }
+            if (player.moveVelos.y > 0 && player.isGrounded()) {
+                player.moveVelos.y = 0;
+                player.state = 'idle';
+            }
+
+            if (player.moveVelos.y > 0 && !player.pressedKeys.jump && player.state != 'wallJumpLeft' && player.state != 'wallJumpRight')
+            {
+                player.state = 'fall';
+            }
+        }
+        
+        player.rechargeJumps();
+
+        // Jump handling
+        if (player.pressedKeys.jump) {
+            player.jump();
+        }
     } else {
-        // Gravity handling
-        player.moveVelos.y += moveVeloConsts.gravity.y;
-        if (player.moveVelos.y > maxSpeeds.fall) {
-            player.moveVelos.y = maxSpeeds.fall;
-        }
-        if (player.moveVelos.y > 0 && player.isGrounded()) {
-            player.moveVelos.y = 0;
-            player.state = 'idle';
-        }
-
-        if (player.moveVelos.y > 0 && !player.pressedKeys.jump && player.state != 'wallJumpLeft' && player.state != 'wallJumpRight')
-        {
-            player.state = 'fall';
-        }
-    }
-    
-    player.rechargeJumps();
-
-    // Jump handling
-    if (player.pressedKeys.jump) {
-        player.jump();
+        player.moveVelos.x = 0;
+        player.moveVelos.y = 0;
     }
 }
 // Fix out of bounds player position
@@ -162,6 +169,8 @@ function randomColor() {
 /*   Game constants   */
 /*--------------------*/
 
+const ticksPerSecond = 60;
+const frameLength = 1000 / ticksPerSecond;
 const preLoadGameData = JSON.parse(fs.readFileSync('gameData.json'));
 const wallCheckTolerance = 2;
 const groundCheckTolerance = 2;
@@ -243,7 +252,7 @@ class Fighter {
         characterType,
         position = { x: 0, y: 0 },
         hitboxColor = 'white',
-        hitboxWidth = 24,
+        hitboxWidth = 32,
         hitboxHeight = 48
     }) {
         
@@ -268,9 +277,10 @@ class Fighter {
         };
         this.performedJumps = 0;
         this.max_jumps = 2;
-        this.canMove = false;
+        this.canMove = true;
         this.state = 'idle';
         this.damage = Math.floor(Math.random() * 1000);
+        this.direction = 'right';
         
         this.hitbox = new Hitbox({
             position: { x: this.position.x, y: this.position.y },
@@ -342,24 +352,46 @@ class Fighter {
             this.performedJumps = 0;
         }
     }
-    attack(category, type) {
+    // Helper function to introduce delay
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async attack(category, type) {
         const attackData  = preLoadGameData.characters[this.characterType].attacks[category][type];
-        const current = attackData.hitboxes[0];
+        
+        const hitboxes = attackData.hitboxes;
+
+        for (const current of hitboxes) {
+            this.currentAttack = new Attack({
+                position: {
+                    x: (this.direction != 'left') ? this.position.x + current.offset.x
+                                                  : this.position.x + this.hitbox.width - current.offset.x - current.width,
+                    y: this.position.y + current.offset.y
+                },
+                width:     current.width,
+                height:    current.height,
+                damage:    current.damage,
+                knockback: current.knockback,
+                hitstun:   current.hitstun,
+                canMove:   current.canMove,
+                offset:    current.offset
+            });
+
+            this.canMove = this.currentAttack.canMove;
+            
+            await this.sleep(current.hold*frameLength);
+            this.canMove = true;
+        }
 
         this.currentAttack = new Attack({
             position: {
-                x: this.position.x + current.offset.x,
-                y: this.position.y + current.offset.y
+                x: this.position.x,
+                y: this.position.y
             },
-            width:     current.width,
-            height:    current.height,
-            damage:    current.damage,
-            knockback: current.knockback,
-            hitstun:   current.hitstun,
-            canMove:   current.canMove,
-            offset:    current.offset
+            color: 'red',
+            width: 0,
+            height: 0,
         });
-        console.log(this.currentAttack)
     }
 }
 class Obstacle extends Hitbox{
@@ -433,6 +465,10 @@ io.on('connection', (socket) => {
         if (oldPressedKeys.light != player.pressedKeys.light && player.pressedKeys.light) {
             player.attack('light', 'nlight');
         }
+
+        // if (player.pressedKeys.light) {
+        //     player.attack('light', 'nlight');
+        // }
     });
 
 });
@@ -457,7 +493,8 @@ setInterval(() => {
             color: player.hitbox.color,
             hitbox: player.hitbox,
             state: player.state,
-            damage: player.damage
+            damage: player.damage,
+            attack: player.currentAttack
         });
     }
 
@@ -474,7 +511,7 @@ setInterval(() => {
     for (const socket of Object.values(sockets)) {
         socket.emit('update', { players: playerData, map: mapData});
     }
-}, 1000/60);
+}, frameLength);
 
 /*---------------------*/
 /*   Starting Server   */

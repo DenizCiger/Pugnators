@@ -28,7 +28,6 @@ const pressedKeys = {
 // Draw everything on the canvas
 function drawCanvas(players, map) {
     // Clear the canvas
-    console.log(canvas.width, canvas.height)
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.globalAlpha = 0.5; // Set transparency
@@ -41,9 +40,12 @@ function drawCanvas(players, map) {
     // Draw players
     for (let i = 0; i < players.length; i++) {
         const pH = players[i].hitbox;
+        const att = players[i].attack;
 
         ctx.fillStyle = players[i].color;
         ctx.fillRect(players[i].x, players[i].y, pH.width, pH.height);
+        ctx.fillStyle = att.color;
+        ctx.fillRect(att.position.x, att.position.y, att.width, att.height);
     }
     
     ctx.globalAlpha = 1; // Reset transparency
